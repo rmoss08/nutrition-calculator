@@ -1,8 +1,8 @@
+import IngredientForm from "./components/IngredientForm";
+
 function App() {
   return (
-    <div>
-      Hello world!
-    </div>
+    <IngredientForm />
   );
 }
 

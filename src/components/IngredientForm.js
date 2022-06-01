@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { mealActions } from '../store/ingredient-slice';
+import { mealActions } from '../store/meal-slice';
 
 const IngredientForm = () => {
   const dispatch = useDispatch();
