@@ -1,4 +1,5 @@
 import IngredientForm from './components/IngredientForm';
+import MealForm from './components/MealForm';
 import Table from './components/Table';
 
 function App() {
@@ -6,6 +7,7 @@ function App() {
     <div>
       <IngredientForm />
       <Table />
+      <MealForm />
     </div>
   );
 }
