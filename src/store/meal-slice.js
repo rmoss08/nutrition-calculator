@@ -1,21 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const mealSlice = createSlice({
-  name: 'menu',
-  initialState: { ingredients: [] },
+  name: 'meal',
+  initialState: {
+    ingredients: [],
+  },
   reducers: {
-    add(state, payload) {
+    add(state, action) {
       const prevState = state.ingredients;
-      state.ingredients = [...prevState, payload ];
+      state.ingredients = [...prevState, action.payload];
     },
-    delete(state, payload) {
+    delete(state, action) {
       const prevState = state.ingredients;
       // This many need work
-      state.ingredients = prevState.map(ingredient => ingredient.id !== payload.id);
+      state.ingredients = prevState.map(
+        (ingredient) => ingredient.id !== action.payload.id
+      );
     },
-    reset(state){
-        state.ingredients = [];
-    }
+    reset(state) {
+      state.ingredients = [];
+    },
   },
 });
 
