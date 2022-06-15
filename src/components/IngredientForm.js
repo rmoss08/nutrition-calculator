@@ -1,11 +1,23 @@
 import axios from 'axios';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { mealActions } from '../store/meal-slice';
 
 const IngredientForm = () => {
   const dispatch = useDispatch();
 
-  const fetchNutrition = (ingredient, weight, timestamp) => {
+  const formatNutritionData = (data) => {
+    delete data.name;
+
+    let formattedData = {};
+    for (const key in data) {
+      formattedData[key] = parseFloat(data[key]);
+    }
+
+    return formattedData;
+  };
+
+  const fetchNutritionData = (ingredient, weight, timestamp) => {
     const axios = require('axios');
 
     const options = {
@@ -21,13 +33,16 @@ const IngredientForm = () => {
     return axios
       .request(options)
       .then((response) => {
-        const data = response.data;
-        console.log(data);
+        const data = response.data.items[0];
+        // console.log(data);
+
+        const formattedData = formatNutritionData(data);
+
         const ingredientData = {
           id: timestamp,
           name: ingredient,
           weight: weight,
-          nutrition: data.items[0],
+          nutrition: formattedData,
         };
 
         return dispatch(mealActions.add(ingredientData));
@@ -41,10 +56,10 @@ const IngredientForm = () => {
     event.preventDefault();
 
     const ingredient = event.target[0].value;
-    const weight = event.target[1].value;
-    const timestamp = event.timeStamp;
+    const weight = parseFloat(event.target[1].value);
+    const timestamp = `${event.timeStamp}`;
 
-    return fetchNutrition(ingredient, weight, timestamp);
+    return fetchNutritionData(ingredient, weight, timestamp);
   };
 
   return (

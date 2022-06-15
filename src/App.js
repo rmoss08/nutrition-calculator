@@ -1,8 +1,12 @@
-import IngredientForm from "./components/IngredientForm";
+import IngredientForm from './components/IngredientForm';
+import Table from './components/Table';
 
 function App() {
   return (
-    <IngredientForm />
+    <div>
+      <IngredientForm />
+      <Table />
+    </div>
   );
 }
 
