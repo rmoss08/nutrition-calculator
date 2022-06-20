@@ -6,8 +6,13 @@ function App() {
   return (
     <div>
       <IngredientForm />
-      <Table />
+      <br></br>
+      <Table slice='meal'/>
+      <br></br>
+      <br></br>
       <MealForm />
+      <br></br>
+      <Table slice='day' />
     </div>
   );
 }

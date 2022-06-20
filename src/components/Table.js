@@ -1,9 +1,10 @@
+import { produceWithPatches } from 'immer';
 import { useDispatch, useSelector } from 'react-redux';
 import { dayActions } from '../store/day-slice';
 import { mealActions } from '../store/meal-slice';
 
 const TABLE_HEADER = [
-  'Ingredient',
+  'rowData',
   'Weight (g)',
   'Actions',
   'Sugar (g)',
@@ -18,49 +19,50 @@ const TABLE_HEADER = [
   'Carbohydrate (g)',
 ];
 
-const Table = () => {
+const Table = (props) => {
   const dispatch = useDispatch();
+
   const ingredients = useSelector((state) => state.meal.ingredients);
+  const selectedMeals = useSelector((state) => state.day.selectedMeals);
+
+  let tableData;
+  let mealTable;
+  if (props.slice === 'meal') {
+    tableData = ingredients;
+    mealTable = true;
+  } else if (props.slice === 'day') {
+    tableData = selectedMeals;
+    console.log(selectedMeals)
+    mealTable = false;
+  } else {
+    tableData = null;
+    console.log('Invalid slice props');
+  }
 
   const thElements = TABLE_HEADER.map((description) => (
     <th key={description}>{description}</th>
   ));
 
-  const calculateWeightedValues = (ingredient) => {
-    const nutrition = ingredient.nutrition;
-
-    const userServingSize = ingredient.weight;
-    const nutritionServingSize = nutrition.serving_size_g;
-    const servingSizeFactor = userServingSize / nutritionServingSize;
-
-    let weightedNutritionValues = {};
-
-    for (const key in nutrition) {
-      if (key !== 'serving_size_g') {
-        const nutritionValue = nutrition[key];
-        const weightedValue = nutritionValue * servingSizeFactor;
-        weightedNutritionValues[key] = weightedValue;
-      }
-    }
-
-    return weightedNutritionValues;
-  };
-
-  const createRowElement = (id, name, weight, data) => {
+  const createRowElement = (rowData) => {
+    // console.log('rowData');
+    // console.log(rowData);
     let tdElements = [
-      <td key="name">{name}</td>,
-      <td key="weight">{weight}</td>,
+      <td key="name">{rowData.name}</td>,
+      <td key="weight">{mealTable ? rowData.weight: ''}</td>,
       <td key="action">
         <button>+</button>
         <button>-</button>
       </td>,
     ];
 
-    for (const key in data) {
-      tdElements.push(<td key={key}>{data[key]}</td>);
+    const nutrition = rowData.nutrition;
+    for (const key in nutrition) {
+      tdElements.push(<td key={key}>{nutrition[key]}</td>);
     }
-
-    return <tr key={id}>{tdElements}</tr>;
+    
+    console.log('tdElements');
+    console.log(tdElements);
+    return <tr key={rowData.id}>{tdElements}</tr>;
   };
 
   const createTotalRowElement = (totals) => {
@@ -90,12 +92,12 @@ const Table = () => {
     carbohydrates_total_g: 0,
   };
 
-  const calculateTotals = (ingredients) => {
-    for (const i in ingredients) {
-      const ingredient = ingredients[i];
-      for (const key in ingredient.nutrition) {
+  const calculateTotals = (tableData) => {
+    for (const i in tableData) {
+      const rowData = tableData[i];
+      for (const key in rowData.nutrition) {
         const prevTotal = totals[key];
-        totals[key] = prevTotal + ingredient.nutrition[key];
+        totals[key] = prevTotal + rowData.nutrition[key];
       }
     }
     return totals;
@@ -105,10 +107,11 @@ const Table = () => {
     event.preventDefault();
     let mealNameInput = document.getElementById('meal-name');
 
-    const meal = { name: mealNameInput.value, totals: totals };
+    console.log(totals);
+    const meal = { name: mealNameInput.value, nutrition: totals };
 
-    if (ingredients.length > 0) {
-      dispatch(dayActions.add(meal));
+    if (tableData.length > 0) {
+      dispatch(dayActions.addToMeals(meal));
       dispatch(mealActions.reset());
       mealNameInput.value = '';
     }
@@ -117,47 +120,40 @@ const Table = () => {
   const resetHandler = (event) => {
     event.preventDefault();
 
-    return dispatch(mealActions.reset());
+    return mealTable
+      ? dispatch(mealActions.reset())
+      : dispatch(dayActions.resetSelectedMeals());
   };
 
   let tableElements = [];
 
-  if (ingredients.length > 0) {
-    let weightedIngredients = [];
-    for (const i in ingredients) {
-      const weightedNutrition = calculateWeightedValues(ingredients[i]);
-      const weightedIng = { ...ingredients[i], nutrition: weightedNutrition };
-      weightedIngredients.push(weightedIng);
-    }
-
-    console.log(weightedIngredients);
-    tableElements = weightedIngredients.map((ingredient) => {
-      return createRowElement(
-        ingredient.id,
-        ingredient.name,
-        ingredient.weight,
-        ingredient.nutrition
-      );
+  if (tableData.length > 0) {
+    tableElements = tableData.map((rowData) => {
+      return createRowElement(rowData);
     });
 
-    const mealTotal = calculateTotals(weightedIngredients);
-    const totalRowElement = createTotalRowElement(mealTotal);
+    console.log('tableElements');
+    console.log(tableElements);
+    const totals = calculateTotals(tableData);
+    const totalRowElement = createTotalRowElement(totals);
     tableElements.push(totalRowElement);
   }
 
   return (
     <div>
-      <div>
-        <label htmlFor="meal-name">Meal Name:</label>
-        <input type="text" id="meal-name"></input>
-      </div>
+      {mealTable && (
+        <div>
+          <label htmlFor="meal-name">Meal Name:</label>
+          <input type="text" id="meal-name"></input>
+        </div>
+      )}
       <table>
         <thead>
           <tr>{thElements}</tr>
         </thead>
         <tbody>{tableElements}</tbody>
       </table>
-      <button onClick={addMealHandler}>Add Meal</button>
+      {mealTable && <button onClick={addMealHandler}>Add Meal</button>}
       <button onClick={resetHandler}>Reset</button>
     </div>
   );
