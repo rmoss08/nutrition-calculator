@@ -2,21 +2,35 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const daySlice = createSlice({
   name: 'day',
-  initialState: { meals: [] },
+  initialState: { meals: [], selectedMeals: [] },
   reducers: {
-    add(state, action) {
+    addToMeals(state, action) {
       const prevState = state.meals;
       state.meals = [...prevState, action.payload];
     },
-    delete(state, action) {
+    deleteFromMeals(state, action) {
       const prevState = state.meals;
       // This many need work
       state.meals = prevState.map(
         (ingredient) => ingredient.id !== action.payload.id
       );
     },
-    reset(state) {
+    resetMeals(state) {
       state.meals = [];
+    },
+    addToSelectedMeals(state, action) {
+      const prevState = state.selectedMeals;
+      state.selectedMeals = [...prevState, action.payload];
+    },
+    deleteFromSelectedMeals(state, action) {
+      const prevState = state.selectedMeals;
+      // This many need work
+      state.selectedMeals = prevState.map(
+        (ingredient) => ingredient.id !== action.payload.id
+      );
+    },
+    resetSelectedMeals(state) {
+      state.selectedMeals = [];
     },
   },
 });

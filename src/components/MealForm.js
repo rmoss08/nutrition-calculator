@@ -1,7 +1,24 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { dayActions } from "../store/day-slice";
 
 const MealForm = ()=> {
+    const dispatch = useDispatch();
     const meals = useSelector(state => state.day.meals);
+
+    const determineSelectedMeal = () => {
+        const selectValue = document.getElementById('meal-select').value;
+        const selectedMealArray = meals.filter(meal => meal.name === selectValue);
+
+        return selectedMealArray[0];
+    };
+
+    const addHandler = (event) => {
+        event.preventDefault();
+
+        const mealSelected = determineSelectedMeal();
+
+        return dispatch(dayActions.addToSelectedMeals(mealSelected));
+    };
 
     let optionElements = [<option value='none'>---</option>];
 
@@ -14,7 +31,7 @@ const MealForm = ()=> {
     return <form>
         <label htmlFor="meal-select">Select Meal:</label>
         <select id='meal-select'>{optionElements}</select>
-        <button>Add</button>
+        <button onClick={addHandler}>Add</button>
     </form>
 };
 
