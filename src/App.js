@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import BarChart from './components/BarChart';
 import IngredientForm from './components/IngredientForm';
 import MealForm from './components/MealForm';
 import Table from './components/Table';
@@ -12,7 +14,9 @@ function App() {
       <br></br>
       <MealForm />
       <br></br>
-      <Table slice='day' />
+      <Table slice='day'/>
+      <br></br>
+      <BarChart />
     </div>
   );
 }
