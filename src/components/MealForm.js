@@ -20,12 +20,15 @@ const MealForm = ()=> {
         return dispatch(dayActions.addToSelectedMeals(mealSelected));
     };
 
-    let optionElements = [<option value='none'>---</option>];
+    let optionElements = [<option key='none' value='none'>---</option>];
+
+
 
     for (const i in meals) {
         const meal = meals[i];
         const mealName = meal.name;
-        optionElements.push(<option value={mealName}>{mealName}</option>)
+        const key = `${mealName}-${i}`
+        optionElements.push(<option key={key} value={mealName}>{mealName}</option>)
     }
     
     return <form>
