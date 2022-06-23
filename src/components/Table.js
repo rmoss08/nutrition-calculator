@@ -1,7 +1,8 @@
-import { produceWithPatches } from 'immer';
+import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { dayActions } from '../store/day-slice';
 import { mealActions } from '../store/meal-slice';
+import Total from './Total';
 
 const TABLE_HEADER = [
   'rowData',
@@ -24,6 +25,7 @@ const Table = (props) => {
 
   const ingredients = useSelector((state) => state.meal.ingredients);
   const selectedMeals = useSelector((state) => state.day.selectedMeals);
+  const mealTotal =useSelector((state) => state.meal.mealTotal);
 
   let tableData;
   let mealTable;
@@ -32,7 +34,6 @@ const Table = (props) => {
     mealTable = true;
   } else if (props.slice === 'day') {
     tableData = selectedMeals;
-    console.log(selectedMeals)
     mealTable = false;
   } else {
     tableData = null;
@@ -44,11 +45,9 @@ const Table = (props) => {
   ));
 
   const createRowElement = (rowData) => {
-    // console.log('rowData');
-    // console.log(rowData);
     let tdElements = [
       <td key="name">{rowData.name}</td>,
-      <td key="weight">{mealTable ? rowData.weight: ''}</td>,
+      <td key="weight">{mealTable ? rowData.weight : ''}</td>,
       <td key="action">
         <button>+</button>
         <button>-</button>
@@ -59,9 +58,7 @@ const Table = (props) => {
     for (const key in nutrition) {
       tdElements.push(<td key={key}>{nutrition[key]}</td>);
     }
-    
-    console.log('tdElements');
-    console.log(tdElements);
+
     return <tr key={rowData.id}>{tdElements}</tr>;
   };
 
@@ -107,8 +104,7 @@ const Table = (props) => {
     event.preventDefault();
     let mealNameInput = document.getElementById('meal-name');
 
-    console.log(totals);
-    const meal = { name: mealNameInput.value, nutrition: totals };
+    const meal = { name: mealNameInput.value, nutrition: mealTotal };
 
     if (tableData.length > 0) {
       dispatch(dayActions.addToMeals(meal));
@@ -125,18 +121,26 @@ const Table = (props) => {
       : dispatch(dayActions.resetSelectedMeals());
   };
 
-  let tableElements = [];
+  let tbodyElements = [];
 
   if (tableData.length > 0) {
-    tableElements = tableData.map((rowData) => {
+    tbodyElements = tableData.map((rowData) => {
       return createRowElement(rowData);
     });
+    
+    let totalRowElement;
+    if (props.slice === 'day') {
+      totalRowElement = <Total tableData={tableData} slice='day' />
+    } else {
+      totalRowElement = <Total tableData={tableData} />
+    }
+    // totals = calculateTotals(tableData);
+    // if (props.slice === 'day') {
+    //   dispatch(dayActions.updateTotals(totals));
+    // }
 
-    console.log('tableElements');
-    console.log(tableElements);
-    const totals = calculateTotals(tableData);
-    const totalRowElement = createTotalRowElement(totals);
-    tableElements.push(totalRowElement);
+    // const totalRowElement = createTotalRowElement(totals);
+    tbodyElements.push(totalRowElement);
   }
 
   return (
@@ -151,7 +155,7 @@ const Table = (props) => {
         <thead>
           <tr>{thElements}</tr>
         </thead>
-        <tbody>{tableElements}</tbody>
+        <tbody>{tbodyElements}</tbody>
       </table>
       {mealTable && <button onClick={addMealHandler}>Add Meal</button>}
       <button onClick={resetHandler}>Reset</button>
