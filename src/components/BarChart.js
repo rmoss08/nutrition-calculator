@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { VictoryBar, VictoryChart, VictoryAxis } from 'victory';
+import { VictoryBar, VictoryChart, VictoryAxis, VictoryTooltip } from 'victory';
 
 const NUTRITION_DAILY_VALUES = {
   fiber_g: 25,
@@ -22,7 +22,7 @@ const TESTING_DATA = [
 ];
 
 const X_AXIS = 'name';
-const Y_AXIS = 'value';
+const Y_AXIS = 'dailyValuePercentage';
 
 const X_AXIS_LABELS = [
   'Fiber',
@@ -37,35 +37,50 @@ const X_AXIS_LABELS = [
 const X_AXIS_VALUES = [1, 2, 3, 4, 5, 6, 7];
 
 const BarChart = (props) => {
-  // const userDailyTotal = useSelector(state => state.day.totals);
+  // const mealTotals = useSelector((state) => state.meal.totals);
+  const mealTotals = Object.assign(
+    {},
+    useSelector((state) => state.meal.totals)
+  );
 
-  // delete userDailyTotal.sugar_g;
-  // delete userDailyTotal.calories;
-  // delete userDailyTotal.protein_g;
+  let dailyValuePercentages = {};
+  let chartData = [];
 
-  // const createChartData = () => {
-  //   let data = [];
-  //   for (const i in NUTRITION_DAILY_VALUES) {
-  //     const nutrition = {
-  //       name: NUTRITION_DAILY_VALUES[i],
-  //       userTotal: userDailyTotal[i],
-  //       dailyValue: NUTRITION_DAILY_VALUES[i],
-  //     };
-  //     const percentage = nutrition.userTotal / nutrition.dailyValue;
-  //     nutrition.percentage = percentage;
-  //   }
+  if (Object.keys(mealTotals).length !== 0) {
+    delete mealTotals.sugar_g;
+    delete mealTotals.calories;
+    delete mealTotals.protein_g;
 
-  //   return data;
-  // };
+    for (const i in mealTotals) {
+      dailyValuePercentages[i] =
+        (mealTotals[i] / NUTRITION_DAILY_VALUES[i]) * 100;
+      chartData.push({
+        // key: mealTotals,
+        name: i,
+        servingNutrition: mealTotals[i],
+        dailyValue: NUTRITION_DAILY_VALUES[i],
+        dailyValuePercentage: dailyValuePercentages[i],
+      });
+    }
+  }
 
-  // const chartData = createChartData();
-  // console.log(chartData);
+  console.log('chartData');
+  console.log(chartData);
 
   return (
     <VictoryChart domainPadding={20}>
       <VictoryAxis tickValues={X_AXIS_VALUES} tickFormat={X_AXIS_LABELS} />
       <VictoryAxis dependentAxis />
-      <VictoryBar horizontal={true} data={TESTING_DATA} x={X_AXIS} y={Y_AXIS} />
+      <VictoryBar
+        horizontal={true}
+        data={chartData}
+        x={X_AXIS}
+        y={Y_AXIS}
+        label={({ datum }) =>
+          `${datum.name}, DV %: ${datum.dailyValuePercentage}`
+        }
+        labelComponent={<VictoryTooltip />}
+      />
     </VictoryChart>
   );
 };

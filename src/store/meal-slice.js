@@ -4,6 +4,7 @@ const mealSlice = createSlice({
   name: 'meal',
   initialState: {
     ingredients: [],
+    totals: {},
   },
   reducers: {
     add(state, action) {
@@ -20,6 +21,9 @@ const mealSlice = createSlice({
     reset(state) {
       state.ingredients = [];
     },
+    updateTotals(state, action) {
+      state.totals = action.payload;
+    }
   },
 });
 

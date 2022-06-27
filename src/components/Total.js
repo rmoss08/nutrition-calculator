@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { dayActions } from "../store/day-slice";
 import { mealActions } from "../store/meal-slice";
@@ -52,12 +53,9 @@ const Total = (props) => {
   ];
   tdElements = createTdElements(tdElements, tableTotals);
 
-  if (props.slice === 'day') {
-    dispatch(dayActions.updateTotals(tableTotals));
-  }
-  if (props.slice === 'meal') {
-    dispatch(mealActions.updateMealTotal(tableTotals));
-  }
+  useEffect(()=>{
+    dispatch(mealActions.updateTotals(tableTotals));
+  }, [tableTotals])
 
   return <tr key='totals'>{tdElements}</tr>;
 };
