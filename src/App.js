@@ -7,16 +7,16 @@ import Table from './components/Table';
 function App() {
   return (
     <div>
-      <IngredientForm />
-      <br></br>
-      <Table slice='meal'/>
-      <br></br>
-      <br></br>
-      <MealForm />
-      <br></br>
-      <Table slice='day'/>
-      <br></br>
-      <BarChart />
+      <nav>
+        <h1>NutriCalc</h1>
+      </nav>
+      <div className="wrapper">
+        <IngredientForm />
+        <br></br>
+        <Table slice="meal" />
+        <br></br>
+        <BarChart />
+      </div>
     </div>
   );
 }
