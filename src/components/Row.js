@@ -1,34 +1,26 @@
 const Row = (props) => {
-    const createTdElements = (data) => {
-        let elements = []
+  const createTdElements = (tdData) => {
+    let elements = [
+      <td key="name">{tdData.name}</td>,
+      <td key="weight">{tdData.weight}</td>,
+      <td key="action">
+        <button>+</button>
+        <button>-</button>
+      </td>,
+    ];
 
-        for (const i in data) {
-            elements.push(<td key={i}>{data[i]}</td>)
-        }
-        
-        return elements
-    };
-    
-    let tdElements = []
-    tdElements = createTdElements(props.data);
+    const nutrition = tdData.nutrition;
+    for (const key in nutrition) {
+      elements.push(<td key={key}>{nutrition[key]}</td>);
+    }
 
-    return <tr>{tdElements}</tr>;
+    return elements;
+  };
+
+  // let tdElements = []
+  const tdElements = createTdElements(props.tdData);
+
+  return <tr key={props.tdData.id}>{tdElements}</tr>;
 };
 
 export default Row;
-
-// const unNestObject = (object, nestedIndex) => {
-//   const newObject = {};
-
-//   for (const i in data) {
-//     if (i !== nestedIndex) {
-//       newObject[i] = object[i];
-//     } else {
-//       for (const j in data[i]) {
-//         newObject[j] = data[i][j];
-//       }
-//     }
-//   }
-
-//   return newObject;
-// };
