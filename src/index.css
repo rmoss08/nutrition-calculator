@@ -1,0 +1,60 @@
+:root {
+    --dark-green: #348850;
+    --border-radius-5: 5px;
+}
+
+body {
+  box-sizing: border-box;
+  overflow-x: hidden;
+  margin: 0;
+  background-color: #43d374;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button {
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  color: white;
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: 300;
+    margin: 0;
+}
+
+nav {
+    padding: 1rem 10vw;
+    background-color: var(--dark-green);
+    margin-bottom: 3rem;
+}
+
+button {
+    background-color: var(--dark-green);
+    border: none;
+    border-radius: var(--border-radius-5);
+    padding: 0.5rem 2rem;
+}
+
+button:hover {
+    border: 1px solid white;
+}
+
+input {
+    border-radius: var(--border-radius-5);
+    border: none;
+}
+
+label {
+    color: white;
+}
+
+.wrapper {
+    width: 80vw;
+    margin: 0 auto;
+}
