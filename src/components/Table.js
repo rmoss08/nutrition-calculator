@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { mealActions } from '../store/meal-slice';
 import Total from './Total';
 import Row from './Row';
+import styles from './Table.module.css';
 
 const TABLE_HEADER = [
   'rowData',
@@ -48,7 +49,7 @@ const Table = (props) => {
         </div> */}
       <table>
         <thead>
-          <tr>{thElements}</tr>
+          <tr className={styles['table-header']}>{thElements}</tr>
         </thead>
         <tbody>{tbodyElements}</tbody>
       </table>

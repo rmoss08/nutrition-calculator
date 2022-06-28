@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { dayActions } from "../store/day-slice";
 import { mealActions } from "../store/meal-slice";
+import styles from './Total.module.css';
 
 const Total = (props) => {
   const tableData = props.tableData;
@@ -26,7 +27,7 @@ const Total = (props) => {
     let elements = init;
 
     for (const i in data) {
-      elements.push(<td key={i}>{data[i]}</td>);
+      elements.push(<td key={i} className="text-align-right">{data[i]}</td>);
     }
     
     return elements;
@@ -57,7 +58,7 @@ const Total = (props) => {
     dispatch(mealActions.updateTotals(tableTotals));
   }, [tableTotals])
 
-  return <tr key='totals'>{tdElements}</tr>;
+  return <tr key='totals' className={styles['total-row']}>{tdElements}</tr>;
 };
 
 export default Total;

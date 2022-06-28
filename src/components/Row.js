@@ -1,17 +1,21 @@
+import styles from './Row.module.css';
+
 const Row = (props) => {
   const createTdElements = (tdData) => {
     let elements = [
-      <td key="name">{tdData.name}</td>,
-      <td key="weight">{tdData.weight}</td>,
+      <td key="name" className={styles['row-name']}>{tdData.name}</td>,
+      <td key="weight" className="text-align-right">{tdData.weight}</td>,
       <td key="action">
-        <button>+</button>
-        <button>-</button>
+        <button className={`${styles['quantity-button']} ${styles.add}`}>
+          +
+        </button>
+        <button className={`${styles['quantity-button']} ${styles.subtract}`}>-</button>
       </td>,
     ];
 
     const nutrition = tdData.nutrition;
     for (const key in nutrition) {
-      elements.push(<td key={key}>{nutrition[key]}</td>);
+      elements.push(<td key={key} className="text-align-right">{nutrition[key]}</td>);
     }
 
     return elements;

@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { mealActions } from '../store/meal-slice';
+import styles from './IngredientForm.module.css';
 
 const TEST_CUCUMBER = {
   sugar_g: 0.85,
@@ -101,11 +102,11 @@ const IngredientForm = () => {
 
   return (
     <form onSubmit={submitHandler}>
-      <div>
+      <div className={styles['ing-form-field']}>
         <label htmlFor="ingredient-input">Ingredient:</label>
         <input id="ingredient-input" type="text" />
       </div>
-      <div>
+      <div className={styles['ing-form-field']}>
         <label htmlFor="weight-input">Weight (grams):</label>
         <input id="weight-input" type="number" min="1" />
       </div>
