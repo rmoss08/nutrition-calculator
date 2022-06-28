@@ -17,6 +17,12 @@ function App() {
         <br></br>
         <BarChart />
       </div>
+      <footer>
+        <p className='footer-credit'>
+          Created by{' '}
+          <a href="https://www.linkedin.com/in/robertjmoss/" className='linkedin-hyperlink'>Robert J. Moss</a>
+        </p>
+      </footer>
     </div>
   );
 }
