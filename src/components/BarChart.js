@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { VictoryBar, VictoryChart, VictoryAxis, VictoryTooltip } from 'victory';
+import styles from './BarChart.module.css';
 
 const NUTRITION_DAILY_VALUES = {
   fiber_g: 25,
@@ -64,24 +65,32 @@ const BarChart = (props) => {
     }
   }
 
-  console.log('chartData');
-  console.log(chartData);
-
   return (
-    <VictoryChart domainPadding={20}>
-      <VictoryAxis tickValues={X_AXIS_VALUES} tickFormat={X_AXIS_LABELS} />
-      <VictoryAxis dependentAxis />
-      <VictoryBar
-        horizontal={true}
-        data={chartData}
-        x={X_AXIS}
-        y={Y_AXIS}
-        label={({ datum }) =>
-          `${datum.name}, DV %: ${datum.dailyValuePercentage}`
-        }
-        labelComponent={<VictoryTooltip />}
-      />
-    </VictoryChart>
+    <div className={styles.barchart}>
+      <VictoryChart
+        domainPadding={20}
+        padding={{ left: 120, right: 10, top: 10, bottom: 35 }}
+      >
+        <VictoryAxis tickValues={X_AXIS_VALUES} tickFormat={X_AXIS_LABELS} />
+        <VictoryAxis dependentAxis />
+        <VictoryBar
+          horizontal={true}
+          data={chartData}
+          x={X_AXIS}
+          y={Y_AXIS}
+          style={{
+            data: {
+              fill: '#348850',
+            },
+            labels: { fontSize: 1 },
+          }}
+          label={({ datum }) =>
+            `${datum.name}, DV %: ${datum.dailyValuePercentage}`
+          }
+          labelComponent={<VictoryTooltip />}
+        />
+      </VictoryChart>
+    </div>
   );
 };
 
