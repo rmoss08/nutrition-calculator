@@ -25,12 +25,6 @@ const Table = (props) => {
   const dispatch = useDispatch();
   const tableData = useSelector((state) => state.meal.ingredients);
 
-  const resetHandler = (event) => {
-    event.preventDefault();
-
-    return dispatch(mealActions.reset());
-  };
-
   const thElements = TABLE_HEADER.map((description) => (
     <th key={description}>{description}</th>
   ));
@@ -52,7 +46,6 @@ const Table = (props) => {
         </thead>
         <tbody>{tbodyElements}</tbody>
       </table>
-      <button onClick={resetHandler}>Reset</button>
     </div>
   );
 };
