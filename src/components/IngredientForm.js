@@ -5,6 +5,7 @@ import { mealActions } from '../store/meal-slice';
 import styles from './IngredientForm.module.css';
 
 const TEST_CUCUMBER = {
+  serving_size_g: 100,
   sugar_g: 0.85,
   fiber_g: 0.25,
   sodium_mg: 0.5,
@@ -16,26 +17,25 @@ const TEST_CUCUMBER = {
   protein_g: 0.3,
   carbohydrates_total_g: 1.85,
 };
+export const calculateWeightedValues = (ingredient, newQuantity=false) => {
+  const quantity = newQuantity ? newQuantity:ingredient.userQuantity_g;
+  const servingSizeFactor = quantity / ingredient.apiServingSize_g;
+  let weightedNutrition = {};
+  const apiNutrition = ingredient.apiNutrition;
+
+  for (const key in apiNutrition) {
+    if (key !== 'serving_size_g') {
+      const nutritionValue = apiNutrition[key];
+      const weightedValue = nutritionValue * servingSizeFactor;
+      weightedNutrition[key] = weightedValue;
+    }
+  }
+
+  return weightedNutrition;
+};
 
 const IngredientForm = () => {
   const dispatch = useDispatch();
-
-  const calculateWeightedValues = (weight, object) => {
-    const nutritionServingSize = object.serving_size_g;
-    const servingSizeFactor = weight / nutritionServingSize;
-
-    let weightedNutritionValues = {};
-
-    for (const key in object) {
-      if (key !== 'serving_size_g') {
-        const nutritionValue = object[key];
-        const weightedValue = nutritionValue * servingSizeFactor;
-        weightedNutritionValues[key] = weightedValue;
-      }
-    }
-
-    return weightedNutritionValues;
-  };
 
   const convertToFloat = (object) => {
     let formattedData = {};
@@ -75,27 +75,32 @@ const IngredientForm = () => {
     event.preventDefault();
 
     const ingredientName = event.target[0].value;
-    const weight = parseFloat(event.target[1].value);
 
     // --- Commented out for testing purpose
     // fetchNutritionData(ingredientName).then((nutritionData) => {
     //   delete nutritionData.name;
 
-    //   const floatNutritionData = convertToFloat(nutritionData);
+    const floatNutrition = convertToFloat(TEST_CUCUMBER);
+    const apiServingSize_g = floatNutrition['serving_size_g'];
+    delete floatNutrition['serving_size_g'];
     //   const weightedNutritionData = calculateWeightedValues(
     //     weight,
     //     floatNutritionData
     //   );
 
     const ingredient = {
+      id: `${Number(event.timeStamp)}`,
       name: ingredientName,
-      weight: parseFloat(event.target[1].value),
-      id: `${event.timeStamp}`,
-      nutrition: TEST_CUCUMBER,
+      userQuantity_g: parseFloat(event.target[1].value),
+      apiServingSize_g,
+      apiNutrition: floatNutrition,
       // --- Commented out for testing purpose
       // --- NOTE: ingredient and return statement should go back in .then()
       // nutrition: weightedNutritionData,
     };
+
+    const userNutrition = calculateWeightedValues(ingredient);
+    ingredient['userNutrition'] = userNutrition;
 
     return dispatch(mealActions.add(ingredient));
   };

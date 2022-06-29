@@ -11,11 +11,11 @@ const mealSlice = createSlice({
       const prevState = state.ingredients;
       state.ingredients = [...prevState, action.payload];
     },
-    delete(state, action) {
+    remove(state, action) {
       const prevState = state.ingredients;
-      // This many need work
-      state.ingredients = prevState.map(
-        (ingredient) => ingredient.id !== action.payload.id
+      
+      state.ingredients = prevState.filter(
+        (ingredient) => ingredient.id !== action.payload
       );
     },
     reset(state) {
@@ -23,7 +23,14 @@ const mealSlice = createSlice({
     },
     updateTotals(state, action) {
       state.totals = action.payload;
-    }
+    },
+    updateIngredientQuantity(state, action) {
+      const ingredientIndex = state.ingredients.findIndex(
+        (ing) => ing.id === action.payload.id
+      );
+      state.ingredients[ingredientIndex]['userQuantity_g'] = action.payload.newQuantity;
+      state.ingredients[ingredientIndex]['userNutrition'] = action.payload.newWeightedNutrition;
+    },
   },
 });
 

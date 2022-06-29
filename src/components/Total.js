@@ -14,9 +14,9 @@ const Total = (props) => {
     for (const i in data) {
       const dataSet = data[i];
 
-      for (const key in dataSet.nutrition) {
+      for (const key in dataSet.userNutrition) {
         const prevTotal = totals[key];
-        totals[key] = prevTotal + dataSet.nutrition[key];
+        totals[key] = prevTotal + dataSet.userNutrition[key];
       }
     }
 

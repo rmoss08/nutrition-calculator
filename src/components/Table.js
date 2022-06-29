@@ -3,6 +3,7 @@ import { mealActions } from '../store/meal-slice';
 import Total from './Total';
 import Row from './Row';
 import styles from './Table.module.css';
+import { useCallback, useEffect, useMemo } from 'react';
 
 const TABLE_HEADER = [
   'rowData',
@@ -29,24 +30,22 @@ const Table = (props) => {
 
     return dispatch(mealActions.reset());
   };
-  
-  
+
   const thElements = TABLE_HEADER.map((description) => (
     <th key={description}>{description}</th>
   ));
+
   
   let tbodyElements = [];
-  if (tableData.length > 0) {
-    tbodyElements = tableData.map((rowData) => <Row tdData={rowData} />);
-    tbodyElements.push(<Total tableData={tableData} />);
-  }
+  useMemo(() => {
+    if (tableData.length > 0) {
+      tbodyElements = tableData.map((rowData) => <Row tdData={rowData} />);
+      tbodyElements.push(<Total tableData={tableData} />);
+    }
+  }, [tableData]);
 
   return (
     <div>
-        {/* <div>
-          <label htmlFor="meal-name">Meal Name:</label>
-          <input type="text" id="meal-name"></input>
-        </div> */}
       <table>
         <thead>
           <tr className={styles['table-header']}>{thElements}</tr>
