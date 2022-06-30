@@ -1,5 +1,11 @@
 import { useSelector } from 'react-redux';
-import { VictoryBar, VictoryChart, VictoryAxis, VictoryTooltip } from 'victory';
+import {
+  VictoryBar,
+  VictoryChart,
+  VictoryAxis,
+  VictoryTooltip,
+  VictoryStack,
+} from 'victory';
 import styles from './BarChart.module.css';
 
 const NUTRITION_DAILY_VALUES = {
@@ -38,31 +44,65 @@ const X_AXIS_LABELS = [
 const X_AXIS_VALUES = [1, 2, 3, 4, 5, 6, 7];
 
 const BarChart = (props) => {
-  // const mealTotals = useSelector((state) => state.meal.totals);
-  const mealTotals = Object.assign(
+  // const userTotals = useSelector((state) => state.meal.totals);
+  const userTotals = Object.assign(
     {},
     useSelector((state) => state.meal.totals)
   );
 
-  let dailyValuePercentages = {};
+  const calculateNutritionPercentages = (nutrientName, userNutrientValue) => {
+    const userNutrientPercentage =
+      (userNutrientValue / NUTRITION_DAILY_VALUES[nutrientName]) * 100;
+
+    let dailyValueNutrientPercentage;
+    if (userNutrientPercentage < 100) {
+      dailyValueNutrientPercentage = 100 - userNutrientPercentage;
+    } else {
+      dailyValueNutrientPercentage = 0;
+    }
+
+    return {
+      user: userNutrientPercentage,
+      dailyValue: dailyValueNutrientPercentage,
+    };
+  };
+
+  // let chartData = [];
+  // if (Object.keys(userTotals).length !== 0) {
+  //   delete userTotals.sugar_g;
+  //   delete userTotals.calories;
+  //   delete userTotals.protein_g;
+
+  //   for (const nutrient in userTotals) {
+  //     chartData.push({
+  //       nutrientName: nutrient,
+  //       userTotal: userTotals[nutrient],
+  //       dailyValue: NUTRITION_DAILY_VALUES[nutrient],
+  //       nutritionPercentages: calculateNutritionPercentages(nutrient, userTotals[nutrient]),
+  //     });
+  //   }
+  // }
   let chartData = [];
+  if (Object.keys(userTotals).length !== 0) {
+    delete userTotals.sugar_g;
+    delete userTotals.calories;
+    delete userTotals.protein_g;
 
-  if (Object.keys(mealTotals).length !== 0) {
-    delete mealTotals.sugar_g;
-    delete mealTotals.calories;
-    delete mealTotals.protein_g;
+    const userChartData = [];
+    const dailyValueChartData = [];
+    for (const nutrient in userTotals) {
+      const nutrientPercentages = calculateNutritionPercentages(
+        nutrient,
+        userTotals[nutrient]
+      );
 
-    for (const i in mealTotals) {
-      dailyValuePercentages[i] =
-        (mealTotals[i] / NUTRITION_DAILY_VALUES[i]) * 100;
-      chartData.push({
-        // key: mealTotals,
-        name: i,
-        servingNutrition: mealTotals[i],
-        dailyValue: NUTRITION_DAILY_VALUES[i],
-        dailyValuePercentage: dailyValuePercentages[i],
+      userChartData.push({ x: nutrient, y: nutrientPercentages.user });
+      dailyValueChartData.push({
+        x: nutrient,
+        y: nutrientPercentages.dailyValue,
       });
     }
+    chartData.push(userChartData, dailyValueChartData);
   }
 
   return (
@@ -71,24 +111,13 @@ const BarChart = (props) => {
         domainPadding={20}
         padding={{ left: 120, right: 10, top: 10, bottom: 35 }}
       >
+        <VictoryStack colorScale={['#348850', 'grey']}>
+          {chartData.map((data, i) => {
+            return <VictoryBar data={data} key={i} horizontal={true} />;
+          })}
+        </VictoryStack>
         <VictoryAxis tickValues={X_AXIS_VALUES} tickFormat={X_AXIS_LABELS} />
         <VictoryAxis dependentAxis />
-        <VictoryBar
-          horizontal={true}
-          data={chartData}
-          x={X_AXIS}
-          y={Y_AXIS}
-          style={{
-            data: {
-              fill: '#348850',
-            },
-            labels: { fontSize: 1 },
-          }}
-          label={({ datum }) =>
-            `${datum.name}, DV %: ${datum.dailyValuePercentage}`
-          }
-          labelComponent={<VictoryTooltip />}
-        />
       </VictoryChart>
     </div>
   );
