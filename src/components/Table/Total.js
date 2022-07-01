@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { dayActions } from "../store/day-slice";
-import { mealActions } from "../store/meal-slice";
+import { mealActions } from "../../store/meal-slice";
 import styles from './Total.module.css';
 
 const Total = (props) => {

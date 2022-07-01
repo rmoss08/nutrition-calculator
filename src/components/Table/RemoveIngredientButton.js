@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { mealActions } from "../store/meal-slice";
+import { mealActions } from "../../store/meal-slice";
 
 const RemoveIngredientButton = (props) => {
   const dispatch = useDispatch();

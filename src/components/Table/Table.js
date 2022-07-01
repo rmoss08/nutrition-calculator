@@ -1,15 +1,8 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { mealActions } from '../store/meal-slice';
+import { useSelector } from 'react-redux';
 import Total from './Total';
 import Row from './Row';
 import styles from './Table.module.css';
-import {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useState,
-} from 'react';
+import { useMemo } from 'react';
 
 const TABLE_HEADER = [
   'Ingredient',

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import BarChart from '../components/BarChart';
 import IngredientForm from '../components/IngredientForm';
-import Table from '../components/Table';
+import Table from '../components/Table/Table';
 import { mealActions } from '../store/meal-slice';
 import { Fragment } from 'react';
 import Layout from '../components/Layout';

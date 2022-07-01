@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { mealActions } from '../store/meal-slice';
-import { calculateWeightedValues } from './IngredientForm';
+import { mealActions } from '../../store/meal-slice';
+import { calculateWeightedValues } from '../IngredientForm';
 
 const QuantityInput = (props) => {
   const dispatch = useDispatch();
