@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import BarChart from '../components/BarChart';
+import StackedBarChart from '../components/StackedBarChart';
 import IngredientForm from '../components/IngredientForm';
 import Table from '../components/Table/Table';
 import { mealActions } from '../store/meal-slice';
@@ -47,7 +47,7 @@ const Home = () => {
           )}
           {showBarChart && (
             <div>
-              <BarChart />
+              <StackedBarChart />
               <button onClick={hideChartClickHandler}>Hide Chart</button>
             </div>
           )}
