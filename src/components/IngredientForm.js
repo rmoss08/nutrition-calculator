@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { mealActions } from '../store/meal-slice';
 import styles from './IngredientForm.module.css';
 
@@ -17,8 +17,11 @@ const TEST_CUCUMBER = {
   protein_g: 0.3,
   carbohydrates_total_g: 1.85,
 };
-export const calculateWeightedValues = (ingredient, newQuantity=false) => {
-  const quantity = newQuantity ? newQuantity:ingredient.userQuantity_g;
+
+const INGREDIENT_LIMIT = 50;
+
+export const calculateWeightedValues = (ingredient, newQuantity = false) => {
+  const quantity = newQuantity ? newQuantity : ingredient.userQuantity_g;
   const servingSizeFactor = quantity / ingredient.apiServingSize_g;
   let weightedNutrition = {};
   const apiNutrition = ingredient.apiNutrition;
@@ -36,6 +39,14 @@ export const calculateWeightedValues = (ingredient, newQuantity=false) => {
 
 const IngredientForm = () => {
   const dispatch = useDispatch();
+  const numberOfIngredients = useSelector(
+    (state) => state.meal.ingredients
+  ).length;
+
+  const [isInvalidIngredient, setIsInvalidIngredient] = useState(false);
+  const [isIngredientLimitReached, setIsIngredientLimitReached] =
+    useState(false);
+  const [isAPIConnectionError, setIsAPIConnectionError] = useState(false);
 
   const convertToFloat = (object) => {
     let formattedData = {};
@@ -68,6 +79,7 @@ const IngredientForm = () => {
       })
       .catch((error) => {
         console.error(error);
+        setIsAPIConnectionError(true);
       });
   };
 
@@ -78,15 +90,15 @@ const IngredientForm = () => {
 
     // --- Commented out for testing purpose
     // fetchNutritionData(ingredientName).then((nutritionData) => {
-    //   delete nutritionData.name;
+    //   try {
+    //     if (nutritionData === undefined || null) {
+    //       throw 'Invalid ingredient';
+    //     } else {
+    // delete nutritionData.name;
 
     const floatNutrition = convertToFloat(TEST_CUCUMBER);
     const apiServingSize_g = floatNutrition['serving_size_g'];
     delete floatNutrition['serving_size_g'];
-    //   const weightedNutritionData = calculateWeightedValues(
-    //     weight,
-    //     floatNutritionData
-    //   );
 
     const ingredient = {
       id: `${Number(event.timeStamp)}`,
@@ -94,28 +106,45 @@ const IngredientForm = () => {
       userQuantity_g: parseFloat(event.target[1].value),
       apiServingSize_g,
       apiNutrition: floatNutrition,
-      // --- Commented out for testing purpose
-      // --- NOTE: ingredient and return statement should go back in .then()
-      // nutrition: weightedNutritionData,
     };
 
     const userNutrition = calculateWeightedValues(ingredient);
     ingredient['userNutrition'] = userNutrition;
 
     return dispatch(mealActions.add(ingredient));
+    //   }
+    // } catch {
+    //   setIsInvalidIngredient(true);
+    // }
+    // });
   };
+
+  useMemo(() => {
+    if (numberOfIngredients >= INGREDIENT_LIMIT) {
+      setIsIngredientLimitReached(true);
+    } else {
+      setIsIngredientLimitReached(false);
+    }
+  }, [numberOfIngredients]);
 
   return (
     <form onSubmit={submitHandler}>
       <div className={styles['ing-form-field']}>
         <label htmlFor="ingredient-input">Ingredient:</label>
         <input id="ingredient-input" type="text" />
+        {isInvalidIngredient && <div>Please enter a valid ingredient</div>}
       </div>
       <div className={styles['ing-form-field']}>
         <label htmlFor="weight-input">Weight (grams):</label>
         <input id="weight-input" type="number" min="1" />
       </div>
-      <button>Add</button>
+      <button disabled={isIngredientLimitReached}>Add</button>
+      {isAPIConnectionError && (
+        <div>Sorry, something went wrong. Please try again later</div>
+      )}
+      {isIngredientLimitReached && (
+        <div>You have reached the ingredient limit</div>
+      )}
     </form>
   );
 };
