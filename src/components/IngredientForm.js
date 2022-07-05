@@ -29,8 +29,8 @@ export const calculateWeightedValues = (ingredient, newQuantity = false) => {
   for (const key in apiNutrition) {
     if (key !== 'serving_size_g') {
       const nutritionValue = apiNutrition[key];
-      const weightedValue = nutritionValue * servingSizeFactor;
-      weightedNutrition[key] = weightedValue;
+      const weightedValue = (nutritionValue * servingSizeFactor);
+      weightedNutrition[key] = Number(weightedValue.toFixed(1));
     }
   }
 

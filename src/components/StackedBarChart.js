@@ -68,9 +68,10 @@ const StackedBarChart = (props) => {
   };
 
   const calculateNutritionPercentages = (nutrientName, userNutrientValue) => {
+    const recommendedNutrientDailyValue = NUTRITION_DAILY_VALUES[nutrientName];
     const userNutrientPercentage =
-      (userNutrientValue / NUTRITION_DAILY_VALUES[nutrientName]) * 100;
-
+       Number(((userNutrientValue / recommendedNutrientDailyValue) * 100).toFixed(1));
+    
     let dailyValueNutrientPercentage;
     if (userNutrientPercentage < 100) {
       dailyValueNutrientPercentage = 100 - userNutrientPercentage;

@@ -1,6 +1,6 @@
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { mealActions } from "../../store/meal-slice";
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { mealActions } from '../../store/meal-slice';
 import styles from './Total.module.css';
 
 const Total = (props) => {
@@ -9,26 +9,31 @@ const Total = (props) => {
 
   const calculateTotals = (init, data) => {
     let totals = init;
-    
+
     for (const i in data) {
       const dataSet = data[i];
 
       for (const key in dataSet.userNutrition) {
         const prevTotal = totals[key];
-        totals[key] = prevTotal + dataSet.userNutrition[key];
+        const newNutrient = dataSet.userNutrition[key];
+        totals[key] = Number((prevTotal + newNutrient).toFixed(1));
       }
     }
 
     return totals;
-};
+  };
 
   const createTdElements = (init, data) => {
     let elements = init;
 
     for (const i in data) {
-      elements.push(<td key={i} className="text-align-right">{data[i]}</td>);
+      elements.push(
+        <td key={i} className="text-align-right">
+          {data[i]}
+        </td>
+      );
     }
-    
+
     return elements;
   };
 
@@ -46,17 +51,18 @@ const Total = (props) => {
   };
   tableTotals = calculateTotals(tableTotals, tableData);
 
-  let tdElements = [
-    <td key="total">Total</td>,
-    <td key="weight"></td>,
-  ];
+  let tdElements = [<td key="total">Total</td>, <td key="weight"></td>];
   tdElements = createTdElements(tdElements, tableTotals);
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(mealActions.updateTotals(tableTotals));
-  }, [tableTotals])
+  }, [tableTotals]);
 
-  return <tr key='totals' className={styles['total-row']}>{tdElements}</tr>;
+  return (
+    <tr key="totals" className={styles['total-row']}>
+      {tdElements}
+    </tr>
+  );
 };
 
 export default Total;

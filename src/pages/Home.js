@@ -34,7 +34,6 @@ const Home = () => {
   return (
     <Fragment>
       <Layout>
-        <LoadingSpinner />
         <div className="wrapper">
           <IngredientForm />
           <br></br>
