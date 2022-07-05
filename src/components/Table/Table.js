@@ -23,7 +23,7 @@ const Table = (props) => {
   const tableData = useSelector((state) => state.meal.ingredients);
 
   const thElements = TABLE_HEADER.map((description) => (
-    <th key={description}>{description}</th>
+    <th key={description} className={styles['table-header__column-name']}>{description}</th>
   ));
 
   // React forgets tbodyElements whenever App re-renders

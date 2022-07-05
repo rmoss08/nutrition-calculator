@@ -88,6 +88,11 @@ table {
   margin-bottom: 1rem;
 }
 
+td {
+  min-width: 4rem;
+  padding-right: 1rem;
+}
+
 .wrapper {
   width: 80%;
   margin: 0 auto;
@@ -126,3 +131,4 @@ table {
 .table-button .material-symbols-outlined {
   font-size: 1.2rem;
 }
+

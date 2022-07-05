@@ -5,7 +5,7 @@ import styles from './Row.module.css';
 const Row = (props) => {
   const createTdElements = (tdData) => {
     let elements = [
-      <td key={`name-${tdData.id}`} className={styles['row-name']}>
+      <td key={`name-${tdData.id}`} className={styles['row__name']}>
         {tdData.name}
       </td>,
       // <td key={`weight-${tdData.id}`} className="text-align-right">
@@ -26,7 +26,7 @@ const Row = (props) => {
     }
 
     elements.push(
-      <td key={`remove-${tdData.id}`}>
+      <td key={`remove-${tdData.id}`} className={styles['row__remove-button']}>
         <RemoveIngredientButton ingredientId={tdData.id} />
       </td>
     );
