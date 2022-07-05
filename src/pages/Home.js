@@ -6,6 +6,7 @@ import Table from '../components/Table/Table';
 import { mealActions } from '../store/meal-slice';
 import { Fragment } from 'react';
 import Layout from '../components/Layout';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ const Home = () => {
   return (
     <Fragment>
       <Layout>
+        <LoadingSpinner />
         <div className="wrapper">
           <IngredientForm />
           <br></br>
