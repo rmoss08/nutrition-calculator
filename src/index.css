@@ -110,3 +110,19 @@ table {
 .linkedin-hyperlink:hover {
   color: blue;
 }
+
+.table-button {
+  display: flex;
+  align-items: center;
+  border-radius: 50%;
+  padding: 0.5rem;
+}
+
+.table-button:hover {
+  background-color: #2a7041;;
+  border: none;
+}
+
+.table-button .material-symbols-outlined {
+  font-size: 1.2rem;
+}

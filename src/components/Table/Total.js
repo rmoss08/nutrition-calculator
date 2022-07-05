@@ -49,7 +49,6 @@ const Total = (props) => {
   let tdElements = [
     <td key="total">Total</td>,
     <td key="weight"></td>,
-    <td key="action"></td>,
   ];
   tdElements = createTdElements(tdElements, tableTotals);
 

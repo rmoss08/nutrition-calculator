@@ -8,11 +8,11 @@ const Row = (props) => {
       <td key={`name-${tdData.id}`} className={styles['row-name']}>
         {tdData.name}
       </td>,
-      <td key={`weight-${tdData.id}`} className="text-align-right">
-        {tdData.userQuantity_g}
-      </td>,
+      // <td key={`weight-${tdData.id}`} className="text-align-right">
+      //   {tdData.userQuantity_g}
+      // </td>,
       <td key={`action-${tdData.id}`}>
-        <QuantityInput ingredient={tdData} />
+        <QuantityInput ingredient={tdData} placeholder={tdData.userQuantity_g} />
       </td>,
     ];
 

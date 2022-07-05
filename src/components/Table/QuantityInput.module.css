@@ -1,0 +1,17 @@
+.quantity-form {
+    display: flex;
+    align-items: center;
+}
+
+.quantity-form__input,
+.quantity-form .table-button {
+    display: inline;
+}
+
+.quantity-form__input {
+    width: 4rem;
+}
+
+.quantity-form__input[placeholder] {
+    font-size: 1rem;
+}

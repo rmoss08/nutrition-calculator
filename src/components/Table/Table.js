@@ -7,17 +7,16 @@ import { useMemo } from 'react';
 const TABLE_HEADER = [
   'Ingredient',
   'Weight',
-  'Actions',
-  'Sugar',
-  'Fiber',
-  'Sodium',
-  'Potassium',
-  'Saturated Fat',
-  'Total Fat',
+  'Sugar\n(g)',
+  'Fiber\n(g)',
+  'Sodium\n(mg)',
+  'Potassium\n(mg)',
+  'Saturated Fat\n(g)',
+  'Total Fat\n(g)',
   'Calories',
-  'Cholesterol',
-  'Protein',
-  'Carbohydrate',
+  'Cholesterol\n(mg)',
+  'Protein\n(g)',
+  'Carbohydrates\n(g)',
 ];
 
 const Table = (props) => {

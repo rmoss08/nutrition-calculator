@@ -12,7 +12,7 @@ const RemoveIngredientButton = (props) => {
   };
   
     return (
-    <button onClick={clickHandler}>
+    <button className="table-button" onClick={clickHandler}>
       <span className="material-symbols-outlined">remove</span>
     </button>
   );
