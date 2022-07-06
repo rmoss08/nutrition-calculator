@@ -53,6 +53,8 @@ const X_AXIS_LABELS = [
 
 const X_AXIS_VALUES = [1, 2, 3, 4, 5, 6, 7];
 
+const CHART_FONT_FAMILY = 'Arial, Helvetica, sans-serif';
+
 const StackedBarChart = (props) => {
   const userTotals = Object.assign(
     {},
@@ -69,9 +71,10 @@ const StackedBarChart = (props) => {
 
   const calculateNutritionPercentages = (nutrientName, userNutrientValue) => {
     const recommendedNutrientDailyValue = NUTRITION_DAILY_VALUES[nutrientName];
-    const userNutrientPercentage =
-       Number(((userNutrientValue / recommendedNutrientDailyValue) * 100).toFixed(1));
-    
+    const userNutrientPercentage = Number(
+      ((userNutrientValue / recommendedNutrientDailyValue) * 100).toFixed(1)
+    );
+
     let dailyValueNutrientPercentage;
     if (userNutrientPercentage < 100) {
       dailyValueNutrientPercentage = 100 - userNutrientPercentage;
@@ -86,18 +89,20 @@ const StackedBarChart = (props) => {
   };
 
   const createTooltipLabel = (type, nutrient, nutrition, dvPercentages) => {
-    let nutrientPrefix;
+    let tooltipTitle, tooltipDVPercentage, tooltipNutrientValue;
     if (type === 'user') {
-      nutrientPrefix = 'User';
+      tooltipTitle = 'Your Meal:';
+      tooltipNutrientValue = nutrition[nutrient];
+      tooltipDVPercentage = `\n${dvPercentages[type]}%`;
     } else if (type === 'dailyValue') {
-      nutrientPrefix = 'Recomended Daily';
+      tooltipTitle = 'Recomended\nDaily Value:';
+      tooltipNutrientValue = NUTRITION_DAILY_VALUES[nutrient]
+      tooltipDVPercentage = '';
     } else {
       console.error('Invalid type argument passed to createTooltipLabel');
     }
 
-    return `${nutrientPrefix} ${NUTRITION_TOOLTIP_INFO[nutrient].formattedName}\n
-            Value: ${nutrition[nutrient]} ${NUTRITION_TOOLTIP_INFO[nutrient].unit}\n
-            ${type === 'user' ? `Recommended Daily Total: ${dvPercentages[type]}%`:''}`;
+    return `${tooltipTitle}\n${tooltipNutrientValue}${NUTRITION_TOOLTIP_INFO[nutrient].unit}${tooltipDVPercentage}`;
   };
 
   // This could likely be broken up into two function
@@ -148,26 +153,59 @@ const StackedBarChart = (props) => {
     chartData = prepareStackedBarChartData(chartUserTotals);
   }
 
+  // Could refactor by making fontFamily a constant
   return (
     <div className={styles.barchart}>
       <VictoryChart
         domainPadding={20}
-        padding={{ left: 120, right: 10, top: 10, bottom: 35 }}
+        padding={{ left: 110, right: 10, top: 10, bottom: 55 }}
       >
-        <VictoryStack colorScale={['#348850', 'grey']}>
+        <VictoryStack
+          colorScale={['#348850', 'grey']}
+          style={{
+            labels: {
+              fontFamily: CHART_FONT_FAMILY,
+              fontSize: 20,
+            },
+          }}
+        >
           {chartData.map((data, i) => {
             return (
               <VictoryBar
                 data={data}
                 key={i}
                 horizontal={true}
-                labelComponent={<VictoryTooltip />}
+                labelComponent={
+                  <VictoryTooltip
+                    constrainToVisibleArea
+                    flyoutPadding={5}
+                    style={{
+                      fontFamily: CHART_FONT_FAMILY,
+                    }}
+                  />
+                }
               />
             );
           })}
         </VictoryStack>
-        <VictoryAxis tickValues={X_AXIS_VALUES} tickFormat={X_AXIS_LABELS} />
-        <VictoryAxis dependentAxis />
+        <VictoryAxis
+          tickValues={X_AXIS_VALUES}
+          tickFormat={X_AXIS_LABELS}
+          style={{ tickLabels: { fontFamily: CHART_FONT_FAMILY } }}
+        />
+        <VictoryAxis
+          dependentAxis
+          label="Recommended Daily Value"
+          tickFormat={(tick) => `${tick}%`}
+          style={{
+            axisLabel: {
+              fontFamily: CHART_FONT_FAMILY,
+              fontSize: 16,
+              padding: 35,
+            },
+            tickLabels: { fontFamily: CHART_FONT_FAMILY },
+          }}
+        />
       </VictoryChart>
     </div>
   );
