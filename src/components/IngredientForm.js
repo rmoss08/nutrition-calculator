@@ -142,7 +142,7 @@ const IngredientForm = () => {
             className={styles['ingredient-form__field--input']}
             type="text"
           />
-          {isInvalidIngredient && <div>Please enter a valid ingredient</div>}
+          {isInvalidIngredient && <div className='error-message'>Please enter a valid ingredient</div>}
         </div>
         <div className={styles['ingredient-form__field']}>
           <label
@@ -162,10 +162,10 @@ const IngredientForm = () => {
       </div>
       <button disabled={isIngredientLimitReached}>Add</button>
       {isAPIConnectionError && (
-        <div>Sorry, something went wrong. Please try again later</div>
+        <div className='error-message'>Sorry, something went wrong. Please try again later</div>
       )}
       {isIngredientLimitReached && (
-        <div>You have reached the ingredient limit</div>
+        <div className='error-message'>You have reached the ingredient limit</div>
       )}
     </form>
   );
