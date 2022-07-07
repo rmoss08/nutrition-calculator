@@ -130,4 +130,16 @@ td {
   font-size: 1.2rem;
 }
 
+.error-message {
+  background-color: rgb(236, 172, 172);
+  color: rgb(207, 26, 26);
+  border-radius: var(--border-radius-5);
+  padding: 0.5rem 1rem;
+  margin: 0.5rem 0;
+}
 
+@media (min-width: 400px) {
+  .error-message {
+    width: 20rem;
+  }
+}
