@@ -62,9 +62,9 @@ const Table = (props) => {
 
   return (
     <div>
-      <table>
+      <table className={styles.table}>
         <thead>
-          <tr className={styles['table-header']}>{thElements}</tr>
+          <tr className={styles['table__header']}>{thElements}</tr>
         </thead>
         <tbody>{tbodyElements}</tbody>
       </table>

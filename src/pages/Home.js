@@ -35,23 +35,26 @@ const Home = () => {
     <Fragment>
       <Layout>
         <div className="wrapper">
-          <IngredientForm />
-          <br></br>
-          <Table slice="meal" />
-          <br></br>
-          <button onClick={resetTableClickHandler}>Reset</button>
-          <br></br>
-          {!showBarChart && (
-            <button onClick={showChartClickHandler}>
-              <span className="material-symbols-outlined">bar_chart</span>
-            </button>
-          )}
-          {showBarChart && (
-            <div>
-              <StackedBarChart />
-              <button onClick={hideChartClickHandler}>Hide Chart</button>
-            </div>
-          )}
+          <div className="page-sub-section">
+            <IngredientForm />
+          </div>
+          <div className="page-sub-section">
+            <Table slice="meal" />
+            <button onClick={resetTableClickHandler}>Reset</button>
+          </div>
+          <div className="last page-sub-section">
+            {!showBarChart && (
+              <button onClick={showChartClickHandler}>
+                <span className="material-symbols-outlined">bar_chart</span>
+              </button>
+            )}
+            {showBarChart && (
+              <div>
+                <StackedBarChart />
+                <button onClick={hideChartClickHandler}>Hide Chart</button>
+              </div>
+            )}
+          </div>
         </div>
       </Layout>
     </Fragment>

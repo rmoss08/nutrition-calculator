@@ -1,3 +1,40 @@
-.ing-form-field {
-    margin: 1rem 0;
+.ingredient-form__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+  /* row-gap: 0.25rem; */
+}
+
+.ingredient-form__field {
+  margin: 1rem 0;
+}
+
+.ingredient-form__field--label {
+  display: block;
+  font-weight: 600;
+  color: white;
+  /* margin: 0 0 0.25rem 0; */
+  margin: 0;
+}
+
+.ingredient-form__field--input {
+  border-radius: var(--border-radius-5);
+  border: none;
+  width: 100%;
+  padding: 0.5rem;
+}
+
+.ingredient-form__field--input:focus {
+  outline: none;
+}
+
+@media (min-width: 400px) {
+  .ingredient-form__field {
+    display: inline;
+  }
+  .ingredient-form__grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    column-gap: 2rem;
+  }
 }

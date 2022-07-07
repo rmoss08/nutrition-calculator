@@ -29,7 +29,7 @@ export const calculateWeightedValues = (ingredient, newQuantity = false) => {
   for (const key in apiNutrition) {
     if (key !== 'serving_size_g') {
       const nutritionValue = apiNutrition[key];
-      const weightedValue = (nutritionValue * servingSizeFactor);
+      const weightedValue = nutritionValue * servingSizeFactor;
       weightedNutrition[key] = Number(weightedValue.toFixed(1));
     }
   }
@@ -129,14 +129,36 @@ const IngredientForm = () => {
 
   return (
     <form onSubmit={submitHandler}>
-      <div className={styles['ing-form-field']}>
-        <label htmlFor="ingredient-input">Ingredient:</label>
-        <input id="ingredient-input" type="text" />
-        {isInvalidIngredient && <div>Please enter a valid ingredient</div>}
-      </div>
-      <div className={styles['ing-form-field']}>
-        <label htmlFor="weight-input">Weight (grams):</label>
-        <input id="weight-input" type="number" min="1" />
+      <div className={styles['ingredient-form__grid']}>
+        <div className={styles['ingredient-form__field']}>
+          <label
+            htmlFor="ingredient-input"
+            className={styles['ingredient-form__field--label']}
+          >
+            Ingredient:
+          </label>
+          <input
+            id="ingredient-input"
+            className={styles['ingredient-form__field--input']}
+            type="text"
+          />
+          {isInvalidIngredient && <div>Please enter a valid ingredient</div>}
+        </div>
+        <div className={styles['ingredient-form__field']}>
+          <label
+            htmlFor="weight-input"
+            className={styles['ingredient-form__field--label']}
+          >
+            Weight (grams):
+          </label>
+          <input
+            id="weight-input"
+            className={styles['ingredient-form__field--input']}
+            type="number"
+            min="1"
+          />
+        </div>
+
       </div>
       <button disabled={isIngredientLimitReached}>Add</button>
       {isAPIConnectionError && (
