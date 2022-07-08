@@ -12,14 +12,14 @@
 .ingredient-form__field--label {
   display: block;
   font-weight: 600;
-  color: white;
+  /* color: var(--dark-green); */
   margin: 0 0 0.25rem 0;
 }
 
 .ingredient-form__field--input {
   box-sizing: border-box;
   border-radius: var(--border-radius-5);
-  border: none;
+  border: var(--dark-green-border);
   width: 100%;
   padding: 0.5rem;
 }

@@ -1,5 +1,6 @@
 .barchart {
     background-color: white;
+    border: var(--dark-green-border);
     border-radius: var(--border-radius-5);
     font-family: Arial, Helvetica, sans-serif;
     max-width: 600px;
