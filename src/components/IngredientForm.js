@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { mealActions } from '../store/meal-slice';
+import Error from './Error';
 import styles from './IngredientForm.module.css';
 
 const TEST_CUCUMBER = {
@@ -19,6 +20,12 @@ const TEST_CUCUMBER = {
 };
 
 const INGREDIENT_LIMIT = 50;
+
+const ERROR_MESSAGES = {
+  ingredientLimitReached: 'You have reached the ingredient limit',
+  apiConnectionError: 'Sorry, something went wrong. Please try again later',
+  invalidIngredient: 'Please enter a valid ingredient',
+};
 
 export const calculateWeightedValues = (ingredient, newQuantity = false) => {
   const quantity = newQuantity ? newQuantity : ingredient.userQuantity_g;
@@ -142,7 +149,9 @@ const IngredientForm = () => {
             className={styles['ingredient-form__field--input']}
             type="text"
           />
-          {isInvalidIngredient && <div className='error-message'>Please enter a valid ingredient</div>}
+          {isInvalidIngredient && (
+            <Error message={ERROR_MESSAGES.invalidIngredient} />
+          )}
         </div>
         <div className={styles['ingredient-form__field']}>
           <label
@@ -158,14 +167,13 @@ const IngredientForm = () => {
             min="1"
           />
         </div>
-
       </div>
       <button disabled={isIngredientLimitReached}>Add</button>
       {isAPIConnectionError && (
-        <div className='error-message'>Sorry, something went wrong. Please try again later</div>
+        <Error message={ERROR_MESSAGES.apiConnectionError} />
       )}
       {isIngredientLimitReached && (
-        <div className='error-message'>You have reached the ingredient limit</div>
+        <Error message={ERROR_MESSAGES.ingredientLimitReached} />
       )}
     </form>
   );
