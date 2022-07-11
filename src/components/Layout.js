@@ -1,14 +1,15 @@
 import { Fragment } from 'react';
+import { Link } from 'react-router-dom';
 
 const Layout = (props) => {
   return (
     <Fragment>
       <nav>
-        <h1 className="logo">NutriCalc</h1>
+        <Link to={'/'}>
+          <h1 className="logo">NutriCalc</h1>
+        </Link>
       </nav>
-      <section>
-        {props.children}
-      </section>
+      <section>{props.children}</section>
       <footer>
         <p className="footer-credit">
           Created by{' '}

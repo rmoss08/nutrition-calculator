@@ -52,6 +52,10 @@ footer {
   margin-top: 3rem;
 }
 
+a {
+  text-decoration: none;
+}
+
 button {
   background-color: var(--dark-green);
   border: none;
@@ -73,7 +77,12 @@ td {
 }
 
 .logo {
+  display: inline;
   color: white;
+}
+
+.logo:hover {
+  color: rgb(224, 224, 224);
 }
 
 .wrapper {
