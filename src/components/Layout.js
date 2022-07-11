@@ -4,7 +4,7 @@ const Layout = (props) => {
   return (
     <Fragment>
       <nav>
-        <h1>NutriCalc</h1>
+        <h1 className="logo">NutriCalc</h1>
       </nav>
       <section>
         {props.children}

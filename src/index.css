@@ -28,7 +28,6 @@ button {
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
-h1,
 button {
   color: white;
 }
@@ -71,6 +70,10 @@ button:focus {
 td {
   min-width: 4rem;
   padding-right: 1rem;
+}
+
+.logo {
+  color: white;
 }
 
 .wrapper {
