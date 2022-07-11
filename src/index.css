@@ -3,12 +3,13 @@
   --border-radius-5: 5px;
   --dark-green-border: 2px solid var(--dark-green);
   --table-border: 0.5px solid black;
+  --font-family-Ariel: Arial, Helvetica, sans-serif;
 }
 
 body {
   box-sizing: border-box;
   overflow-x: hidden;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-family-Ariel);
   width: 100vw;
   margin: 0;
 }
@@ -24,12 +25,8 @@ h3,
 h4,
 h5,
 h6,
-button {
+.button {
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-}
-
-button {
-  color: white;
 }
 
 h1 {
@@ -56,20 +53,6 @@ a {
   text-decoration: none;
 }
 
-button {
-  background-color: var(--dark-green);
-  border: none;
-  border-radius: var(--border-radius-5);
-  padding: 0.5rem 2rem;
-}
-
-button:hover {
-  border: 1px solid white;
-}
-
-button:focus {
-  outline: none;
-}
 
 td {
   min-width: 4rem;
@@ -96,6 +79,22 @@ td {
   margin: 3rem 0;
 }
 
+.button {
+  border: none;
+  background-color: var(--dark-green);
+  color: white;
+  border-radius: var(--border-radius-5);
+  padding: 0.5rem 2rem;
+}
+
+.button:hover {
+  border: 1px solid white;
+}
+
+.button:focus {
+  outline: none;
+}
+
 .text-align-right {
   text-align: right;
 }
@@ -114,18 +113,18 @@ td {
   color: blue;
 }
 
-.table-button {
+.table-.button {
   display: flex;
   align-items: center;
   border-radius: 50%;
   padding: 0.5rem;
 }
 
-.table-button:hover {
+.table-.button:hover {
   background-color: #2a7041;
   border: none;
 }
 
-.table-button .material-symbols-outlined {
+.table-.button .material-symbols-outlined {
   font-size: 1.2rem;
 }
