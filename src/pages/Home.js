@@ -3,32 +3,31 @@ import { useDispatch } from 'react-redux';
 import StackedBarChart from '../components/StackedBarChart';
 import IngredientForm from '../components/IngredientForm';
 import Table from '../components/Table/Table';
-import { mealActions } from '../store/meal-slice';
 import { Fragment } from 'react';
+import { mealActions } from '../store/meal-slice';
 import Layout from '../components/Layout';
-import LoadingSpinner from '../components/LoadingSpinner';
 
 const Home = () => {
   const dispatch = useDispatch();
-  const [showBarChart, setShowBarChart] = useState(false);
+  const [showStackedBarChart, setShowStackedBarChart] = useState(false);
 
-  const resetTableClickHandler = (event) => {
+  const resetMealClickHandler = (event) => {
     event.preventDefault();
 
-    setShowBarChart(false);
+    setShowStackedBarChart(false);
     dispatch(mealActions.reset());
   };
 
   const showChartClickHandler = (event) => {
     event.preventDefault();
 
-    return setShowBarChart(true);
+    return setShowStackedBarChart(true);
   };
 
-  const hideChartClickHandler = (event) => {
+  const hideStackedBarChartClickHandler = (event) => {
     event.preventDefault();
 
-    return setShowBarChart(false);
+    return setShowStackedBarChart(false);
   };
 
   return (
@@ -39,19 +38,21 @@ const Home = () => {
             <IngredientForm />
           </div>
           <div className="page-sub-section">
-            <Table slice="meal" />
-            <button onClick={resetTableClickHandler}>Reset</button>
+            <Table />
+            <button onClick={resetMealClickHandler}>Reset</button>
           </div>
-          <div className="last page-sub-section">
-            {!showBarChart && (
+          <div className="page-sub-section">
+            {!showStackedBarChart && (
               <button onClick={showChartClickHandler}>
                 <span className="material-symbols-outlined">bar_chart</span>
               </button>
             )}
-            {showBarChart && (
+            {showStackedBarChart && (
               <div>
                 <StackedBarChart />
-                <button onClick={hideChartClickHandler}>Hide Chart</button>
+                <button onClick={hideStackedBarChartClickHandler}>
+                  Hide Chart
+                </button>
               </div>
             )}
           </div>

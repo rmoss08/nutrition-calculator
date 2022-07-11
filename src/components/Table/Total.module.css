@@ -1,4 +1,4 @@
-.total-row {
+.total__tr {
     font-weight: 600;
     border-top: var(--table-border);
 }

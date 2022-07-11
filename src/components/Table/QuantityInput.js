@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { mealActions } from '../../store/meal-slice';
-import { calculateWeightedValues } from '../IngredientForm';
+import { calculateWeightedNutrition } from '../IngredientForm';
 import styles from './QuantityInput.module.css';
 
 const QuantityInput = (props) => {
@@ -11,7 +11,7 @@ const QuantityInput = (props) => {
     event.preventDefault();
     
     const newQuantity = document.getElementById(`table-quantity-input-${ingredient.id}`).value;
-    const newWeightedNutrition = calculateWeightedValues(ingredient, newQuantity);
+    const newWeightedNutrition = calculateWeightedNutrition(ingredient, newQuantity);
     
     return dispatch(
       mealActions.updateIngredientQuantity({

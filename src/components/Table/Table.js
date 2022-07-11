@@ -4,9 +4,9 @@ import Row from './Row';
 import styles from './Table.module.css';
 import { useMemo } from 'react';
 
-const TABLE_HEADER = [
+const TABLE_COLUMN_NAMES = [
   'Ingredient',
-  'Weight',
+  'Quantity',
   'Sugar\n(g)',
   'Fiber\n(g)',
   'Sodium\n(mg)',
@@ -19,46 +19,23 @@ const TABLE_HEADER = [
   'Carbohydrates\n(g)',
 ];
 
-const Table = (props) => {
-  const tableData = useSelector((state) => state.meal.ingredients);
+const Table = () => {
+  const ingredients = useSelector((state) => state.meal.ingredients);
 
-  const thElements = TABLE_HEADER.map((description) => (
-    <th key={description} className={styles['table-header__column-name']}>{description}</th>
+  const thElements = TABLE_COLUMN_NAMES.map((description) => (
+    <th key={description} className={styles['table__th']}>{description}</th>
   ));
-
-  // React forgets tbodyElements whenever App re-renders
-  // let tbodyElements = [];
-  // useMemo(() => {
-  //   console.log('useMemo');
-  //   if (tableData.length > 0) {
-  //     tbodyElements = tableData.map((rowData) => (
-  //       <Row key={rowData.id} tdData={rowData} />
-  //     ));
-  //     tbodyElements.push(<Total key='total' tableData={tableData} />);
-  //   }
-  // }, [tableData]);
 
   let tbodyElements = [];
   tbodyElements = useMemo(() => {
-    if (tableData.length > 0) {
-      let elements = tableData.map((rowData) => (
-        <Row key={rowData.id} tdData={rowData} />
+    if (ingredients.length > 0) {
+      let elements = ingredients.map((ingredient) => (
+        <Row key={ingredient.id} rowData={ingredient} />
       ));
-      elements.push(<Total key="total" tableData={tableData} />);
+      elements.push(<Total key="total" totalData={ingredients} />);
       return elements;
     }
-  }, [tableData]);
-
-  // Creates an infinite loop for some reason
-  // const [tbodyElements, setTbodyElements] = useState([]);
-
-  // if (tableData.length > 0) {
-  //   setTbodyElements((prevState) => {
-  //     const newState = tableData.map((rowData) => <Row tdData={rowData} />);
-  //     newState.push(<Total tableData={tableData} />);
-  //     return newState;
-  //   });
-  // }
+  }, [ingredients]);
 
   return (
     <div>

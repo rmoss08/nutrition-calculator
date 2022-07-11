@@ -4,37 +4,39 @@ import { mealActions } from '../../store/meal-slice';
 import styles from './Total.module.css';
 
 const Total = (props) => {
-  const tableData = props.tableData;
   const dispatch = useDispatch();
 
-  const calculateTotals = (init, data) => {
-    let totals = init;
+  const totalData = props.totalData;
+  
+  const calculateTotals = (initialTotal, dataToAdd) => {
+    let totals = initialTotal;
 
-    for (const i in data) {
-      const dataSet = data[i];
-
-      for (const key in dataSet.userNutrition) {
-        const prevTotal = totals[key];
-        const newNutrient = dataSet.userNutrition[key];
-        totals[key] = Number((prevTotal + newNutrient).toFixed(1));
+    console.log(totals);
+    for (const i in dataToAdd) {
+      const ingredient = dataToAdd[i];
+      
+      for (const nutrient in ingredient.userNutrition) {
+        const prevNutrientTotal = totals[nutrient];
+        const newIngredient = ingredient.userNutrition[nutrient];
+        totals[nutrient] = Number((prevNutrientTotal + newIngredient).toFixed(1));
       }
     }
-
+    
     return totals;
   };
 
-  const createTdElements = (init, data) => {
-    let elements = init;
+  const createTdElements = (initialTdElements, tdData) => {
+    let tdElements = initialTdElements;
 
-    for (const i in data) {
-      elements.push(
+    for (const i in tdData) {
+      tdElements.push(
         <td key={i} className="text-align-right">
-          {data[i]}
+          {tdData[i]}
         </td>
       );
     }
 
-    return elements;
+    return tdElements;
   };
 
   let tableTotals = {
@@ -49,17 +51,18 @@ const Total = (props) => {
     protein_g: 0,
     carbohydrates_total_g: 0,
   };
-  tableTotals = calculateTotals(tableTotals, tableData);
+  tableTotals = calculateTotals(tableTotals, totalData);
 
-  let tdElements = [<td key="total">Total</td>, <td key="weight"></td>];
+  let tdElements = [<td key="total">Total</td>, <td key="quantity"></td>];
   tdElements = createTdElements(tdElements, tableTotals);
 
   useEffect(() => {
+    console.log(tableTotals);
     dispatch(mealActions.updateTotals(tableTotals));
   }, [tableTotals]);
 
   return (
-    <tr key="totals" className={styles['total-row']}>
+    <tr key="totals" className={styles['total__tr']}>
       {tdElements}
     </tr>
   );

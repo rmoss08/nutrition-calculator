@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { mealActions } from '../store/meal-slice';
 import Error from './Error';
@@ -22,22 +22,22 @@ const TEST_CUCUMBER = {
 const INGREDIENT_LIMIT = 50;
 
 const ERROR_MESSAGES = {
-  ingredientLimitReached: 'You have reached the ingredient limit',
-  apiConnectionError: 'Sorry, something went wrong. Please try again later',
+  ingredientLimitMet: 'You have reached the ingredient limit',
+  apiConnectionDown: 'Sorry, something went wrong. Please try again later',
   invalidIngredient: 'Please enter a valid ingredient',
 };
 
-export const calculateWeightedValues = (ingredient, newQuantity = false) => {
+export const calculateWeightedNutrition = (ingredient, newQuantity = false) => {
   const quantity = newQuantity ? newQuantity : ingredient.userQuantity_g;
   const servingSizeFactor = quantity / ingredient.apiServingSize_g;
   let weightedNutrition = {};
   const apiNutrition = ingredient.apiNutrition;
 
-  for (const key in apiNutrition) {
-    if (key !== 'serving_size_g') {
-      const nutritionValue = apiNutrition[key];
+  for (const nutrient in apiNutrition) {
+    if (nutrient !== 'serving_size_g') {
+      const nutritionValue = apiNutrition[nutrient];
       const weightedValue = nutritionValue * servingSizeFactor;
-      weightedNutrition[key] = Number(weightedValue.toFixed(1));
+      weightedNutrition[nutrient] = Number(weightedValue.toFixed(1));
     }
   }
 
@@ -45,23 +45,22 @@ export const calculateWeightedValues = (ingredient, newQuantity = false) => {
 };
 
 const IngredientForm = () => {
-  const dispatch = useDispatch();
-  const numberOfIngredients = useSelector(
-    (state) => state.meal.ingredients
-  ).length;
-
   const [isInvalidIngredient, setIsInvalidIngredient] = useState(false);
-  const [isIngredientLimitReached, setIsIngredientLimitReached] =
-    useState(false);
-  const [isAPIConnectionError, setIsAPIConnectionError] = useState(false);
+  const [isIngredientLimitMet, setIsIngredientLimitMet] = useState(false);
+  const [isAPIConnectionDown, setIsAPIConnectionDown] = useState(false);
 
-  const convertToFloat = (object) => {
-    let formattedData = {};
-    for (const key in object) {
-      formattedData[key] = parseFloat(object[key]);
+  const dispatch = useDispatch();
+  const ingredients = useSelector((state) => state.meal.ingredients);
+  const numberOfIngredients = ingredients.length;
+
+  const convertToFloat = (objectToConvert) => {
+    let floatObject = {};
+
+    for (const key in objectToConvert) {
+      floatObject[key] = parseFloat(objectToConvert[key]);
     }
 
-    return formattedData;
+    return floatObject;
   };
 
   const fetchNutritionData = (ingredientName) => {
@@ -86,7 +85,7 @@ const IngredientForm = () => {
       })
       .catch((error) => {
         console.error(error);
-        setIsAPIConnectionError(true);
+        setIsAPIConnectionDown(true);
       });
   };
 
@@ -104,6 +103,7 @@ const IngredientForm = () => {
     // delete nutritionData.name;
 
     const floatNutrition = convertToFloat(TEST_CUCUMBER);
+
     const apiServingSize_g = floatNutrition['serving_size_g'];
     delete floatNutrition['serving_size_g'];
 
@@ -115,7 +115,7 @@ const IngredientForm = () => {
       apiNutrition: floatNutrition,
     };
 
-    const userNutrition = calculateWeightedValues(ingredient);
+    const userNutrition = calculateWeightedNutrition(ingredient);
     ingredient['userNutrition'] = userNutrition;
 
     return dispatch(mealActions.add(ingredient));
@@ -128,51 +128,50 @@ const IngredientForm = () => {
 
   useMemo(() => {
     if (numberOfIngredients >= INGREDIENT_LIMIT) {
-      setIsIngredientLimitReached(true);
+      setIsIngredientLimitMet(true);
     } else {
-      setIsIngredientLimitReached(false);
+      setIsIngredientLimitMet(false);
     }
   }, [numberOfIngredients]);
 
   return (
     <form onSubmit={submitHandler}>
-      <div className={styles['ingredient-form__grid']}>
-        <div className={styles['ingredient-form__field']}>
-          <label
-            htmlFor="ingredient-input"
-            className={styles['ingredient-form__field--label']}
-          >
+      <div className={styles['if__grid']}>
+        <div className={styles['if__field']}>
+          <label htmlFor="if-name-input" className={styles['if__field-label']}>
             Ingredient:
           </label>
           <input
-            id="ingredient-input"
-            className={styles['ingredient-form__field--input']}
+            id="if-name-input"
+            className={styles['if__field-input']}
             type="text"
           />
           {isInvalidIngredient && (
             <Error message={ERROR_MESSAGES.invalidIngredient} />
           )}
         </div>
-        <div className={styles['ingredient-form__field']}>
+        <div className={styles['if__field']}>
           <label
-            htmlFor="weight-input"
-            className={styles['ingredient-form__field--label']}
+            htmlFor="if-quantity-input"
+            className={styles['if__field-label']}
           >
-            Weight (grams):
+            Quantity (grams):
           </label>
           <input
-            id="weight-input"
-            className={styles['ingredient-form__field--input']}
+            id="if-quantity-input"
+            className={styles['if__field-input']}
             type="number"
             min="1"
           />
         </div>
       </div>
-      <button disabled={isIngredientLimitReached}>Add</button>
-      {isAPIConnectionError && (
+      <button className={styles['if__add-button']} disabled={isIngredientLimitMet}>
+        Add
+      </button>
+      {isAPIConnectionDown && (
         <Error message={ERROR_MESSAGES.apiConnectionError} />
       )}
-      {isIngredientLimitReached && (
+      {isIngredientLimitMet && (
         <Error message={ERROR_MESSAGES.ingredientLimitReached} />
       )}
     </form>
