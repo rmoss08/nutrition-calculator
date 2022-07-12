@@ -12,11 +12,17 @@
 }
 
 .table-placeholder__dot {
-    background-color: rgb(160, 160, 160);
     border-radius: var(--border-radius-5);
+    background-color: rgb(160, 160, 160);
     width: 0.5rem;
     height: 0.5rem;
-    margin: 0 1rem;
+    margin: 0 0.75rem;
+}
+
+.table-menu {
+    display: flex;
+    justify-content: centre;
+    align-items: center;
 }
 
 @media (min-width: 400px) {

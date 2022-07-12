@@ -4,6 +4,8 @@
   --dark-green-border: 2px solid var(--dark-green);
   --table-border: 0.5px solid black;
   --font-family-Ariel: Arial, Helvetica, sans-serif;
+  --font-family-Impact: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  --max-content-width: 900px;
 }
 
 body {
@@ -24,9 +26,8 @@ h2,
 h3,
 h4,
 h5,
-h6,
-.button {
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+h6 {
+  font-family: var(--font-family-Impact);
 }
 
 h1 {
@@ -35,18 +36,19 @@ h1 {
   margin: 0;
 }
 
-nav,
-footer {
-  padding: 1rem 10vw;
+button {
+  border: none;
   background-color: var(--dark-green);
+  font-family: var(--font-family-Impact);
+  color: white;
 }
 
-nav {
-  margin-bottom: 3rem;
+button:hover {
+  border: 1px solid white;
 }
 
-footer {
-  margin-top: 3rem;
+button:focus {
+  outline: none;
 }
 
 a {
@@ -70,7 +72,7 @@ td {
 
 .wrapper {
   width: 80%;
-  max-width: 750px;
+  max-width: var(--max-content-width);
   min-height: 90vh;
   margin: 0 auto;
 }
@@ -79,52 +81,67 @@ td {
   margin: 3rem 0;
 }
 
-.button {
-  border: none;
-  background-color: var(--dark-green);
-  color: white;
+.page-sub-section__header {
+  font-family: var(--font-family-Ariel);
+  color: var(--dark-green);
+}
+
+.rectangular-button {
   border-radius: var(--border-radius-5);
+  font-size: 1.05rem;
+  height: 2.5rem;
   padding: 0.5rem 2rem;
+  margin-right: 1rem;
 }
 
-.button:hover {
-  border: 1px solid white;
+.rectangular-button .material-symbols-outlined {
+  font-size: 1.5rem;
 }
 
-.button:focus {
-  outline: none;
+.rectangular-button.reset {
+  background-color: rgb(141, 0, 0);
+}
+
+.flex-center-all {
+  display: flex;
+  justify-content: center;
+  align-items: flex;
 }
 
 .text-align-right {
   text-align: right;
 }
 
-.footer-credit {
-  font-size: 0.8rem;
-  color: white;
-  margin: 0;
+.hyperlink {
+  text-decoration: underline;
+  color: black;
 }
 
-.linkedin-hyperlink {
-  color: white;
-}
-
-.linkedin-hyperlink:hover {
+.hyperlink:hover,
+.hyperlink.linkedin:hover {
   color: blue;
 }
 
-.table-.button {
+.hyperlink.linkedin  {
+  color: white;
+}
+
+.fine-print {
+  font-size: 0.75rem;
+}
+
+.table-button {
   display: flex;
   align-items: center;
   border-radius: 50%;
   padding: 0.5rem;
 }
 
-.table-.button:hover {
+.table-button:hover {
   background-color: #2a7041;
   border: none;
 }
 
-.table-.button .material-symbols-outlined {
+.table-button .material-symbols-outlined {
   font-size: 1.2rem;
 }

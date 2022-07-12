@@ -165,7 +165,7 @@ const IngredientForm = () => {
           />
         </div>
       </div>
-      <button className={`button ${styles['if__add-button']}`} disabled={isIngredientLimitMet}>
+      <button className={`rectangular-button ${styles['if__add-button']}`} disabled={isIngredientLimitMet}>
         Add
       </button>
       {isAPIConnectionDown && (

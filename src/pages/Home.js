@@ -20,13 +20,16 @@ const Home = () => {
     event.preventDefault();
 
     setShowStackedBarChart(false);
+    setShowTable(false);
     dispatch(mealActions.reset());
   };
 
   const showChartClickHandler = (event) => {
     event.preventDefault();
 
-    return setShowStackedBarChart(true);
+    return setShowStackedBarChart((prevState) => {
+      return !prevState;
+    });
   };
 
   const hideStackedBarChartClickHandler = (event) => {
@@ -46,13 +49,15 @@ const Home = () => {
       <Layout>
         <div className="wrapper">
           <div className="page-sub-section">
+            <h2 className="page-sub-section__header">
+              Calculate Your Meal's Nutrition
+            </h2>
+            <p>Start by adding an ingredient to your meal.</p>
             <IngredientForm />
           </div>
           {!showTable && (
             <div className={`page-sub-section ${styles['table-placeholder']}`}>
-              <p>
-                Waiting for your first ingredient
-              </p>
+              <p>Waiting for your first ingredient</p>
               <div className={styles['table-placeholder__ellipses']}>
                 <div className={styles['table-placeholder__dot']}></div>
                 <div className={styles['table-placeholder__dot']}></div>
@@ -62,15 +67,18 @@ const Home = () => {
           )}
           {showTable && (
             <div className="page-sub-section">
+              <h2 className="page-sub-section__header">Meal Nutrition</h2>
               <Table />
-              <div>
-                <button className='button'
-                  title="Show chart comparing your meal to the recommended daily nutrition values"
+              <div className={styles['table-menu']}>
+                <button
+                  className="rectangular-button"
+                  title="Toggle display of chart comparing your meal to the recommended daily nutrition values"
                   onClick={showChartClickHandler}
                 >
                   <span className="material-symbols-outlined">bar_chart</span>
                 </button>
-                <button className='button'
+                <button
+                  className="rectangular-button reset"
                   title="Reset the meal nutrition table"
                   onClick={resetMealClickHandler}
                 >
@@ -81,7 +89,18 @@ const Home = () => {
           )}
           {showStackedBarChart && (
             <div className="page-sub-section">
+              <h2 className="page-sub-section__header">
+                Recommended Daily Value Comparison
+              </h2>
               <StackedBarChart />
+              <p className='fine-print'>
+                <i>
+                  Note: recommended daily values come from the
+                  <a className='hyperlink' href="https://www.canada.ca/en/health-canada/services/understanding-food-labels/percent-daily-value.html">
+                    Government of Canada
+                  </a>
+                </i>
+              </p>
             </div>
           )}
         </div>

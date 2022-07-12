@@ -1,0 +1,20 @@
+.layout__nav,
+.layout__footer {
+  background-color: var(--dark-green);
+  padding: 1rem 0;
+}
+
+.layout__nav {
+  margin-bottom: 3rem;
+}
+
+.layout__wrapper {
+  width: 80%;
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+}
+
+.layout__footer {
+  color: white;
+  margin-top: 3rem;
+}

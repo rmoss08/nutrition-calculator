@@ -50,7 +50,8 @@ const X_AXIS_LABELS = [
 
 const X_AXIS_VALUES = [1, 2, 3, 4, 5, 6, 7];
 
-const CHART_FONT_FAMILY = 'Arial, Helvetica, sans-serif';
+const FONT_FAMILY = 'Arial, Helvetica, sans-serif';
+const GENERAL_FONT_SIZE = 8;
 
 const StackedBarChart = () => {
   const userTotals = Object.assign(
@@ -60,7 +61,7 @@ const StackedBarChart = () => {
 
   const removeUnnecessaryNutrients = (nutrition, unnecessaryNutritents) => {
     for (const i in unnecessaryNutritents) {
-      const nutrient = unnecessaryNutritents[i]
+      const nutrient = unnecessaryNutritents[i];
       delete nutrition[nutrient];
     }
     console.log(nutrition);
@@ -109,7 +110,7 @@ const StackedBarChart = () => {
       console.error('Invalid type argument passed to createTooltipLabel');
     }
 
-    return `${tooltipTitle}\n${tooltipNutrientValue}${tooltipRecommendedDVPercentage}`;
+    return `${tooltipTitle}\n${tooltipNutrientValue} ${NUTRITION_TOOLTIP_INFO[nutrient].unit}${tooltipRecommendedDVPercentage}`;
   };
 
   // This could likely be broken up into two function
@@ -144,7 +145,7 @@ const StackedBarChart = () => {
         ),
       });
     }
-    
+
     return [stack_1, stack_2];
   };
 
@@ -164,14 +165,14 @@ const StackedBarChart = () => {
     <div className={styles['stacked-bar-chart']}>
       <VictoryChart
         domainPadding={20}
-        padding={{ left: 110, right: 10, top: 10, bottom: 55 }}
+        padding={{ left: 80, right: 20, top: 20, bottom: 55 }}
       >
         <VictoryStack
           colorScale={['#348850', 'grey']}
           style={{
             labels: {
-              fontFamily: CHART_FONT_FAMILY,
-              fontSize: 20,
+              fontFamily: FONT_FAMILY,
+              fontSize: GENERAL_FONT_SIZE,
             },
           }}
         >
@@ -184,9 +185,12 @@ const StackedBarChart = () => {
                 labelComponent={
                   <VictoryTooltip
                     constrainToVisibleArea
+                    cornerRadius={5}
                     flyoutPadding={5}
+                    flyoutStyle={{ stroke: '#348850' }}
                     style={{
-                      fontFamily: CHART_FONT_FAMILY,
+                      fontFamily: FONT_FAMILY,
+                      fontSize: GENERAL_FONT_SIZE,
                     }}
                   />
                 }
@@ -197,7 +201,12 @@ const StackedBarChart = () => {
         <VictoryAxis
           tickValues={X_AXIS_VALUES}
           tickFormat={X_AXIS_LABELS}
-          style={{ tickLabels: { fontFamily: CHART_FONT_FAMILY } }}
+          style={{
+            tickLabels: {
+              fontFamily: FONT_FAMILY,
+              fontSize: GENERAL_FONT_SIZE,
+            },
+          }}
         />
         <VictoryAxis
           dependentAxis
@@ -205,11 +214,14 @@ const StackedBarChart = () => {
           tickFormat={(tick) => `${tick}%`}
           style={{
             axisLabel: {
-              fontFamily: CHART_FONT_FAMILY,
-              fontSize: 16,
+              fontFamily: FONT_FAMILY,
+              fontSize: 10,
               padding: 35,
             },
-            tickLabels: { fontFamily: CHART_FONT_FAMILY },
+            tickLabels: {
+              fontFamily: FONT_FAMILY,
+              fontSize: GENERAL_FONT_SIZE,
+            },
           }}
         />
       </VictoryChart>
