@@ -23,18 +23,18 @@ const Table = () => {
   const ingredients = useSelector((state) => state.meal.ingredients);
 
   const thElements = TABLE_COLUMN_NAMES.map((description) => (
-    <th key={description} className={styles['table__th']}>{description}</th>
+    <th key={description} className={styles['table__th']}>
+      {description}
+    </th>
   ));
 
   let tbodyElements = [];
   tbodyElements = useMemo(() => {
-    if (ingredients.length > 0) {
-      let elements = ingredients.map((ingredient) => (
-        <Row key={ingredient.id} rowData={ingredient} />
-      ));
-      elements.push(<Total key="total" totalData={ingredients} />);
-      return elements;
-    }
+    let elements = ingredients.map((ingredient) => (
+      <Row key={ingredient.id} rowData={ingredient} />
+    ));
+    elements.push(<Total key="total" totalData={ingredients} />);
+    return elements;
   }, [ingredients]);
 
   return (

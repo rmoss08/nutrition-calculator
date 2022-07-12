@@ -11,7 +11,9 @@ const Row = (props) => {
         {tdData.name}
       </td>,
       <td key={`action-${tdData.id}`}>
-        <QuantityInput ingredient={tdData} placeholder={tdData.userQuantity_g} />
+        <div className='flex-center-all'>
+          <QuantityInput ingredient={tdData} placeholder={tdData.userQuantity_g} />
+        </div>
       </td>,
     ];
 
@@ -23,12 +25,6 @@ const Row = (props) => {
         </td>
       );
     }
-
-    elements.push(
-      <td key={`remove-${tdData.id}`} className={styles['row__remove-button']}>
-        <RemoveIngredientButton ingredientId={tdData.id} />
-      </td>
-    );
 
     return elements;
   };

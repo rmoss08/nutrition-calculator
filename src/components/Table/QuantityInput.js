@@ -9,17 +9,28 @@ const QuantityInput = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    
-    const newQuantity = document.getElementById(`table-quantity-input-${ingredient.id}`).value;
-    const newWeightedNutrition = calculateWeightedNutrition(ingredient, newQuantity);
-    
-    return dispatch(
-      mealActions.updateIngredientQuantity({
-        id: ingredient.id,
-        newQuantity,
-        newWeightedNutrition,
-      })
-    );
+
+    const newQuantity = document.getElementById(
+      `table-quantity-input-${ingredient.id}`
+    ).value;
+
+    console.log(typeof newQuantity);
+    if (newQuantity === '0') {
+      return dispatch(mealActions.remove(ingredient.id));
+    } else {
+      const newWeightedNutrition = calculateWeightedNutrition(
+        ingredient,
+        newQuantity
+      );
+
+      return dispatch(
+        mealActions.updateIngredientQuantity({
+          id: ingredient.id,
+          newQuantity,
+          newWeightedNutrition,
+        })
+      );
+    }
   };
 
   return (
@@ -30,7 +41,7 @@ const QuantityInput = (props) => {
         type="number"
         placeholder={props.placeholder}
       ></input>
-      <button className='table-button'>
+      <button className="table-button">
         <span className="material-symbols-outlined">calculate</span>
       </button>
     </form>
