@@ -1,0 +1,21 @@
+.tip__button {
+    background-color: white;
+    color: grey;
+    margin-left: 2px;
+    padding: 0;
+}
+
+
+.tip-message {
+    position: absolute;
+    z-index: 10;
+    border-radius: var(--border-radius-5);
+    background-color: var(--dark-green);
+    text-align: left;
+    font-size: 0.75rem;
+    font-weight: 300;
+    color: white;
+    width: 10rem;
+    padding: 1rem;
+}
+

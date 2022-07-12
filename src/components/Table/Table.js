@@ -3,10 +3,25 @@ import Total from './Total';
 import Row from './Row';
 import styles from './Table.module.css';
 import { useMemo } from 'react';
+import Tip from '../Tip.js';
+
+const QUANTITY_TIP_MESSAGE = (
+  <p className={styles['tip-message__p']}>
+    Change an ingredient's quantity by entering a new value and pressing the
+    re-calculate button.
+    <br />
+    <br />
+    Remove an ingredient by clicking the delete button on the far right of the
+    table.
+  </p>
+);
 
 const TABLE_COLUMN_NAMES = [
   'Ingredient',
-  'Quantity',
+  <div>
+    Quantity
+    <Tip message={QUANTITY_TIP_MESSAGE} />
+  </div>,
   'Sugar\n(g)',
   'Fiber\n(g)',
   'Sodium\n(mg)',
