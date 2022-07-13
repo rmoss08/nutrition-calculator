@@ -11,7 +11,7 @@ const QUANTITY_TIP_MESSAGE = (
     re-calculate button.
     <br />
     <br />
-    Remove an ingredient by clicking the delete button on the far right of the
+    Remove an ingredient by clicking the remove button on the far right of the
     table.
   </p>
 );

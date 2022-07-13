@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { mealActions } from '../../store/meal-slice';
 
-const RemoveIngredientButton = (props) => {
+const RemoveButton = (props) => {
   const dispatch = useDispatch();
 
   const clickHandler = (event) => {
@@ -17,4 +17,4 @@ const RemoveIngredientButton = (props) => {
   );
 };
 
-export default RemoveIngredientButton;
+export default RemoveButton;

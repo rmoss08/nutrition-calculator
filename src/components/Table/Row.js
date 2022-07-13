@@ -1,5 +1,5 @@
 import QuantityInput from './QuantityInput';
-import RemoveIngredientButton from './RemoveIngredientButton';
+import RemoveButton from './RemoveButton';
 import styles from './Row.module.css';
 
 const Row = (props) => {
@@ -29,7 +29,7 @@ const Row = (props) => {
 
     elements.push(
       <td key={`remove-${tdData.id}`}>
-        <RemoveIngredientButton id={tdData.id} />
+        <RemoveButton id={tdData.id} />
       </td>
     );
     
