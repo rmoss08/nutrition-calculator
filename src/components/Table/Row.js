@@ -2,28 +2,35 @@ import QuantityForm from './QuantityForm';
 import RemoveButton from './RemoveButton';
 import styles from './Row.module.css';
 
+export const createTdElement = (key, classes, content) => {
+  return (
+    <td key={key} className={classes}>
+      {content}
+    </td>
+  );
+};
+
 const Row = (props) => {
   const rowData = props.rowData;
 
-  const createTdElements = (tdData) => {
+  const createRowElements = (tdData) => {
     let elements = [
-      <td key={`name-${tdData.id}`} className={styles['row__name']}>
+      <th key={`name-${tdData.id}`} className={styles['row__name']}>
         {tdData.name}
-      </td>,
+      </th>,
       <td key={`action-${tdData.id}`} className="flex-center-all">
-        <QuantityForm
-          ingredient={tdData}
-          placeholder={tdData.userQuantity_g}
-        />
+        <QuantityForm ingredient={tdData} placeholder={tdData.userQuantity_g} />
       </td>,
     ];
 
     const userNutrition = tdData.userNutrition;
     for (const nutrient in userNutrition) {
       elements.push(
-        <td key={`${nutrient}-${tdData.id}`} className="text-align-right">
-          {userNutrition[nutrient]}
-        </td>
+        createTdElement(
+          `${nutrient}-${tdData.id}`,
+          'text-align-right',
+          userNutrition[nutrient]
+        )
       );
     }
 
@@ -32,13 +39,13 @@ const Row = (props) => {
         <RemoveButton id={tdData.id} />
       </td>
     );
-    
+
     return elements;
   };
 
-  const tdElements = createTdElements(rowData);
+  const rowElements = createRowElements(rowData);
 
-  return <tr key={rowData.id}>{tdElements}</tr>;
+  return <tr key={rowData.id}>{rowElements}</tr>;
 };
 
 export default Row;

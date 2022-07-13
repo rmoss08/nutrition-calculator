@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { mealActions } from '../../store/meal-slice';
 import styles from './Total.module.css';
+import { createTdElement } from './Row';
 
 const Total = (props) => {
   const totalData = props.totalData;
@@ -11,7 +12,6 @@ const Total = (props) => {
   const calculateTotals = (initialTotal, dataToAdd) => {
     let totals = initialTotal;
 
-    console.log(totals);
     for (const i in dataToAdd) {
       const ingredient = dataToAdd[i];
 
@@ -27,22 +27,29 @@ const Total = (props) => {
     return totals;
   };
 
-  const createTdElements = (initialTdElements, tdData) => {
-    let tdElements = initialTdElements;
+  const createTotalElements = (tdData) => {
+    let elements = [
+      <th key="total" className={styles['total__td']}>
+        Total
+      </th>,
+      <td key="quantity" className={styles['total__td']}></td>,
+    ];
 
     for (const i in tdData) {
-      tdElements.push(
-        <td key={i} className={`text-align-right ${styles['total__td']}`}>
-          {tdData[i]}
-        </td>
+      elements.push(
+        createTdElement(
+          `${i}-total`,
+          `text-align-right ${styles['total__td']}`,
+          tdData[i]
+        )
       );
     }
 
-    tdElements.push(
-      <td key="remove-button" className="total__td--remove-button"></td>
+    elements.push(
+      <td key="remove-button-total" className="total__td--remove-button"></td>
     );
 
-    return tdElements;
+    return elements;
   };
 
   let tableTotals = {
@@ -59,21 +66,15 @@ const Total = (props) => {
   };
   tableTotals = calculateTotals(tableTotals, totalData);
 
-  let tdElements = [
-    <td key="total" className={styles['total__td']}>
-      Total
-    </td>,
-    <td key="quantity" className={styles['total__td']}></td>,
-  ];
-  tdElements = createTdElements(tdElements, tableTotals);
-
   useEffect(() => {
     dispatch(mealActions.updateTotals(tableTotals));
   }, [tableTotals]);
 
+  const totalElements = createTotalElements(tableTotals);
+
   return (
     <tr key="totals" className={styles['total__tr']}>
-      {tdElements}
+      {totalElements}
     </tr>
   );
 };
