@@ -6,15 +6,13 @@ import { useMemo } from 'react';
 import Header from './Header';
 
 const Table = (props) => {
-  const ingredients = useSelector((state) => state.meal.ingredients);
+  const ingredients = props.tbodyData;
 
-  let tbodyElements = [];
-  tbodyElements = useMemo(() => {
-    let elements = ingredients.map((ingredient) => (
+  let tbodyContent = [];
+  tbodyContent = useMemo(() => {
+    return ingredients.map((ingredient) => (
       <Row key={ingredient.id} rowData={ingredient} />
     ));
-    elements.push(<Total key="total" totalData={ingredients} />);
-    return elements;
   }, [ingredients]);
 
   return (
@@ -23,7 +21,10 @@ const Table = (props) => {
         <thead>
           <Header thData={props.thData} />
         </thead>
-        <tbody>{tbodyElements}</tbody>
+        <tbody>{tbodyContent}</tbody>
+        <tfoot>
+          <Total key="total" totalData={ingredients} />
+        </tfoot>
       </table>
     </div>
   );

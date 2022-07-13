@@ -92,7 +92,7 @@ const Home = () => {
           {showTable && (
             <div className="page-sub-section">
               <h2 className="page-sub-section__header">Meal Nutrition</h2>
-              <Table thData={TABLE_COLUMN_NAMES} />
+              <Table thData={TABLE_COLUMN_NAMES} tbodyData={ingredients}/>
               <div className={styles['table-menu']}>
                 <button
                   className="rectangular-button"
