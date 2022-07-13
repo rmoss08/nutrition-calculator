@@ -3,7 +3,6 @@ import Total from './Total';
 import Row from './Row';
 import styles from './Table.module.css';
 import { useMemo } from 'react';
-import InformationButton from '../InformationButton.js';
 import Header from './Header';
 
 const Table = (props) => {

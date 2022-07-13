@@ -1,4 +1,4 @@
-import QuantityInput from './QuantityInput';
+import QuantityForm from './QuantityForm';
 import RemoveButton from './RemoveButton';
 import styles from './Row.module.css';
 
@@ -11,7 +11,7 @@ const Row = (props) => {
         {tdData.name}
       </td>,
       <td key={`action-${tdData.id}`} className="flex-center-all">
-        <QuantityInput
+        <QuantityForm
           ingredient={tdData}
           placeholder={tdData.userQuantity_g}
         />

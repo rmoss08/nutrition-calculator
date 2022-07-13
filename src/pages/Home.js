@@ -62,12 +62,6 @@ const Home = () => {
     });
   };
 
-  const hideStackedBarChartClickHandler = (event) => {
-    event.preventDefault();
-
-    return setShowStackedBarChart(false);
-  };
-
   useMemo(() => {
     if (numberOfIngredients) {
       setShowTable(true);
