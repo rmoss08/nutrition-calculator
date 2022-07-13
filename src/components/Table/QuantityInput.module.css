@@ -1,3 +1,7 @@
+.quantity-form {
+    margin-right: 0.5rem;
+}
+
 .quantity-form__input,
 .quantity-form .table-button {
     display: inline;

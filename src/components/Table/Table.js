@@ -3,7 +3,7 @@ import Total from './Total';
 import Row from './Row';
 import styles from './Table.module.css';
 import { useMemo } from 'react';
-import Tip from '../Tip.js';
+import InformationButton from '../InformationButton.js';
 
 const QUANTITY_TIP_MESSAGE = (
   <p className={styles['tip-message__p']}>
@@ -18,9 +18,9 @@ const QUANTITY_TIP_MESSAGE = (
 
 const TABLE_COLUMN_NAMES = [
   'Ingredient',
-  <div>
+  <div className={styles['table__th--quantity']}>
     Quantity
-    <Tip message={QUANTITY_TIP_MESSAGE} />
+    <InformationButton message={QUANTITY_TIP_MESSAGE} />
   </div>,
   'Sugar\n(g)',
   'Fiber\n(g)',
@@ -42,6 +42,7 @@ const Table = () => {
       {description}
     </th>
   ));
+  thElements.push(<th key="remove-button"></th>)
 
   let tbodyElements = [];
   tbodyElements = useMemo(() => {

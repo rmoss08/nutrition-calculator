@@ -14,6 +14,12 @@
   font-weight: 600;
 }
 
+.table__th--quantity {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
 .tip-message__p {
   margin: 0;
 }

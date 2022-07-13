@@ -10,10 +10,11 @@ const Row = (props) => {
       <td key={`name-${tdData.id}`} className={styles['row__name']}>
         {tdData.name}
       </td>,
-      <td key={`action-${tdData.id}`}>
-        <div className='flex-center-all'>
-          <QuantityInput ingredient={tdData} placeholder={tdData.userQuantity_g} />
-        </div>
+      <td key={`action-${tdData.id}`} className="flex-center-all">
+        <QuantityInput
+          ingredient={tdData}
+          placeholder={tdData.userQuantity_g}
+        />
       </td>,
     ];
 
@@ -26,6 +27,12 @@ const Row = (props) => {
       );
     }
 
+    elements.push(
+      <td key={`remove-${tdData.id}`}>
+        <RemoveIngredientButton id={tdData.id} />
+      </td>
+    );
+    
     return elements;
   };
 

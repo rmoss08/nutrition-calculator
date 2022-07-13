@@ -1,12 +1,18 @@
-.tip__button {
+.information-button__button {
+    display: inline;
     background-color: white;
     color: grey;
     margin-left: 2px;
     padding: 0;
 }
 
+.information-button__button .material-symbols-outlined {
+    display: relative;
+    bottom: 0;
+}
 
-.tip-message {
+
+.information-button__message {
     position: absolute;
     z-index: 10;
     border-radius: var(--border-radius-5);

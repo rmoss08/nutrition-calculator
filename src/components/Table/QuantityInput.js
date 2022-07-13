@@ -34,14 +34,17 @@ const QuantityInput = (props) => {
   };
 
   return (
-    <form className={styles['quantity-form']} onSubmit={submitHandler}>
+    <form
+      className={`flex-center-all ${styles['quantity-form']}`}
+      onSubmit={submitHandler}
+    >
       <input
         id={`table-quantity-input-${ingredient.id}`}
         className={styles['quantity-form__input']}
         type="number"
         placeholder={props.placeholder}
       ></input>
-      <button className="table-button">
+      <button className="table-button" title='Re-calculate'>
         <span className="material-symbols-outlined">calculate</span>
       </button>
     </form>
