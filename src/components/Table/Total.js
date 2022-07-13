@@ -68,7 +68,6 @@ const Total = (props) => {
   tdElements = createTdElements(tdElements, tableTotals);
 
   useEffect(() => {
-    console.log(tableTotals);
     dispatch(mealActions.updateTotals(tableTotals));
   }, [tableTotals]);
 

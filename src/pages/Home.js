@@ -7,6 +7,36 @@ import { Fragment } from 'react';
 import { mealActions } from '../store/meal-slice';
 import Layout from '../components/Layout';
 import styles from './Home.module.css';
+import InformationButton from '../components/InformationButton';
+
+const QUANTITY_TIP_MESSAGE = (
+  <p className={styles['tip-message__p']}>
+    Change an ingredient's quantity by entering a new value and pressing the
+    re-calculate button.
+    <br />
+    <br />
+    Remove an ingredient by clicking the remove button on the far right of the
+    table.
+  </p>
+);
+
+const TABLE_COLUMN_NAMES = [
+  'Ingredient',
+  <div className={styles['table__th--quantity']}>
+    Quantity
+    <InformationButton message={QUANTITY_TIP_MESSAGE} />
+  </div>,
+  'Sugar\n(g)',
+  'Fiber\n(g)',
+  'Sodium\n(mg)',
+  'Potassium\n(mg)',
+  'Saturated Fat\n(g)',
+  'Total Fat\n(g)',
+  'Calories',
+  'Cholesterol\n(mg)',
+  'Protein\n(g)',
+  'Carbohydrates\n(g)',
+];
 
 const Home = () => {
   const [showStackedBarChart, setShowStackedBarChart] = useState(false);
@@ -68,7 +98,7 @@ const Home = () => {
           {showTable && (
             <div className="page-sub-section">
               <h2 className="page-sub-section__header">Meal Nutrition</h2>
-              <Table />
+              <Table thData={TABLE_COLUMN_NAMES} />
               <div className={styles['table-menu']}>
                 <button
                   className="rectangular-button"

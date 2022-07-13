@@ -1,32 +1,42 @@
 .table-placeholder {
-    text-align: center;
-    color: rgb(160, 160, 160);
-    margin-top: 8rem;
+  text-align: center;
+  color: rgb(160, 160, 160);
+  margin-top: 8rem;
 }
 
 .table-placeholder__ellipses {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
 }
 
 .table-placeholder__dot {
-    border-radius: var(--border-radius-5);
-    background-color: rgb(160, 160, 160);
-    width: 0.5rem;
-    height: 0.5rem;
-    margin: 0 0.75rem;
+  border-radius: var(--border-radius-5);
+  background-color: rgb(160, 160, 160);
+  width: 0.5rem;
+  height: 0.5rem;
+  margin: 0 0.75rem;
 }
 
 .table-menu {
-    display: flex;
-    justify-content: centre;
-    align-items: center;
+  display: flex;
+  justify-content: centre;
+  align-items: center;
+}
+
+.table__th--quantity {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.tip-message__p {
+  margin: 0;
 }
 
 @media (min-width: 400px) {
-    .table-placeholder {
-        margin-top: 10rem;
-    }
+  .table-placeholder {
+    margin-top: 10rem;
+  }
 }

@@ -4,45 +4,10 @@ import Row from './Row';
 import styles from './Table.module.css';
 import { useMemo } from 'react';
 import InformationButton from '../InformationButton.js';
+import Header from './Header';
 
-const QUANTITY_TIP_MESSAGE = (
-  <p className={styles['tip-message__p']}>
-    Change an ingredient's quantity by entering a new value and pressing the
-    re-calculate button.
-    <br />
-    <br />
-    Remove an ingredient by clicking the remove button on the far right of the
-    table.
-  </p>
-);
-
-const TABLE_COLUMN_NAMES = [
-  'Ingredient',
-  <div className={styles['table__th--quantity']}>
-    Quantity
-    <InformationButton message={QUANTITY_TIP_MESSAGE} />
-  </div>,
-  'Sugar\n(g)',
-  'Fiber\n(g)',
-  'Sodium\n(mg)',
-  'Potassium\n(mg)',
-  'Saturated Fat\n(g)',
-  'Total Fat\n(g)',
-  'Calories',
-  'Cholesterol\n(mg)',
-  'Protein\n(g)',
-  'Carbohydrates\n(g)',
-];
-
-const Table = () => {
+const Table = (props) => {
   const ingredients = useSelector((state) => state.meal.ingredients);
-
-  const thElements = TABLE_COLUMN_NAMES.map((description) => (
-    <th key={description} className={styles['table__th']}>
-      {description}
-    </th>
-  ));
-  thElements.push(<th key="remove-button"></th>)
 
   let tbodyElements = [];
   tbodyElements = useMemo(() => {
@@ -57,7 +22,7 @@ const Table = () => {
     <div>
       <table className={styles.table}>
         <thead>
-          <tr className={styles['table__header']}>{thElements}</tr>
+          <Header thData={props.thData} />
         </thead>
         <tbody>{tbodyElements}</tbody>
       </table>

@@ -8,19 +8,3 @@
   margin: 1rem 0;
 }
 
-.table__th {
-  border-bottom: var(--table-border);
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: 600;
-}
-
-.table__th--quantity {
-  display: flex;
-  justify-content: end;
-  align-items: center;
-}
-
-.tip-message__p {
-  margin: 0;
-}
-
