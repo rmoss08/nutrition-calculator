@@ -72,15 +72,15 @@ const Home = () => {
     <Fragment>
       <Layout>
         <div className="wrapper">
-          <div className="page-sub-section">
-            <h2 className="page-sub-section__header">
+          <div className="page-subsection">
+            <h2 className="page-subsection__header">
               Calculate Your Meal's Nutrition
             </h2>
             <p>Start by adding an ingredient to your meal.</p>
             <IngredientForm />
           </div>
           {!showTable && (
-            <div className={`page-sub-section ${styles['table-placeholder']}`}>
+            <div className={`page-subsection ${styles['table-placeholder']}`}>
               <p>Waiting for your first ingredient</p>
               <div className={styles['table-placeholder__ellipses']}>
                 <div className={styles['table-placeholder__dot']}></div>
@@ -90,19 +90,19 @@ const Home = () => {
             </div>
           )}
           {showTable && (
-            <div className="page-sub-section">
-              <h2 className="page-sub-section__header">Meal Nutrition</h2>
+            <div className="page-subsection">
+              <h2 className="page-subsection__header">Meal Nutrition</h2>
               <Table thData={TABLE_COLUMN_NAMES} tbodyData={ingredients} />
               <div className={styles['table-menu']}>
                 <button
-                  className="rectangular-button"
+                  className="page-subsection__button"
                   title="Toggle display of chart comparing your meal to the recommended daily nutrition values"
                   onClick={showChartClickHandler}
                 >
                   <span className="material-symbols-outlined">bar_chart</span>
                 </button>
                 <button
-                  className="rectangular-button reset"
+                  className="page-subsection__button--dark-red page-subsection__button "
                   title="Reset the meal nutrition table"
                   onClick={resetMealClickHandler}
                 >
@@ -112,8 +112,8 @@ const Home = () => {
             </div>
           )}
           {showStackedBarChart && (
-            <div className="page-sub-section">
-              <h2 className="page-sub-section__header">
+            <div className="page-subsection">
+              <h2 className="page-subsection__header">
                 Recommended Daily Value Comparison
               </h2>
               <StackedBarChart />

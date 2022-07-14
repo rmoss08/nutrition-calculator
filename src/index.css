@@ -1,5 +1,6 @@
 :root {
   --dark-green: #348850;
+  --green-button-hover-color: #2a7041;
   --border-radius-5: 5px;
   --dark-green-border: 2px solid var(--dark-green);
   --table-border: 0.5px solid black;
@@ -38,19 +39,20 @@ h1 {
 }
 
 button {
+  appearance: none;
   border: none;
   background-color: var(--dark-green);
   font-family: var(--font-family-Impact);
   color: white;
 }
 
-button:hover {
+/* button:hover {
   border: 1px solid white;
 }
 
 button:focus {
   outline: none;
-}
+} */
 
 a {
   text-decoration: none;
@@ -78,16 +80,16 @@ td {
   margin: 0 auto;
 }
 
-.page-sub-section {
+.page-subsection {
   margin: 3rem 0;
 }
 
-.page-sub-section__header {
+.page-subsection__header {
   font-family: var(--font-family-Ariel);
   color: var(--dark-green);
 }
 
-.rectangular-button {
+.page-subsection__button {
   border-radius: var(--border-radius-5);
   font-size: 1.05rem;
   height: 2.5rem;
@@ -95,12 +97,33 @@ td {
   margin-right: 1rem;
 }
 
-.rectangular-button .material-symbols-outlined {
+.page-subsection__button:hover,
+.table__button:hover {
+  background-color: var(--green-button-hover-color);
+}
+
+.page-subsection__button .material-symbols-outlined {
   font-size: 1.5rem;
 }
 
-.rectangular-button.reset {
+.page-subsection__button--dark-red,
+.table__button--dark-red {
   background-color: rgb(141, 0, 0);
+}
+.page-subsection__button--dark-red:hover,
+.table__button--dark-red:hover {
+  background-color: rgb(112, 0, 0);
+} 
+
+.table__button {
+  display: flex;
+  align-items: center;
+  border-radius: 50%;
+  padding: 0.5rem;
+}
+
+.table__button .material-symbols-outlined {
+  font-size: 1.2rem;
 }
 
 .flex-center-all {
@@ -131,18 +154,3 @@ td {
   font-size: 0.75rem;
 }
 
-.table-button {
-  display: flex;
-  align-items: center;
-  border-radius: 50%;
-  padding: 0.5rem;
-}
-
-.table-button:hover {
-  background-color: #2a7041;
-  border: none;
-}
-
-.table-button .material-symbols-outlined {
-  font-size: 1.2rem;
-}

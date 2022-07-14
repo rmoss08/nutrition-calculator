@@ -11,7 +11,11 @@ const RemoveButton = (props) => {
   };
 
   return (
-    <button className="table-button" title="Remove" onClick={clickHandler}>
+    <button
+      className="table__button table__button--dark-red"
+      title="Remove"
+      onClick={clickHandler}
+    >
       <span className="material-symbols-outlined">close</span>
     </button>
   );

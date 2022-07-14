@@ -44,7 +44,7 @@ const QuantityForm = (props) => {
         type="number"
         placeholder={props.placeholder}
       ></input>
-      <button className="table-button" title='Re-calculate'>
+      <button className="table__button" title='Re-calculate'>
         <span className="material-symbols-outlined">calculate</span>
       </button>
     </form>
