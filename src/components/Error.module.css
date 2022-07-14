@@ -1,9 +1,24 @@
 .error {
-  background-color: rgb(236, 172, 172);
-  color: rgb(207, 26, 26);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   border-radius: var(--border-radius-5);
   padding: 0.5rem 1rem;
   margin: 0.5rem 0;
+}
+
+.error,
+.error__button {
+  background-color: rgb(236, 172, 172);
+  color: rgb(207, 26, 26);
+}
+
+.error__button {
+  border-radius: 50%;
+}
+
+.error__button:hover {
+  color: var(--dark-red-button-hovering);
 }
 
 @media (min-width: 400px) {

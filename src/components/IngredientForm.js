@@ -19,11 +19,6 @@ const TEST_CUCUMBER = {
   carbohydrates_total_g: 1.85,
 };
 const INGREDIENT_LIMIT = 50;
-const ERROR_MESSAGES = {
-  ingredientLimitMet: 'You have reached the ingredient limit',
-  apiConnectionDown: 'Sorry, something went wrong. Please try again later',
-  invalidIngredient: 'Please enter a valid ingredient',
-};
 
 export const calculateWeightedNutrition = (ingredient, newQuantity = false) => {
   const quantity = newQuantity ? newQuantity : ingredient.userQuantity_g;
@@ -50,6 +45,18 @@ const IngredientForm = () => {
   const dispatch = useDispatch();
   const ingredients = useSelector((state) => state.meal.ingredients);
   const numberOfIngredients = ingredients.length;
+
+  const closeErrorHandler = (type) => {
+    if (type === 'invalidIngredient'){
+      return setIsInvalidIngredient(false);
+    }
+    if (type === 'apiConnectionError') {
+      return setIsAPIConnectionDown(false);
+    }
+    if (type === 'ingredientLimitMet') {
+      return setIsIngredientLimitMet(false);
+    }
+  };
 
   const convertObjectDataToNumbers = (objectToConvert) => {
     let floatObject = {};
@@ -92,36 +99,36 @@ const IngredientForm = () => {
 
     const ingredientName = event.target[0].value;
 
-    // --- Commented out for testing purpose
-    // fetchNutritionData(ingredientName).then((nutritionData) => {
-    //   try {
-    //     if (nutritionData === undefined || null) {
-    //       throw 'Invalid ingredient';
-    //     } else {
-    // delete nutritionData.name;
+    // --- Comment out for testing purpose
+    fetchNutritionData(ingredientName).then((nutritionData) => {
+      try {
+        if (nutritionData === undefined || null) {
+          throw 'Invalid ingredient';
+        } else {
+          delete nutritionData.name;
 
-    const floatNutrition = convertObjectDataToNumbers(TEST_CUCUMBER);
+          const floatNutrition = convertObjectDataToNumbers(TEST_CUCUMBER);
 
-    const apiServingSize_g = floatNutrition['serving_size_g'];
-    delete floatNutrition['serving_size_g'];
+          const apiServingSize_g = floatNutrition['serving_size_g'];
+          delete floatNutrition['serving_size_g'];
 
-    const ingredient = {
-      id: `${Number(event.timeStamp)}`,
-      name: ingredientName,
-      userQuantity_g: parseFloat(event.target[1].value),
-      apiServingSize_g,
-      apiNutrition: floatNutrition,
-    };
+          const ingredient = {
+            id: `${Number(event.timeStamp)}`,
+            name: ingredientName,
+            userQuantity_g: parseFloat(event.target[1].value),
+            apiServingSize_g,
+            apiNutrition: floatNutrition,
+          };
 
-    const userNutrition = calculateWeightedNutrition(ingredient);
-    ingredient['userNutrition'] = userNutrition;
+          const userNutrition = calculateWeightedNutrition(ingredient);
+          ingredient['userNutrition'] = userNutrition;
 
-    return dispatch(mealActions.add(ingredient));
-    //   }
-    // } catch {
-    //   setIsInvalidIngredient(true);
-    // }
-    // });
+          return dispatch(mealActions.add(ingredient));
+        }
+      } catch {
+        setIsInvalidIngredient(true);
+      }
+    });
   };
 
   useMemo(() => {
@@ -136,7 +143,10 @@ const IngredientForm = () => {
     <form onSubmit={submitHandler}>
       <div className={styles['ingredient-form__grid']}>
         <div className={styles['ingredient-form__field']}>
-          <label htmlFor="ingredient-form-name-input" className={styles['ingredient-form__field-label']}>
+          <label
+            htmlFor="ingredient-form-name-input"
+            className={styles['ingredient-form__field-label']}
+          >
             Ingredient:
           </label>
           <input
@@ -145,7 +155,7 @@ const IngredientForm = () => {
             type="text"
           />
           {isInvalidIngredient && (
-            <Error message={ERROR_MESSAGES.invalidIngredient} />
+            <Error type='invalidIngredient' closeError={closeErrorHandler}/>
           )}
         </div>
         <div className={styles['ingredient-form__field']}>
@@ -163,14 +173,17 @@ const IngredientForm = () => {
           />
         </div>
       </div>
-      <button className="page-subsection__button" disabled={isIngredientLimitMet}>
+      <button
+        className="page-subsection__button"
+        disabled={isIngredientLimitMet}
+      >
         Add
       </button>
       {isAPIConnectionDown && (
-        <Error message={ERROR_MESSAGES.apiConnectionError} />
+        <Error type='apiConnectionError' closeError={closeErrorHandler} />
       )}
       {isIngredientLimitMet && (
-        <Error message={ERROR_MESSAGES.ingredientLimitReached} />
+        <Error type='ingredientLimitMet' closeError={closeErrorHandler} />
       )}
     </form>
   );

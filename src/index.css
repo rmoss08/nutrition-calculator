@@ -1,5 +1,6 @@
 :root {
   --dark-green: #348850;
+  --dark-red-button-hovering: rgb(112, 0, 0);
   --border-radius-5: 5px;
   --dark-green-border: 2px solid var(--dark-green);
   --table-border: 0.5px solid black;
@@ -104,7 +105,7 @@ td {
 }
 .page-subsection__button--dark-red:hover,
 .table__button--dark-red:hover {
-  background-color: rgb(112, 0, 0);
+  background-color: var(--dark-red-button-hovering);
 } 
 
 .table__button {
