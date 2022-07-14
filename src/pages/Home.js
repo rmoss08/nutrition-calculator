@@ -63,15 +63,17 @@ const Home = () => {
   };
 
   useMemo(() => {
-    if (numberOfIngredients) {
-      setShowTable(true);
+    if (numberOfIngredients > 0) {
+      console.log(numberOfIngredients);
+      setShowTable(true); 
+    } else {
+      setShowTable(false);
     }
   }, [numberOfIngredients]);
 
   return (
     <Fragment>
       <Layout>
-        <div className="wrapper">
           <div className="page-subsection">
             <h2 className="page-subsection__header">
               Calculate Your Meal's Nutrition
@@ -96,7 +98,7 @@ const Home = () => {
               <div className={styles['table-menu']}>
                 <button
                   className="page-subsection__button"
-                  title="Toggle display of chart comparing your meal to the recommended daily nutrition values"
+                  title="Toggle display of the chart"
                   onClick={showChartClickHandler}
                 >
                   <span className="material-symbols-outlined">bar_chart</span>
@@ -130,7 +132,6 @@ const Home = () => {
               </p>
             </div>
           )}
-        </div>
       </Layout>
     </Fragment>
   );

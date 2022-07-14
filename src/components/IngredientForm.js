@@ -18,9 +18,7 @@ const TEST_CUCUMBER = {
   protein_g: 0.3,
   carbohydrates_total_g: 1.85,
 };
-
 const INGREDIENT_LIMIT = 50;
-
 const ERROR_MESSAGES = {
   ingredientLimitMet: 'You have reached the ingredient limit',
   apiConnectionDown: 'Sorry, something went wrong. Please try again later',
@@ -37,7 +35,7 @@ export const calculateWeightedNutrition = (ingredient, newQuantity = false) => {
     if (nutrient !== 'serving_size_g') {
       const nutritionValue = apiNutrition[nutrient];
       const weightedValue = nutritionValue * servingSizeFactor;
-      weightedNutrition[nutrient] = Number(weightedValue.toFixed(1));
+      weightedNutrition[nutrient] = Number(weightedValue.toFixed(2));
     }
   }
 
@@ -53,11 +51,11 @@ const IngredientForm = () => {
   const ingredients = useSelector((state) => state.meal.ingredients);
   const numberOfIngredients = ingredients.length;
 
-  const convertToFloat = (objectToConvert) => {
+  const convertObjectDataToNumbers = (objectToConvert) => {
     let floatObject = {};
 
     for (const key in objectToConvert) {
-      floatObject[key] = parseFloat(objectToConvert[key]);
+      floatObject[key] = Number(objectToConvert[key]);
     }
 
     return floatObject;
@@ -102,7 +100,7 @@ const IngredientForm = () => {
     //     } else {
     // delete nutritionData.name;
 
-    const floatNutrition = convertToFloat(TEST_CUCUMBER);
+    const floatNutrition = convertObjectDataToNumbers(TEST_CUCUMBER);
 
     const apiServingSize_g = floatNutrition['serving_size_g'];
     delete floatNutrition['serving_size_g'];
@@ -136,36 +134,36 @@ const IngredientForm = () => {
 
   return (
     <form onSubmit={submitHandler}>
-      <div className={styles['if__grid']}>
-        <div className={styles['if__field']}>
-          <label htmlFor="if-name-input" className={styles['if__field-label']}>
+      <div className={styles['ingredient-form__grid']}>
+        <div className={styles['ingredient-form__field']}>
+          <label htmlFor="ingredient-form-name-input" className={styles['ingredient-form__field-label']}>
             Ingredient:
           </label>
           <input
-            id="if-name-input"
-            className={styles['if__field-input']}
+            id="ingredient-form-name-input"
+            className={styles['ingredient-form__field-input']}
             type="text"
           />
           {isInvalidIngredient && (
             <Error message={ERROR_MESSAGES.invalidIngredient} />
           )}
         </div>
-        <div className={styles['if__field']}>
+        <div className={styles['ingredient-form__field']}>
           <label
-            htmlFor="if-quantity-input"
-            className={styles['if__field-label']}
+            htmlFor="ingredient-form-quantity-input"
+            className={styles['ingredient-form__field-label']}
           >
             Quantity (grams):
           </label>
           <input
-            id="if-quantity-input"
-            className={styles['if__field-input']}
+            id="ingredient-form-quantity-input"
+            className={styles['ingredient-form__field-input']}
             type="number"
             min="1"
           />
         </div>
       </div>
-      <button className={`page-subsection__button ${styles['if__add-button']}`} disabled={isIngredientLimitMet}>
+      <button className="page-subsection__button" disabled={isIngredientLimitMet}>
         Add
       </button>
       {isAPIConnectionDown && (

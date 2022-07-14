@@ -1,16 +1,24 @@
-.layout__nav,
+.layout__header,
 .layout__footer {
   background-color: var(--dark-green);
   padding: 1rem 0;
 }
 
-.layout__nav {
+.layout__header {
   margin-bottom: 3rem;
 }
 
-.layout__wrapper {
+.layout__header-wrapper,
+.layout__footer-wrapper {
   width: 80%;
   max-width: var(--max-content-width);
+  margin: 0 auto;
+}
+
+.layout__section-wrapper {
+  width: 80%;
+  max-width: var(--max-content-width);
+  min-height: 90vh;
   margin: 0 auto;
 }
 

@@ -15,7 +15,10 @@ const Row = (props) => {
 
   const createRowElements = (tdData) => {
     let elements = [
-      <th key={`name-${tdData.id}`} className={styles['row__name']}>
+      <th
+        key={`name-${tdData.id}`}
+        className={`text-align-left ${styles['row__header']}`}
+      >
         {tdData.name}
       </th>,
       <td key={`action-${tdData.id}`} className="flex-center-all">

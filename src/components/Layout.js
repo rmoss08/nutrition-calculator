@@ -5,16 +5,16 @@ import styles from './Layout.module.css';
 const Layout = (props) => {
   return (
     <Fragment>
-      <nav className={styles['layout__nav']}>
-        <div className={styles['layout__wrapper']}>
+      <header className={styles['layout__header']}>
+        <div className={styles['layout__header-wrapper']}>
           <Link to={'/'}>
             <h1 className="logo">NutriCalc</h1>
           </Link>
         </div>
-      </nav>
-      <section>{props.children}</section>
+      </header>
+      <section className={styles['layout__section-wrapper']}>{props.children}</section>
       <footer className={styles['layout__footer']}>
-        <div className={styles['layout__wrapper']}>
+        <div className={styles['layout__footer-wrapper']}>
           <p>
             Created by{' '}
             <a

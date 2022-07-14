@@ -19,7 +19,7 @@ const Total = (props) => {
         const prevNutrientTotal = totals[nutrient];
         const newIngredient = ingredient.userNutrition[nutrient];
         totals[nutrient] = Number(
-          (prevNutrientTotal + newIngredient).toFixed(1)
+          (prevNutrientTotal + newIngredient).toFixed(2)
         );
       }
     }
@@ -29,24 +29,24 @@ const Total = (props) => {
 
   const createTotalElements = (tdData) => {
     let elements = [
-      <th key="total" className={styles['total__td']}>
+      <th key="total" className={`text-align-left ${styles['total__cell']}`}>
         Total
       </th>,
-      <td key="quantity" className={styles['total__td']}></td>,
+      <td key="quantity" className={styles['total__cell']}></td>,
     ];
 
     for (const i in tdData) {
       elements.push(
         createTdElement(
           `${i}-total`,
-          `text-align-right ${styles['total__td']}`,
+          `text-align-right ${styles['total__cell']}`,
           tdData[i]
         )
       );
     }
 
     elements.push(
-      <td key="remove-button-total" className="total__td--remove-button"></td>
+      <td key="remove-button-total" className="total__cell--remove-button"></td>
     );
 
     return elements;

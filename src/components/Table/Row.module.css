@@ -1,4 +1,8 @@
-.row__name::first-letter {
+.row__header {
+    font-weight: 300;
+}
+
+.row__header::first-letter {
     text-transform: capitalize;
 }
 

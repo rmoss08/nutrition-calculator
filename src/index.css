@@ -1,6 +1,5 @@
 :root {
   --dark-green: #348850;
-  --green-button-hover-color: #2a7041;
   --border-radius-5: 5px;
   --dark-green-border: 2px solid var(--dark-green);
   --table-border: 0.5px solid black;
@@ -46,14 +45,6 @@ button {
   color: white;
 }
 
-/* button:hover {
-  border: 1px solid white;
-}
-
-button:focus {
-  outline: none;
-} */
-
 a {
   text-decoration: none;
 }
@@ -61,6 +52,7 @@ a {
 th,
 td {
   min-width: 4rem;
+  max-width: 14rem;
   padding-right: 1rem;
 }
 
@@ -94,12 +86,12 @@ td {
   font-size: 1.05rem;
   height: 2.5rem;
   padding: 0.5rem 2rem;
-  margin-right: 1rem;
+  margin: 1rem 1rem 1rem 0;
 }
 
 .page-subsection__button:hover,
 .table__button:hover {
-  background-color: var(--green-button-hover-color);
+  background-color: #2a7041;
 }
 
 .page-subsection__button .material-symbols-outlined {
@@ -134,6 +126,10 @@ td {
 
 .text-align-right {
   text-align: right;
+}
+
+.text-align-left {
+  text-align: left;
 }
 
 .hyperlink {

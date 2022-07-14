@@ -2,7 +2,6 @@
     font-weight: 600;
 }
 
-.total__td {
+.total__cell {
     border-top: var(--table-border);
-    
 }

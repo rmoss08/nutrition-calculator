@@ -13,7 +13,7 @@ const Header = (props) => {
     let tdArray = [];
 
     for (const i in thData) {
-      tdArray.push(createThElement(thData[i], 'header__th', thData[i]));
+      tdArray.push(createThElement(thData[i], 'header__cell', thData[i]));
     }
     return tdArray;
   };

@@ -50,7 +50,6 @@ const StackedBarChart = () => {
       const nutrient = unnecessaryNutritents[i];
       delete nutrition[nutrient];
     }
-    console.log(nutrition);
     return nutrition;
   };
 
