@@ -92,7 +92,7 @@ const Home = () => {
           {showTable && (
             <div className="page-sub-section">
               <h2 className="page-sub-section__header">Meal Nutrition</h2>
-              <Table thData={TABLE_COLUMN_NAMES} tbodyData={ingredients}/>
+              <Table thData={TABLE_COLUMN_NAMES} tbodyData={ingredients} />
               <div className={styles['table-menu']}>
                 <button
                   className="rectangular-button"
@@ -117,10 +117,13 @@ const Home = () => {
                 Recommended Daily Value Comparison
               </h2>
               <StackedBarChart />
-              <p className='fine-print'>
+              <p className="fine-print">
                 <i>
-                  Note: recommended daily values come from the
-                  <a className='hyperlink' href="https://www.canada.ca/en/health-canada/services/understanding-food-labels/percent-daily-value.html">
+                  Note: recommended daily values come from the{' '}
+                  <a
+                    className="hyperlink"
+                    href="https://www.canada.ca/en/health-canada/services/understanding-food-labels/percent-daily-value.html"
+                  >
                     Government of Canada
                   </a>
                 </i>

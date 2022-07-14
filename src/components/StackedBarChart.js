@@ -8,17 +8,7 @@ import {
 } from 'victory';
 import styles from './StackedBarChart.module.css';
 
-const TESTING_DATA = [
-  { name: 'fiber_g', value: 25 },
-  { name: 'sodium_mg', value: 2500 },
-  { name: 'potassium_mg', value: 4700 },
-  { name: 'fat_saturated_g', value: 20 },
-  { name: 'fat_total_g', value: 65 },
-  { name: 'cholesterol_mg', value: 300 },
-  { name: 'carbohydrates_total_g', value: 300 },
-];
-
-const RECOMENDED_DAILY_NUTRITION = {
+const NUTRITION_DAILY_VALUES = {
   fiber_g: 25,
   sodium_mg: 2500,
   potassium_mg: 4700,
@@ -27,8 +17,7 @@ const RECOMENDED_DAILY_NUTRITION = {
   cholesterol_mg: 300,
   carbohydrates_total_g: 300,
 };
-
-const NUTRITION_TOOLTIP_INFO = {
+const NUTRITION_DETAILS = {
   fiber_g: { formattedName: 'Fiber', unit: 'g' },
   sodium_mg: { formattedName: 'Sodium', unit: 'mg' },
   potassium_mg: { formattedName: 'Potassium', unit: 'mg' },
@@ -37,7 +26,6 @@ const NUTRITION_TOOLTIP_INFO = {
   cholesterol_mg: { formattedName: 'Cholesterol', unit: 'mg' },
   carbohydrates_total_g: { formattedName: 'Carbohydrates', unit: 'g' },
 };
-
 const X_AXIS_LABELS = [
   'Fiber',
   'Sodium',
@@ -47,9 +35,7 @@ const X_AXIS_LABELS = [
   'Cholesterol',
   'Carbohydrates',
 ];
-
 const X_AXIS_VALUES = [1, 2, 3, 4, 5, 6, 7];
-
 const FONT_FAMILY = 'Arial, Helvetica, sans-serif';
 const GENERAL_FONT_SIZE = 8;
 
@@ -68,98 +54,75 @@ const StackedBarChart = () => {
     return nutrition;
   };
 
-  // This can be split up into two functions
-  const calculcatePercentOfRecommendedDailyValue = (
-    nutrientName,
-    userNutrientTotal
+  const createTooltipLabel2 = (
+    stackType,
+    nutrientTotal,
+    nutrientDailyValuePercentage
   ) => {
-    const recommendedDailyValue = RECOMENDED_DAILY_NUTRITION[nutrientName];
-    const userNutrientPercentage = Number(
-      ((userNutrientTotal / recommendedDailyValue) * 100).toFixed(1)
-    );
-
-    let dailyValueNutrientPercentage;
-    if (userNutrientPercentage < 100) {
-      dailyValueNutrientPercentage = 100 - userNutrientPercentage;
-    } else {
-      dailyValueNutrientPercentage = 0;
-    }
-
-    return {
-      user: userNutrientPercentage,
-      dailyValue: dailyValueNutrientPercentage,
-    };
-  };
-
-  const createTooltipLabel = (
-    type,
-    nutrient,
-    nutrition,
-    recommendedDVPercentage
-  ) => {
-    let tooltipTitle, tooltipRecommendedDVPercentage, tooltipNutrientValue;
-    if (type === 'user') {
-      tooltipTitle = 'Your Meal:';
-      tooltipNutrientValue = nutrition[nutrient];
-      tooltipRecommendedDVPercentage = `\n${recommendedDVPercentage[type]}%`;
-    } else if (type === 'dailyValue') {
-      tooltipTitle = 'Recomended\nDaily Value:';
-      tooltipNutrientValue = RECOMENDED_DAILY_NUTRITION[nutrient];
-      tooltipRecommendedDVPercentage = '';
+    if (stackType === 'user') {
+      return `${nutrientTotal}\n${nutrientDailyValuePercentage}% of DV`;
+    } else if (stackType === 'dailyValue') {
+      return `${nutrientTotal}\n${nutrientDailyValuePercentage}% of DV`;
     } else {
       console.error('Invalid type argument passed to createTooltipLabel');
     }
-
-    return `${tooltipTitle}\n${tooltipNutrientValue} ${NUTRITION_TOOLTIP_INFO[nutrient].unit}${tooltipRecommendedDVPercentage}`;
   };
 
-  // This could likely be broken up into two function
-  const prepareStackedBarChartData = (rawChartData) => {
-    let stack_1 = [];
-    let stack_2 = [];
+  const calculcateDailyValuePercentage = (nutrientName, nutrientTotal) => {
+    const nutrientDailyValue = NUTRITION_DAILY_VALUES[nutrientName];
+    const nutrientDailyValuePercentage = Number(
+      ((nutrientTotal / nutrientDailyValue) * 100).toFixed(1)
+    );
+    return nutrientDailyValuePercentage;
+  };
 
-    for (const nutrient in rawChartData) {
-      const nutrientPercentages = calculcatePercentOfRecommendedDailyValue(
+  const createStackData = (rawData, stackType) => {
+    let stack = [];
+    for (const nutrient in rawData){
+      const nutrientDailyValuePercentage = calculcateDailyValuePercentage(
         nutrient,
-        rawChartData[nutrient]
+        rawData[nutrient]
       );
 
-      stack_1.push({
+      stack.push({
         x: nutrient,
-        y: nutrientPercentages.user,
-        label: createTooltipLabel(
-          'user',
-          nutrient,
-          rawChartData,
-          nutrientPercentages
-        ),
-      });
-      stack_2.push({
-        x: nutrient,
-        y: nutrientPercentages.dailyValue,
-        label: createTooltipLabel(
-          'dailyValue',
-          nutrient,
-          rawChartData,
-          nutrientPercentages
+        y:nutrientDailyValuePercentage,
+        label: createTooltipLabel2(
+          stackType,
+          `${rawData[nutrient]} ${NUTRITION_DETAILS[nutrient].unit}`,
+          nutrientDailyValuePercentage
         ),
       });
     }
 
-    return [stack_1, stack_2];
+    return stack;
   };
 
-  let chartData = [];
-  if (Object.keys(userTotals).length !== 0) {
-    const chartUserTotals = removeUnnecessaryNutrients(userTotals, [
-      'sugar_g',
-      'calories',
-      'protein_g',
-    ]);
+  const calculateOutstandingDailyValues = (consumedNutrients, dailyValues) => {
+    let outstandingDailyValues = {};
 
-    // Must be an array
-    chartData = prepareStackedBarChartData(chartUserTotals);
-  }
+    for (const nutrient in consumedNutrients) {
+      const nutrientsOutstandingDailyValue =
+        dailyValues[nutrient] - consumedNutrients[nutrient];
+      outstandingDailyValues[nutrient] = nutrientsOutstandingDailyValue;
+    }
+
+    return outstandingDailyValues;
+  };
+
+  const necessaryUserTotals = removeUnnecessaryNutrients(userTotals, [
+    'sugar_g',
+    'calories',
+    'protein_g',
+  ]);
+  const outstandingDailyValues = calculateOutstandingDailyValues(
+    necessaryUserTotals,
+    NUTRITION_DAILY_VALUES
+  );
+
+  let chartData = [];
+  chartData.push(createStackData(necessaryUserTotals, 'user'));
+  chartData.push(createStackData(outstandingDailyValues, 'dailyValue'));
 
   return (
     <div className={styles['stacked-bar-chart']}>
@@ -210,7 +173,7 @@ const StackedBarChart = () => {
         />
         <VictoryAxis
           dependentAxis
-          label="Recommended Daily Value"
+          label="Recommended Daily Value (DV)"
           tickFormat={(tick) => `${tick}%`}
           style={{
             axisLabel: {

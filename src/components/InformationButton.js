@@ -25,7 +25,7 @@ const InformationButton = (props) => {
         title="Information"
         onClick={buttonClickHandler}
       >
-        <span class="material-symbols-outlined">info</span>
+        <span className="material-symbols-outlined">info</span>
       </button>
       {showMessage && (
         <div
