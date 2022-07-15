@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { mealActions } from '../store/meal-slice';
 import Error from './Error';
@@ -42,12 +42,15 @@ const IngredientForm = () => {
   const [isIngredientLimitMet, setIsIngredientLimitMet] = useState(false);
   const [isAPIConnectionDown, setIsAPIConnectionDown] = useState(false);
 
+  const ingredientInputRef = useRef(null);
+  const quantityInputRef = useRef(null);
+
   const dispatch = useDispatch();
   const ingredients = useSelector((state) => state.meal.ingredients);
   const numberOfIngredients = ingredients.length;
 
   const closeErrorHandler = (type) => {
-    if (type === 'invalidIngredient'){
+    if (type === 'invalidIngredient') {
       return setIsInvalidIngredient(false);
     }
     if (type === 'apiConnectionError') {
@@ -94,9 +97,18 @@ const IngredientForm = () => {
       });
   };
 
+  const resetForm = () => {
+    ingredientInputRef.current.value = '';
+    quantityInputRef.current.value = '';
+
+    setIsInvalidIngredient(false);
+    setIsAPIConnectionDown(false);
+    setIsIngredientLimitMet(false);
+  };
+
   const submitHandler = async (event) => {
     event.preventDefault();
-
+ 
     const ingredientName = event.target[0].value;
 
     // --- Comment out for testing purpose
@@ -122,6 +134,8 @@ const IngredientForm = () => {
 
           const userNutrition = calculateWeightedNutrition(ingredient);
           ingredient['userNutrition'] = userNutrition;
+          
+          resetForm();
 
           return dispatch(mealActions.add(ingredient));
         }
@@ -150,13 +164,11 @@ const IngredientForm = () => {
             Ingredient:
           </label>
           <input
+            ref={ingredientInputRef}
             id="ingredient-form-name-input"
             className={styles['ingredient-form__field-input']}
             type="text"
           />
-          {isInvalidIngredient && (
-            <Error type='invalidIngredient' closeError={closeErrorHandler}/>
-          )}
         </div>
         <div className={styles['ingredient-form__field']}>
           <label
@@ -166,6 +178,7 @@ const IngredientForm = () => {
             Quantity (grams):
           </label>
           <input
+            ref={quantityInputRef}
             id="ingredient-form-quantity-input"
             className={styles['ingredient-form__field-input']}
             type="number"
@@ -176,14 +189,17 @@ const IngredientForm = () => {
       <button
         className="page-subsection__button"
         disabled={isIngredientLimitMet}
-      >
+        >
         Add
       </button>
+      {isInvalidIngredient && (
+        <Error type="invalidIngredient" closeError={closeErrorHandler} />
+      )}
       {isAPIConnectionDown && (
-        <Error type='apiConnectionError' closeError={closeErrorHandler} />
+        <Error type="apiConnectionError" closeError={closeErrorHandler} />
       )}
       {isIngredientLimitMet && (
-        <Error type='ingredientLimitMet' closeError={closeErrorHandler} />
+        <Error type="ingredientLimitMet" closeError={closeErrorHandler} />
       )}
     </form>
   );

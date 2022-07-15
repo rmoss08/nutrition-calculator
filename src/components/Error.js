@@ -19,7 +19,7 @@ const Error = (props) => {
     <div className={styles.error}>
       {ERROR_MESSAGES[type]}
       <button className={styles['error__button']}>
-        <span class="material-symbols-outlined" onClick={closeClickHandler}>close</span>
+        <span className="material-symbols-outlined" onClick={closeClickHandler}>close</span>
       </button>
     </div>
   );
