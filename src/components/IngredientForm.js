@@ -109,24 +109,25 @@ const IngredientForm = () => {
   const submitHandler = async (event) => {
     event.preventDefault();
  
-    const ingredientName = event.target[0].value;
+    const userIngredientName = event.target[0].value;
 
     // --- Comment out for testing purpose
-    fetchNutritionData(ingredientName).then((nutritionData) => {
+    fetchNutritionData(userIngredientName).then((nutritionData) => {
       try {
         if (nutritionData === undefined || null) {
           throw 'Invalid ingredient';
         } else {
+          const apiIngredientName = nutritionData.name 
           delete nutritionData.name;
 
-          const floatNutrition = convertObjectDataToNumbers(TEST_CUCUMBER);
+          const floatNutrition = convertObjectDataToNumbers(nutritionData);
 
           const apiServingSize_g = floatNutrition['serving_size_g'];
           delete floatNutrition['serving_size_g'];
 
           const ingredient = {
             id: `${Number(event.timeStamp)}`,
-            name: ingredientName,
+            name: apiIngredientName,
             userQuantity_g: parseFloat(event.target[1].value),
             apiServingSize_g,
             apiNutrition: floatNutrition,

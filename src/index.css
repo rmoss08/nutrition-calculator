@@ -52,8 +52,10 @@ a {
 
 th,
 td {
+  overflow: hidden;
+  text-overflow: ellipsis;
   min-width: 4rem;
-  max-width: 14rem;
+  max-width: 25rem;
   padding-right: 1rem;
 }
 
@@ -64,13 +66,6 @@ td {
 
 .logo:hover {
   color: rgb(224, 224, 224);
-}
-
-.wrapper {
-  width: 80%;
-  max-width: var(--max-content-width);
-  min-height: 90vh;
-  margin: 0 auto;
 }
 
 .page-subsection {
