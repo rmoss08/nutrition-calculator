@@ -5,7 +5,7 @@ import styles from './Row.module.css';
 export const createTdElement = (key, classes, content) => {
   return (
     <td key={key} className={classes}>
-      {content}
+      {content.toFixed(2)}
     </td>
   );
 };
@@ -28,6 +28,7 @@ const Row = (props) => {
 
     const userNutrition = tdData.userNutrition;
     for (const nutrient in userNutrition) {
+      console.log(typeof userNutrition[nutrient])
       elements.push(
         createTdElement(
           `${nutrient}-${tdData.id}`,
