@@ -8,7 +8,7 @@ const Layout = (props) => {
       <header className={styles['layout__header']}>
         <div className={styles['layout__header-wrapper']}>
           <Link to={'/'}>
-            <h1 className="logo">NutriCalc</h1>
+            <h1 className="logo">Nutrition Calculator</h1>
           </Link>
         </div>
       </header>
