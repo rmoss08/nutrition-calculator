@@ -12,7 +12,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 const LazyTable = lazy(() => import('../components/Table/Table'));
 
 const QUANTITY_INFORMATION = (
-  <p className={styles['tip-message__p']}>
+  <p className={styles['information-button__p']}>
     Change an ingredient's quantity by entering a new value and pressing the
     re-calculate button.
     <br />
@@ -66,7 +66,6 @@ const Home = () => {
 
   useMemo(() => {
     if (numberOfIngredients > 0) {
-      console.log(numberOfIngredients);
       setShowLazyTable(true);
     } else {
       setShowLazyTable(false);
@@ -86,7 +85,7 @@ const Home = () => {
         {!showLazyTable && (
           <div className={`page-subsection ${styles['table-placeholder']}`}>
             <p>Waiting for your first ingredient</p>
-            <div className={styles['table-placeholder__ellipses']}>
+            <div className={`flex-center-all ${styles['table-placeholder__ellipses']}`}>
               <div className={styles['table-placeholder__dot']}></div>
               <div className={styles['table-placeholder__dot']}></div>
               <div className={styles['table-placeholder__dot']}></div>
@@ -98,7 +97,7 @@ const Home = () => {
             <div className="page-subsection">
               <h2 className="page-subsection__header">Meal Nutrition</h2>
               <LazyTable thData={TABLE_COLUMN_NAMES} tbodyData={ingredients} />
-              <div className={styles['table-menu']}>
+              <div className={styles['table__menu']}>
                 <button
                   className="page-subsection__button"
                   title="Toggle display of the chart"
@@ -108,7 +107,7 @@ const Home = () => {
                 </button>
                 <button
                   className="page-subsection__button--dark-red page-subsection__button "
-                  title="Reset the meal nutrition table"
+                  title="Reset your meal"
                   onClick={resetMealClickHandler}
                 >
                   Reset

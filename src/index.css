@@ -1,5 +1,6 @@
 :root {
   --dark-green: #348850;
+  --light-grey: rgb(160, 160, 160);
   --dark-red-button-hovering: rgb(112, 0, 0);
   --border-radius-5: 5px;
   --dark-green-border: 2px solid var(--dark-green);
@@ -117,7 +118,7 @@ td {
 .flex-center-all {
   display: flex;
   justify-content: center;
-  align-items: flex;
+  align-items: center;
 }
 
 .text-align-right {
