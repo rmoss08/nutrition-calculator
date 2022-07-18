@@ -8,6 +8,15 @@ import {
 } from 'victory';
 import styles from './StackedBarChart.module.css';
 
+const CHART_NUTRIENT_ORDER = [
+  'potassium_mg',
+  'sodium_mg',
+  'cholesterol_mg',
+  'fiber_g',
+  'carbohydrates_total_g',
+  'fat_saturated_g',
+  'fat_total_g',
+];
 const NUTRITION_DAILY_VALUES = {
   fiber_g: 25,
   sodium_mg: 2500,
@@ -27,13 +36,13 @@ const NUTRITION_DETAILS = {
   carbohydrates_total_g: { formattedName: 'Carbohydrates', unit: 'g' },
 };
 const X_AXIS_LABELS = [
-  'Fiber',
-  'Sodium',
   'Potassium',
+  'Sodium',
+  'Cholesterol',
+  'Fiber',
+  'Carbohydrates',
   'Saturated Fat',
   'Total Fat',
-  'Cholesterol',
-  'Carbohydrates',
 ];
 const X_AXIS_VALUES = [1, 2, 3, 4, 5, 6, 7];
 const FONT_FAMILY = 'Arial, Helvetica, sans-serif';
@@ -77,7 +86,9 @@ const StackedBarChart = () => {
 
   const createStackData = (rawData, stackType) => {
     let stack = [];
-    for (const nutrient in rawData){
+    for (const i in CHART_NUTRIENT_ORDER){
+      const nutrient = CHART_NUTRIENT_ORDER[i];
+      console.log(nutrient);
       const nutrientDailyValuePercentage = calculcateDailyValuePercentage(
         nutrient,
         rawData[nutrient]
