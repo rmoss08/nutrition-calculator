@@ -79,7 +79,7 @@ const Home = () => {
           <h2 className="page-subsection__header">
             Calculate Your Meal's Nutrition
           </h2>
-          <p>Start by adding an ingredient to your meal.</p>
+          <p>Start by adding an ingredient.</p>
           <IngredientForm />
         </div>
         {!showLazyTable && (
