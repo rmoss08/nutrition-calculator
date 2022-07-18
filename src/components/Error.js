@@ -2,7 +2,7 @@ import styles from './Error.module.css';
 
 const ERROR_MESSAGES = {
   ingredientLimitMet: 'You have reached the ingredient limit',
-  apiConnectionDown: 'Sorry, something went wrong. Please try again later',
+  apiConnectionError: 'Sorry, something went wrong retrieving the data. Please try again later',
   invalidIngredient: 'Please enter a valid ingredient',
 };
 

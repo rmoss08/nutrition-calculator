@@ -76,26 +76,46 @@ const IngredientForm = () => {
 
     const options = {
       method: 'GET',
-      url: 'https://calorieninjas.p.rapidapi.com/v1/nutrition',
+      url: 'http://localhost:8000/fetch',
       params: { query: ingredientName },
-      headers: {
-        'X-RapidAPI-Host': 'calorieninjas.p.rapidapi.com',
-        'X-RapidAPI-Key': 'f31dca7789msh9b76c7ca9ee7a84p1aaa5cjsn75b70701b51a',
-      },
     };
 
     return axios
       .request(options)
       .then((response) => {
-        const data = response.data.items[0];
-
-        return data;
+        // console.log(response);
+        return response.data.items[0];
       })
       .catch((error) => {
         console.error(error);
         setIsAPIConnectionDown(true);
       });
   };
+  // const fetchNutritionData = (ingredientName) => {
+  //   const axios = require('axios');
+
+  //   const options = {
+  //     method: 'GET',
+  //     url: 'https://calorieninjas.p.rapidapi.com/v1/nutrition',
+  //     params: { query: ingredientName },
+  //     headers: {
+  //       'X-RapidAPI-Host': 'calorieninjas.p.rapidapi.com',
+  //       'X-RapidAPI-Key': 'f31dca7789msh9b76c7ca9ee7a84p1aaa5cjsn75b70701b51a',
+  //     },
+  //   };
+
+  //   return axios
+  //     .request(options)
+  //     .then((response) => {
+  //       const data = response.data.items[0];
+
+  //       return data;
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //       setIsAPIConnectionDown(true);
+  //     });
+  // };
 
   const resetForm = () => {
     ingredientInputRef.current.value = '';
@@ -108,7 +128,7 @@ const IngredientForm = () => {
 
   const submitHandler = async (event) => {
     event.preventDefault();
- 
+
     const userIngredientName = event.target[0].value;
 
     // --- Comment out for testing purpose
@@ -117,7 +137,7 @@ const IngredientForm = () => {
         if (nutritionData === undefined || null) {
           throw 'Invalid ingredient';
         } else {
-          const apiIngredientName = nutritionData.name 
+          const apiIngredientName = nutritionData.name;
           delete nutritionData.name;
 
           const floatNutrition = convertObjectDataToNumbers(nutritionData);
@@ -135,7 +155,7 @@ const IngredientForm = () => {
 
           const userNutrition = calculateWeightedNutrition(ingredient);
           ingredient['userNutrition'] = userNutrition;
-          
+
           resetForm();
 
           return dispatch(mealActions.add(ingredient));
@@ -190,7 +210,7 @@ const IngredientForm = () => {
       <button
         className="page-subsection__button"
         disabled={isIngredientLimitMet}
-        >
+      >
         Add
       </button>
       {isInvalidIngredient && (
