@@ -1,6 +1,7 @@
 import QuantityForm from './QuantityForm';
 import RemoveButton from './RemoveButton';
 import styles from './Row.module.css';
+import { TABLE_NUTRIENT_ORDER } from '../../pages/Home';
 
 export const createTdElement = (key, classes, content) => {
   return (
@@ -27,8 +28,11 @@ const Row = (props) => {
     ];
 
     const userNutrition = tdData.userNutrition;
-    for (const nutrient in userNutrition) {
-      console.log(typeof userNutrition[nutrient])
+    
+    for (const i in TABLE_NUTRIENT_ORDER) {
+      const nutrient = TABLE_NUTRIENT_ORDER[i];
+      console.log(nutrient)
+      
       elements.push(
         createTdElement(
           `${nutrient}-${tdData.id}`,

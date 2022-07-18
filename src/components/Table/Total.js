@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { mealActions } from '../../store/meal-slice';
 import styles from './Total.module.css';
 import { createTdElement } from './Row';
+import { TABLE_NUTRIENT_ORDER } from '../../pages/Home';
 
 const Total = (props) => {
   const totalData = props.totalData;
@@ -35,12 +36,14 @@ const Total = (props) => {
       <td key="quantity" className={styles['total__cell']}></td>,
     ];
 
-    for (const i in tdData) {
+    for (const i in TABLE_NUTRIENT_ORDER) {
+      const nutrient = TABLE_NUTRIENT_ORDER[i];
+
       elements.push(
         createTdElement(
-          `${i}-total`,
+          `${nutrient}-total`,
           `text-align-right ${styles['total__cell']}`,
-          tdData[i]
+          tdData[nutrient]
         )
       );
     }

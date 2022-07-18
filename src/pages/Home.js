@@ -22,22 +22,35 @@ const QUANTITY_INFORMATION = (
   </p>
 );
 
+export const TABLE_NUTRIENT_ORDER = [
+  'calories',
+  'fat_total_g',
+  'fat_saturated_g',
+  'carbohydrates_total_g',
+  'fiber_g',
+  'sugar_g',
+  'protein_g',
+  'cholesterol_mg',
+  'sodium_mg',
+  'potassium_mg'
+];
+
 const TABLE_COLUMN_NAMES = [
   'Ingredient',
   <div className={styles['table__th--quantity']}>
     Quantity
     <InformationButton message={QUANTITY_INFORMATION} />
   </div>,
-  'Sugar\n(g)',
+  'Calories',
+  'Total Fat\n(g)',
+  'Saturated Fat\n(g)',
+  'Carbohydrates\n(g)',
   'Fiber\n(g)',
+  'Sugar\n(g)',
+  'Protein\n(g)',
+  'Cholesterol\n(mg)',
   'Sodium\n(mg)',
   'Potassium\n(mg)',
-  'Saturated Fat\n(g)',
-  'Total Fat\n(g)',
-  'Calories',
-  'Cholesterol\n(mg)',
-  'Protein\n(g)',
-  'Carbohydrates\n(g)',
 ];
 
 const Home = () => {
@@ -85,7 +98,9 @@ const Home = () => {
         {!showLazyTable && (
           <div className={`page-subsection ${styles['table-placeholder']}`}>
             <p>Waiting for your first ingredient</p>
-            <div className={`flex-center-all ${styles['table-placeholder__ellipses']}`}>
+            <div
+              className={`flex-center-all ${styles['table-placeholder__ellipses']}`}
+            >
               <div className={styles['table-placeholder__dot']}></div>
               <div className={styles['table-placeholder__dot']}></div>
               <div className={styles['table-placeholder__dot']}></div>
