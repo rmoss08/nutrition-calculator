@@ -6,9 +6,3 @@
 .row__header::first-letter {
     text-transform: capitalize;
 }
-
-.row__remove-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}

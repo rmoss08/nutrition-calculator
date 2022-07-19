@@ -58,7 +58,7 @@ td {
   text-overflow: ellipsis;
   min-width: 4rem;
   max-width: 25rem;
-  padding-right: 1rem;
+  padding: 3px 1rem 3px 0;
 }
 
 .logo {
@@ -123,19 +123,21 @@ td {
   border-radius: 50%;
   padding: 0.5rem;
 }
+
 .table__button:focus {
   outline: 2px solid var(--light-green-button-focus );
 }
+
 .table__button--dark-red {
-  margin-left: 2px;
-  margin-top: 2px
+  margin-left: 3px;
 }
+
 .table__button--dark-red:focus {
   outline: 2px solid var(--light-red-button-focus);
 }
 
 .table__button .material-symbols-outlined {
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 .flex-center-all {

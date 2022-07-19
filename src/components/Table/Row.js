@@ -28,11 +28,11 @@ const Row = (props) => {
     ];
 
     const userNutrition = tdData.userNutrition;
-    
+
     for (const i in TABLE_NUTRIENT_ORDER) {
       const nutrient = TABLE_NUTRIENT_ORDER[i];
-      console.log(nutrient)
-      
+      console.log(nutrient);
+
       elements.push(
         createTdElement(
           `${nutrient}-${tdData.id}`,
@@ -43,7 +43,7 @@ const Row = (props) => {
     }
 
     elements.push(
-      <td key={`remove-${tdData.id}`}>
+      <td key={`remove-${tdData.id}`} className="flex-center-all">
         <RemoveButton id={tdData.id} />
       </td>
     );
