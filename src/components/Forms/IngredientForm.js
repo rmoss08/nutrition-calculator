@@ -7,9 +7,10 @@ import styles from './IngredientForm.module.css';
 
 const INGREDIENT_LIMIT = 50;
 
-export const calculateWeightedNutrition = (ingredient, newQuantity = false) => {
+export const calculateWeightedNutrition = (ingredient, mealServingSize, newQuantity = false) => {
   const quantity = newQuantity ? newQuantity : ingredient.userQuantity_g;
-  const servingSizeFactor = quantity / ingredient.apiServingSize_g;
+  const quantityPerServing = quantity/ mealServingSize;
+  const apiServingSizeFactor = quantityPerServing / ingredient.apiServingSize_g;
   
   let weightedNutrition = {};
   const apiNutrition = ingredient.apiNutrition;
@@ -17,7 +18,7 @@ export const calculateWeightedNutrition = (ingredient, newQuantity = false) => {
   for (const nutrient in apiNutrition) {
     if (nutrient !== 'serving_size_g') {
       const nutritionValue = apiNutrition[nutrient];
-      const weightedValue = nutritionValue * servingSizeFactor;
+      const weightedValue = nutritionValue * apiServingSizeFactor;
       weightedNutrition[nutrient] = Number(weightedValue.toFixed(2));
     }
   }
@@ -35,7 +36,7 @@ const IngredientForm = () => {
 
   const dispatch = useDispatch();
   const ingredients = useSelector((state) => state.meal.ingredients);
-  const numberOfIngredients = ingredients.length;
+  const servingSize = useSelector((state) => state.meal.servingSize);
   
   const closeErrorHandler = (type) => {
     if (type === 'invalidIngredient') {
@@ -93,7 +94,7 @@ const IngredientForm = () => {
 
   const submitHandler = async (event) => {
     event.preventDefault();
-
+    
     const userIngredientName = event.target[0].value;
 
     fetchNutritionData(userIngredientName).then((nutritionData) => {
@@ -103,9 +104,9 @@ const IngredientForm = () => {
         } else {
           const apiIngredientName = nutritionData.name;
           delete nutritionData.name;
-
+          
           const formattedNutritionData = convertObjectValuesToNumbers(nutritionData);
-
+          
           const apiServingSize_g = formattedNutritionData['serving_size_g'];
           delete formattedNutritionData['serving_size_g'];
 
@@ -117,7 +118,7 @@ const IngredientForm = () => {
             apiNutrition: formattedNutritionData,
           };
 
-          const userNutrition = calculateWeightedNutrition(ingredient);
+          const userNutrition = calculateWeightedNutrition(ingredient, servingSize);
           ingredient['userNutrition'] = userNutrition;
 
           resetInputValues();
@@ -131,6 +132,7 @@ const IngredientForm = () => {
     });
   };
 
+  const numberOfIngredients = ingredients.length;
   useMemo(() => {
     if (numberOfIngredients >= INGREDIENT_LIMIT) {
       setIsIngredientLimitMet(true);

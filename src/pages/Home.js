@@ -9,6 +9,7 @@ import styles from './Home.module.css';
 import InformationButton from '../components/InformationButton';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ServingForm from '../components/Forms/ServingForm';
+import { calculateWeightedNutrition } from '../components/Forms/IngredientForm';
 
 const LazyTable = lazy(() => import('../components/Table/Table'));
 
@@ -33,7 +34,7 @@ export const TABLE_NUTRIENT_ORDER = [
   'protein_g',
   'cholesterol_mg',
   'sodium_mg',
-  'potassium_mg'
+  'potassium_mg',
 ];
 
 const TABLE_COLUMN_NAMES = [
@@ -60,7 +61,7 @@ const Home = () => {
 
   const dispatch = useDispatch();
   const ingredients = useSelector((state) => state.meal.ingredients);
-  const numberOfIngredients = ingredients.length;
+  const servingSize = useSelector((state) => state.meal.servingSize);
 
   const resetMealClickHandler = (event) => {
     event.preventDefault();
@@ -78,6 +79,20 @@ const Home = () => {
     });
   };
 
+  const recalculateMealNutrition = (meal, servingSize) => {
+    for (const i in meal) {
+      const ingredient = meal[i];
+      const newUserNutrition = calculateWeightedNutrition(
+        ingredient,
+        servingSize
+      );
+      return dispatch(
+        mealActions.updateUserNutrition({ id: ingredient.id, newUserNutrition })
+      );
+    }
+  };
+  
+  const numberOfIngredients = ingredients.length;
   useMemo(() => {
     if (numberOfIngredients > 0) {
       setShowLazyTable(true);
@@ -85,6 +100,10 @@ const Home = () => {
       setShowLazyTable(false);
     }
   }, [numberOfIngredients]);
+  
+  useMemo(() => {
+    recalculateMealNutrition(ingredients, servingSize);
+  }, [servingSize]);
 
   return (
     <Fragment>

@@ -5,6 +5,8 @@ import styles from './QuantityForm.module.css';
 
 const QuantityForm = (props) => {
   const dispatch = useDispatch();
+  const servingSize = useSelector((state) => state.meal.servingSize);
+
   const ingredient = props.ingredient;
 
   const submitHandler = (event) => {
@@ -20,6 +22,7 @@ const QuantityForm = (props) => {
     } else {
       const newWeightedNutrition = calculateWeightedNutrition(
         ingredient,
+        servingSize,
         newQuantity
       );
 
@@ -44,7 +47,7 @@ const QuantityForm = (props) => {
         type="number"
         placeholder={props.placeholder}
       ></input>
-      <button className="table__button" title='Re-calculate'>
+      <button className="table__button" title="Re-calculate">
         <span className="material-symbols-outlined">calculate</span>
       </button>
     </form>
