@@ -8,6 +8,7 @@ import Layout from '../components/Layout';
 import styles from './Home.module.css';
 import InformationButton from '../components/InformationButton';
 import LoadingSpinner from '../components/LoadingSpinner';
+import ServingForm from '../components/ServingForm';
 
 const LazyTable = lazy(() => import('../components/Table/Table'));
 
@@ -111,6 +112,7 @@ const Home = () => {
           <Suspense fallback={<LoadingSpinner />}>
             <div className="page-subsection">
               <h2 className="page-subsection__header">Meal Nutrition</h2>
+              <ServingForm />
               <LazyTable thData={TABLE_COLUMN_NAMES} tbodyData={ingredients} />
               <div className={styles['table__menu']}>
                 <button
