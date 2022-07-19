@@ -1,0 +1,11 @@
+.serving-form__grid {
+  display: grid;
+  grid-template-rows: 1fr;
+}
+
+@media (min-width: 400px) {
+  .serving-form__grid {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 2rem;
+  }
+}
