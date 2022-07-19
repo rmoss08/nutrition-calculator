@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux';
 import Total from './Total';
 import Row from './Row';
 import styles from './Table.module.css';

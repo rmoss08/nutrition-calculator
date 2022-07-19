@@ -68,7 +68,7 @@ const Home = () => {
 
     setShowStackedBarChart(false);
     setShowLazyTable(false);
-    dispatch(mealActions.reset());
+    dispatch(mealActions.resetIngredients());
   };
 
   const showChartClickHandler = (event) => {

@@ -8,43 +8,51 @@ const mealSlice = createSlice({
     totals: {},
   },
   reducers: {
-    add(state, action) {
+    addIngredient(state, action) {
       const prevState = state.ingredients;
       state.ingredients = [...prevState, action.payload];
     },
-    remove(state, action) {
+
+    removeIngredient(state, action) {
       const prevState = state.ingredients;
-      
+
       state.ingredients = prevState.filter(
         (ingredient) => ingredient.id !== action.payload
       );
     },
-    updateUserNutrition(state, action){
+    
+    resetIngredients(state) {
+      state.ingredients = [];
+    },
+
+    updateUserNutrition(state, action) {
       const ingredientIndex = state.ingredients.findIndex(
         (ingredient) => ingredient.id === action.payload.id
       );
       const ingredient = state.ingredients[ingredientIndex];
-      ingredient.userNutrition = action.payload.newUserNutrition
+      ingredient.userNutrition = action.payload.newUserNutrition;
     },
 
-    reset(state) {
-      state.ingredients = [];
-    },
     updateServingSize(state, action) {
       state.servingSize = action.payload;
     },
-    resetServingSize(state){
+
+    resetServingSize(state) {
       state.servingSize = 1;
     },
+
     updateTotals(state, action) {
       state.totals = action.payload;
     },
+
     updateIngredientQuantity(state, action) {
       const ingredientIndex = state.ingredients.findIndex(
         (ing) => ing.id === action.payload.id
       );
-      state.ingredients[ingredientIndex]['userQuantity_g'] = action.payload.newQuantity;
-      state.ingredients[ingredientIndex]['userNutrition'] = action.payload.newWeightedNutrition;
+      state.ingredients[ingredientIndex]['userQuantity_g'] =
+        action.payload.newQuantity;
+      state.ingredients[ingredientIndex]['userNutrition'] =
+        action.payload.newWeightedNutrition;
     },
   },
 });

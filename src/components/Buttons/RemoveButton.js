@@ -7,7 +7,7 @@ const RemoveButton = (props) => {
   const clickHandler = (event) => {
     event.preventDefault();
 
-    return dispatch(mealActions.remove(props.id));
+    return dispatch(mealActions.removeIngredient(props.id));
   };
 
   return (

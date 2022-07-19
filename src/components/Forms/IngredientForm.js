@@ -124,7 +124,7 @@ const IngredientForm = () => {
           resetInputValues();
           resetErrorStates();
 
-          return dispatch(mealActions.add(ingredient));
+          return dispatch(mealActions.addIngredient(ingredient));
         }
       } catch {
         setIsInvalidIngredient(true);

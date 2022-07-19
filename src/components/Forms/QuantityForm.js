@@ -18,7 +18,7 @@ const QuantityForm = (props) => {
 
     console.log(typeof newQuantity);
     if (newQuantity === '0') {
-      return dispatch(mealActions.remove(ingredient.id));
+      return dispatch(mealActions.removeIngredient(ingredient.id));
     } else {
       const newWeightedNutrition = calculateWeightedNutrition(
         ingredient,
