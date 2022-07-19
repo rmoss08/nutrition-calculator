@@ -19,6 +19,14 @@ const mealSlice = createSlice({
         (ingredient) => ingredient.id !== action.payload
       );
     },
+    updateUserNutrition(state, action){
+      const ingredientIndex = state.ingredients.findIndex(
+        (ingredient) => ingredient.id === action.payload.id
+      );
+      const ingredient = state.ingredients[ingredientIndex];
+      ingredient.userNutrition = action.payload.newUserNutrition
+    },
+
     reset(state) {
       state.ingredients = [];
     },
