@@ -86,12 +86,12 @@ const Home = () => {
         ingredient,
         servingSize
       );
-      return dispatch(
+      dispatch(
         mealActions.updateUserNutrition({ id: ingredient.id, newUserNutrition })
       );
     }
   };
-  
+
   const numberOfIngredients = ingredients.length;
   useMemo(() => {
     if (numberOfIngredients > 0) {
@@ -100,7 +100,7 @@ const Home = () => {
       setShowLazyTable(false);
     }
   }, [numberOfIngredients]);
-  
+
   useMemo(() => {
     recalculateMealNutrition(ingredients, servingSize);
   }, [servingSize]);
@@ -160,7 +160,7 @@ const Home = () => {
             <StackedBarChart />
             <p className="fine-print">
               <i>
-                Note: recommended daily values come from the{' '}
+                Note: the recommended daily values are from the{' '}
                 <a
                   className="hyperlink"
                   href="https://www.canada.ca/en/health-canada/services/understanding-food-labels/percent-daily-value.html"
