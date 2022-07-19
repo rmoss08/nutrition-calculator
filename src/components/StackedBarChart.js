@@ -62,15 +62,16 @@ const StackedBarChart = () => {
     return nutrition;
   };
 
-  const createTooltipLabel2 = (
+  const createTooltipLabel = (
     stackType,
-    nutrientTotal,
-    nutrientDailyValuePercentage
+    total,
+    unit,
+    dailyValuePercentage
   ) => {
     if (stackType === 'user') {
-      return `${nutrientTotal}\n${nutrientDailyValuePercentage}% of DV`;
+      return `Your meal:\n${total} ${unit}\n${dailyValuePercentage}% of DV`;
     } else if (stackType === 'dailyValue') {
-      return `${nutrientTotal}\n${nutrientDailyValuePercentage}% of DV`;
+      return `Daily Value:\n${total}`;
     } else {
       console.error('Invalid type argument passed to createTooltipLabel');
     }
@@ -86,7 +87,7 @@ const StackedBarChart = () => {
 
   const createStackData = (rawData, stackType) => {
     let stack = [];
-    for (const i in CHART_NUTRIENT_ORDER){
+    for (const i in CHART_NUTRIENT_ORDER) {
       const nutrient = CHART_NUTRIENT_ORDER[i];
       console.log(nutrient);
       const nutrientDailyValuePercentage = calculcateDailyValuePercentage(
@@ -96,11 +97,12 @@ const StackedBarChart = () => {
 
       stack.push({
         x: nutrient,
-        y:nutrientDailyValuePercentage,
-        label: createTooltipLabel2(
+        y: nutrientDailyValuePercentage,
+        label: createTooltipLabel(
           stackType,
-          `${rawData[nutrient]} ${NUTRITION_DETAILS[nutrient].unit}`,
-          nutrientDailyValuePercentage
+          rawData[nutrient].toFixed(1),
+          NUTRITION_DETAILS[nutrient].unit,
+          nutrientDailyValuePercentage.toFixed(1)
         ),
       });
     }
@@ -184,7 +186,7 @@ const StackedBarChart = () => {
         <VictoryAxis
           dependentAxis
           label="Recommended Daily Value (DV)"
-          tickFormat={(tick) => `${tick}%`}
+          tickFormat={(tick) => `${tick}.0%`}
           style={{
             axisLabel: {
               fontFamily: FONT_FAMILY,
