@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, useState } from 'react';
+import { Fragment, useState } from 'react';
 import styles from './InformationButton.module.css';
 
 const InformationButton = (props) => {
