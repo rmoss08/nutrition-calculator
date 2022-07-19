@@ -1,5 +1,5 @@
-import QuantityForm from './QuantityForm';
-import RemoveButton from './RemoveButton';
+import QuantityForm from '../Forms/QuantityForm';
+import RemoveButton from '../Buttons/RemoveButton';
 import styles from './Row.module.css';
 import { TABLE_NUTRIENT_ORDER } from '../../pages/Home';
 

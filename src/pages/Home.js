@@ -6,7 +6,7 @@ import { Fragment } from 'react';
 import { mealActions } from '../store/meal-slice';
 import Layout from '../components/Layout';
 import styles from './Home.module.css';
-import InformationButton from '../components/InformationButton';
+import InformationButton from '../components/Buttons/InformationButton';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ServingForm from '../components/Forms/ServingForm';
 import { calculateWeightedNutrition } from '../components/Forms/IngredientForm';
