@@ -1,7 +1,8 @@
 :root {
   --dark-green: #348850;
+  --light-green-button-focus: rgb(148, 201, 143);
+  --light-red-button-focus: rgb(214, 169, 169);
   --light-grey: rgb(160, 160, 160);
-  --dark-red-button-hovering: rgb(112, 0, 0);
   --border-radius-5: 5px;
   --dark-green-border: 2px solid var(--dark-green);
   --table-border: 0.5px solid black;
@@ -91,6 +92,12 @@ td {
   background-color: #2a7041;
 }
 
+.page-subsection__button:focus,
+.table__button:focus {
+  outline: 3px solid var(--light-green-button-focus);
+}
+
+
 .page-subsection__button .material-symbols-outlined {
   font-size: 1.5rem;
 }
@@ -99,10 +106,16 @@ td {
 .table__button--dark-red {
   background-color: rgb(141, 0, 0);
 }
+
 .page-subsection__button--dark-red:hover,
 .table__button--dark-red:hover {
-  background-color: var(--dark-red-button-hovering);
+  background-color: rgb(112, 0, 0);                     
 } 
+
+.page-subsection__button--dark-red:focus,
+.table__button--dark-red:focus {
+  outline: 3px solid var(--light-red-button-focus);
+}
 
 .table__button {
   display: flex;
@@ -110,9 +123,19 @@ td {
   border-radius: 50%;
   padding: 0.5rem;
 }
+.table__button:focus {
+  outline: 2px solid var(--light-green-button-focus );
+}
+.table__button--dark-red {
+  margin-left: 2px;
+  margin-top: 2px
+}
+.table__button--dark-red:focus {
+  outline: 2px solid var(--light-red-button-focus);
+}
 
 .table__button .material-symbols-outlined {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 }
 
 .flex-center-all {
