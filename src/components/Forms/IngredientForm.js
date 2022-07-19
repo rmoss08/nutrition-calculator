@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { mealActions } from '../store/meal-slice';
-import Error from './Error';
+import { mealActions } from '../../store/meal-slice';
+import Error from '../Error';
 import styles from './IngredientForm.module.css';
 
 const INGREDIENT_LIMIT = 50;

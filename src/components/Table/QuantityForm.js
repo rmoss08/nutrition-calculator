@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { mealActions } from '../../store/meal-slice';
-import { calculateWeightedNutrition } from '../IngredientForm';
+import { calculateWeightedNutrition } from '../Forms/IngredientForm';
 import styles from './QuantityForm.module.css';
 
 const QuantityForm = (props) => {

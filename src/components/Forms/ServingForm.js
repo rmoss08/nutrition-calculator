@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { mealActions } from '../store/meal-slice';
+import { mealActions } from '../../store/meal-slice';
 import styles from './ServingForm.module.css';
 
 const ServingForm = () => {

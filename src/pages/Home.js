@@ -1,14 +1,14 @@
 import { lazy, Suspense, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import StackedBarChart from '../components/StackedBarChart';
-import IngredientForm from '../components/IngredientForm';
+import IngredientForm from '../components/Forms/IngredientForm';
 import { Fragment } from 'react';
 import { mealActions } from '../store/meal-slice';
 import Layout from '../components/Layout';
 import styles from './Home.module.css';
 import InformationButton from '../components/InformationButton';
 import LoadingSpinner from '../components/LoadingSpinner';
-import ServingForm from '../components/ServingForm';
+import ServingForm from '../components/Forms/ServingForm';
 
 const LazyTable = lazy(() => import('../components/Table/Table'));
 
