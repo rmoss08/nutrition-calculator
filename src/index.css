@@ -147,3 +147,26 @@ td {
   font-size: 0.75rem;
 }
 
+.general-form__field-label {
+  display: block;
+  font-weight: 600;
+  margin: 0 0 0.25rem 0;
+}
+
+.general-form__field-input {
+  box-sizing: border-box;
+  border-radius: var(--border-radius-5);
+  border: var(--dark-green-border);
+  width: 100%;
+  padding: 0.5rem;
+}
+
+.general-form__field-input:focus {
+  outline: none;
+}
+
+@media (min-width: 400px) {
+  .general-form__field {
+    display: inline;
+  }
+}

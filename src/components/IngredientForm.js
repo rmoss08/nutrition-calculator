@@ -142,31 +142,31 @@ const IngredientForm = () => {
   return (
     <form onSubmit={submitHandler}>
       <div className={styles['ingredient-form__grid']}>
-        <div className={styles['ingredient-form__field']}>
+        <div className='general-form__field'>
           <label
             htmlFor="ingredient-form-name-input"
-            className={styles['ingredient-form__field-label']}
+            className='general-form__field-label'
           >
             Ingredient:
           </label>
           <input
             ref={ingredientInputRef}
             id="ingredient-form-name-input"
-            className={styles['ingredient-form__field-input']}
+            className='general-form__field-input'
             type="text"
           />
         </div>
-        <div className={styles['ingredient-form__field']}>
+        <div className='general-form__field'>
           <label
             htmlFor="ingredient-form-quantity-input"
-            className={styles['ingredient-form__field-label']}
+            className='general-form__field-label'
           >
             Quantity (grams):
           </label>
           <input
             ref={quantityInputRef}
             id="ingredient-form-quantity-input"
-            className={styles['ingredient-form__field-input']}
+            className='general-form__field-input'
             type="number"
             min="1"
           />
