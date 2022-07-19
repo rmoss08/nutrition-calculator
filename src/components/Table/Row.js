@@ -4,9 +4,13 @@ import styles from './Row.module.css';
 import { TABLE_NUTRIENT_ORDER } from '../../pages/Home';
 
 export const createTdElement = (key, classes, content) => {
-  return (
+  const formattedContent = content
+    .toFixed(1)
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  
+    return (
     <td key={key} className={classes}>
-      {content.toFixed(2)}
+      {formattedContent}
     </td>
   );
 };

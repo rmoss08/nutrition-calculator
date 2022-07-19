@@ -36,6 +36,9 @@ const QuantityForm = (props) => {
     }
   };
 
+  const placeholder = `${props.placeholder}`;
+  const formattedPlaceholder = placeholder.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
   return (
     <form
       className={`flex-center-all ${styles['quantity-form']}`}
@@ -45,7 +48,7 @@ const QuantityForm = (props) => {
         id={`table-quantity-input-${ingredient.id}`}
         className={styles['quantity-form__input']}
         type="number"
-        placeholder={props.placeholder}
+        placeholder={formattedPlaceholder}
       ></input>
       <button className="table__button" title="Re-calculate">
         <span className="material-symbols-outlined">calculate</span>

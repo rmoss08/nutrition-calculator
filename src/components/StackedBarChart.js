@@ -62,13 +62,26 @@ const StackedBarChart = () => {
     return nutrition;
   };
 
-  const createTooltipLabel = (stackType, nutrient, total, unit, dailyValuePercentage) => {
-    const dailyValueTotal = (NUTRITION_DAILY_VALUES[nutrient]).toFixed(1);
-    
+  const createTooltipLabel = (
+    stackType,
+    nutrient,
+    total,
+    unit,
+    dailyValuePercentage
+  ) => {
+    const formattedTotal = total.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    const formattedDailyValuePercentage = dailyValuePercentage.replace(
+      /\B(?=(\d{3})+(?!\d))/g,
+      ','
+    );
+    const formattedDailyValueTotal = NUTRITION_DAILY_VALUES[nutrient]
+      .toFixed(1)
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
     if (stackType === 'user') {
-      return `Your Meal:\n${total} ${unit}\n${dailyValuePercentage}% of DV`;
+      return `Your Meal:\n${formattedTotal} ${unit}\n${formattedDailyValuePercentage}% of DV`;
     } else if (stackType === 'dailyValue') {
-      return `Daily Value:\n${dailyValueTotal} ${unit}`;
+      return `Daily Value:\n${formattedDailyValueTotal} ${unit}`;
     } else {
       console.error('Invalid type argument passed to createTooltipLabel');
     }
