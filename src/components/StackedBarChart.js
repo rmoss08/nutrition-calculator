@@ -62,12 +62,7 @@ const StackedBarChart = () => {
     return nutrition;
   };
 
-  const createTooltipLabel = (
-    stackType,
-    total,
-    unit,
-    dailyValuePercentage
-  ) => {
+  const createTooltipLabel = (stackType, total, unit, dailyValuePercentage) => {
     if (stackType === 'user') {
       return `Your meal:\n${total} ${unit}\n${dailyValuePercentage}% of DV`;
     } else if (stackType === 'dailyValue') {
@@ -82,6 +77,7 @@ const StackedBarChart = () => {
     const nutrientDailyValuePercentage = Number(
       ((nutrientTotal / nutrientDailyValue) * 100).toFixed(1)
     );
+
     return nutrientDailyValuePercentage;
   };
 
@@ -116,7 +112,12 @@ const StackedBarChart = () => {
     for (const nutrient in consumedNutrients) {
       const nutrientsOutstandingDailyValue =
         dailyValues[nutrient] - consumedNutrients[nutrient];
-      outstandingDailyValues[nutrient] = nutrientsOutstandingDailyValue;
+
+      if (nutrientsOutstandingDailyValue < 0) {
+        outstandingDailyValues[nutrient] = 0;
+      } else {
+        outstandingDailyValues[nutrient] = nutrientsOutstandingDailyValue;
+      }
     }
 
     return outstandingDailyValues;
