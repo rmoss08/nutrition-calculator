@@ -1,4 +1,3 @@
-const PORT = 8000;
 const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
@@ -24,11 +23,9 @@ app.get('/fetch', (req, res) => {
   return axios
     .request(options)
     .then((response) => {
-      return res.json(response.data);
+      res.json(response.data);
     })
     .catch((error) => {
       console.error(error);
     });
 });
-
-app.listen(8000, () => console.log(`Server is running on port ${PORT}`));
