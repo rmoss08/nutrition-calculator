@@ -2,22 +2,24 @@
 
 Nutrition Calculator is a web app that allows users to input their meal's ingredients, return the nutrition facts per serving size, and compare the meal's nutrition to the daily values recommended by the Government of Canada. 
 
+Note: you will need your own API key for the web app to work. Please refer to Setup below for instructions. 
+
+
+## Setup
+
+1. Go to [Rapid API](https://rapidapi.com/calorieninjas/api/calorieninjas/) to get your API key
+2. Create a .env file in the repository's directory
+3. In .env, add REACT_APP_RAPID_API_KEY=[ENTER YOUR API KEY HERE]
+4. Your API key is now setup. In the terminal, enter npm start to run the web app 
+
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `npm start:frontend`
+### `npm start`
 
-Runs the front-end of the app in development mode.\
+Runs the app in development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm start:backend`
-
-Runs the back-end of the app in development mode.\
-Open [http://localhost:8000](http://localhost:8000) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.

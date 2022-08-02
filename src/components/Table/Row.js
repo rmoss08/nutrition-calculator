@@ -35,7 +35,6 @@ const Row = (props) => {
 
     for (const i in TABLE_NUTRIENT_ORDER) {
       const nutrient = TABLE_NUTRIENT_ORDER[i];
-      console.log(nutrient);
 
       elements.push(
         createTdElement(

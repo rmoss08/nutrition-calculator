@@ -76,8 +76,12 @@ const IngredientForm = () => {
     
     const options = {
       method: 'GET',
-      url: 'http://localhost:8000/fetch',
+      url: 'https://calorieninjas.p.rapidapi.com/v1/nutrition',
       params: { query: ingredientName },
+      headers: {
+        'X-RapidAPI-Host': 'calorieninjas.p.rapidapi.com',
+        'X-RapidAPI-Key': process.env.REACT_APP_RAPID_API_KEY,
+      },
     };
     
     return axios
