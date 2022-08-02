@@ -76,7 +76,7 @@ const IngredientForm = () => {
     
     const options = {
       method: 'GET',
-      url: 'http://nutrition-calculator.web.app/fetch',
+      url: 'http://localhost:8000/fetch',
       params: { query: ingredientName },
     };
     

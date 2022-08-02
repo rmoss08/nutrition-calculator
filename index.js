@@ -29,3 +29,6 @@ app.get('/fetch', (req, res) => {
       console.error(error);
     });
 });
+
+
+app.listen(8000, ()=>console.log("Proxy server is running"));
