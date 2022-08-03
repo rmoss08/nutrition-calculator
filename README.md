@@ -8,8 +8,8 @@ Note: you will need your own API key for the web app to work. Please refer to Se
 ## Setup
 
 1. Go to [Rapid API](https://rapidapi.com/calorieninjas/api/calorieninjas/) to get your API key
-2. Create a .env file in the repository's directory
-3. In .env, add REACT_APP_RAPID_API_KEY=[ENTER YOUR API KEY HERE]
+2. Create a .env.local file in the repository's directory
+3. In .env.local, add REACT_APP_RAPID_API_KEY=[ENTER YOUR API KEY HERE]
 4. Your API key is now setup. In the terminal, enter npm start to run the web app 
 
 ## Available Scripts
