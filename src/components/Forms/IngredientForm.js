@@ -7,11 +7,15 @@ import styles from './IngredientForm.module.css';
 
 const INGREDIENT_LIMIT = 50;
 
-export const calculateWeightedNutrition = (ingredient, mealServingSize, newQuantity = false) => {
+export const calculateWeightedNutrition = (
+  ingredient,
+  mealServingSize,
+  newQuantity = false
+) => {
   const quantity = newQuantity ? newQuantity : ingredient.userQuantity_g;
-  const quantityPerServing = quantity/ mealServingSize;
+  const quantityPerServing = quantity / mealServingSize;
   const apiServingSizeFactor = quantityPerServing / ingredient.apiServingSize_g;
-  
+
   let weightedNutrition = {};
   const apiNutrition = ingredient.apiNutrition;
 
@@ -30,14 +34,14 @@ const IngredientForm = () => {
   const [isInvalidIngredient, setIsInvalidIngredient] = useState(false);
   const [isIngredientLimitMet, setIsIngredientLimitMet] = useState(false);
   const [isAPIConnectionDown, setIsAPIConnectionDown] = useState(false);
-  
+
   const ingredientInputRef = useRef(null);
   const quantityInputRef = useRef(null);
 
   const dispatch = useDispatch();
   const ingredients = useSelector((state) => state.meal.ingredients);
   const servingSize = useSelector((state) => state.meal.servingSize);
-  
+
   const closeErrorHandler = (type) => {
     if (type === 'invalidIngredient') {
       return setIsInvalidIngredient(false);
@@ -52,42 +56,38 @@ const IngredientForm = () => {
 
   const convertObjectValuesToNumbers = (objectToConvert) => {
     let objectWithNumberValues = {};
-    
+
     for (const key in objectToConvert) {
       objectWithNumberValues[key] = Number(objectToConvert[key]);
     }
 
     return objectWithNumberValues;
   };
-  
+
   const resetInputValues = () => {
     ingredientInputRef.current.value = '';
     quantityInputRef.current.value = '';
   };
-  
+
   const resetErrorStates = () => {
     setIsInvalidIngredient(false);
     setIsAPIConnectionDown(false);
     setIsIngredientLimitMet(false);
-  }
+  };
 
-  const fetchNutritionData = (ingredientName) => {
+  const fetchFirebaseNutrition = (ingredientName) => {
     const axios = require('axios');
-    
+
     const options = {
       method: 'GET',
-      url: 'https://calorieninjas.p.rapidapi.com/v1/nutrition',
-      params: { query: ingredientName },
-      headers: {
-        'X-RapidAPI-Host': 'calorieninjas.p.rapidapi.com',
-        'X-RapidAPI-Key': process.env.REACT_APP_RAPID_API_KEY,
-      },
+      url: 'https://us-central1-nutrition-calculator-6db9d.cloudfunctions.net/fetchAPINutrition',
+      params: { ingredient: ingredientName },
     };
-    
+
     return axios
-    .request(options)
-    .then((response) => {
-      return response.data.items[0];
+      .request(options)
+      .then((response) => {
+        return response.data.items[0];
       })
       .catch((error) => {
         console.error(error);
@@ -95,22 +95,22 @@ const IngredientForm = () => {
       });
   };
 
-
   const submitHandler = async (event) => {
     event.preventDefault();
-    
+
     const userIngredientName = event.target[0].value;
 
-    fetchNutritionData(userIngredientName).then((nutritionData) => {
+    fetchFirebaseNutrition(userIngredientName).then((nutritionData) => {
       try {
         if (nutritionData === undefined || null) {
           throw 'Invalid ingredient';
         } else {
           const apiIngredientName = nutritionData.name;
           delete nutritionData.name;
-          
-          const formattedNutritionData = convertObjectValuesToNumbers(nutritionData);
-          
+
+          const formattedNutritionData =
+            convertObjectValuesToNumbers(nutritionData);
+
           const apiServingSize_g = formattedNutritionData['serving_size_g'];
           delete formattedNutritionData['serving_size_g'];
 
@@ -122,7 +122,10 @@ const IngredientForm = () => {
             apiNutrition: formattedNutritionData,
           };
 
-          const userNutrition = calculateWeightedNutrition(ingredient, servingSize);
+          const userNutrition = calculateWeightedNutrition(
+            ingredient,
+            servingSize
+          );
           ingredient['userNutrition'] = userNutrition;
 
           resetInputValues();
@@ -148,31 +151,31 @@ const IngredientForm = () => {
   return (
     <form onSubmit={submitHandler}>
       <div className={styles['ingredient-form__grid']}>
-        <div className='general-form__field'>
+        <div className="general-form__field">
           <label
             htmlFor="ingredient-form-name-input"
-            className='general-form__field-label'
+            className="general-form__field-label"
           >
             Ingredient:
           </label>
           <input
             ref={ingredientInputRef}
             id="ingredient-form-name-input"
-            className='general-form__field-input'
+            className="general-form__field-input"
             type="text"
           />
         </div>
-        <div className='general-form__field'>
+        <div className="general-form__field">
           <label
             htmlFor="ingredient-form-quantity-input"
-            className='general-form__field-label'
+            className="general-form__field-label"
           >
             Quantity (grams):
           </label>
           <input
             ref={quantityInputRef}
             id="ingredient-form-quantity-input"
-            className='general-form__field-input'
+            className="general-form__field-input"
             type="number"
             min="1"
           />
