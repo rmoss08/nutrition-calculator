@@ -2,15 +2,29 @@
 
 Nutrition Calculator is a web app that allows users to input their meal's ingredients, return the nutrition facts per serving size, and compare the meal's nutrition to the daily values recommended by the Government of Canada. 
 
-Note: you will need your own API key for the web app to work. Please refer to Setup below for instructions. 
+You can view the production version [here](https://nutrition-calculator-6db9d.web.app/).
 
 
 ## Setup
 
-1. Go to [Rapid API](https://rapidapi.com/calorieninjas/api/calorieninjas/) to get your API key
-2. Create a .env.local file in the repository's directory
-3. In .env.local, add REACT_APP_RAPID_API_KEY=[ENTER YOUR API KEY HERE]
-4. Your API key is now setup. In the terminal, enter npm start to run the web app 
+If you want to locally host Nutrition Calculator, some setup is required. Nutrition Calculator uses Firebase Functions for API calls, so you will need to change some code to circumvent Firebase. Follow these steps:
+
+1. Open **src/IngredientForm.js**.
+2. In the **fetchFirebaseNutrition** function, replace the **options** variable with the following code:
+```
+    const options = {
+      method: "GET",
+      url: "https://calorieninjas.p.rapidapi.com/v1/nutrition",
+      params: {query: ingredientName},
+      headers: {
+        "X-RapidAPI-Host": "calorieninjas.p.rapidapi.com",
+        "X-RapidAPI-Key": '<ENTER YOUR PERSONAL API KEY>',
+      },
+    };
+```
+3. Go to [CalorieNinja's Rapid API page](https://rapidapi.com/calorieninjas/api/calorieninjas/) to generate your personal API key. This API is completely free.
+4. Now, go back to the **options** variable in the **fetchFirebaseNutrition** function. Next to **X-RapidAPI-Key** property, enter your personal API key in quotation marks.
+5. Everything is now setup for you to locally host Nutrition Calculator. In the terminal, enter **npm run start** to run the web app. 
 
 ## Available Scripts
 
