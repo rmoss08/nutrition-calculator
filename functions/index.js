@@ -7,13 +7,14 @@ exports.fetchAPINutrition = functions.https.onRequest((req, res) => {
   const axios = require("axios");
 
   const ingredient = req.query.ingredient;
+
   const options = {
-    method: "GET",
-    url: "https://calorieninjas.p.rapidapi.com/v1/nutrition",
-    params: {query: ingredient},
+    method: 'GET',
+    url: 'https://edamam-food-and-grocery-database.p.rapidapi.com/parser',
+    params: { ingr: ingredient },
     headers: {
-      "X-RapidAPI-Host": "calorieninjas.p.rapidapi.com",
-      "X-RapidAPI-Key": process.env.REACT_APP_RAPID_API_KEY,
+      'X-RapidAPI-Host': 'edamam-food-and-grocery-database.p.rapidapi.com',
+      "X-RapidAPI-Key": process.env.EDAMAM_API_KEY,
     },
   };
 

@@ -25,16 +25,11 @@ const QUANTITY_INFORMATION = (
 );
 
 export const TABLE_NUTRIENT_ORDER = [
-  'calories',
-  'fat_total_g',
-  'fat_saturated_g',
-  'carbohydrates_total_g',
-  'fiber_g',
-  'sugar_g',
-  'protein_g',
-  'cholesterol_mg',
-  'sodium_mg',
-  'potassium_mg',
+  'ENERC_KCAL',
+  'FAT',
+  'CHOCDF',
+  'FIBTG',
+  'PROCNT',
 ];
 
 const TABLE_COLUMN_NAMES = [
@@ -45,14 +40,9 @@ const TABLE_COLUMN_NAMES = [
   </div>,
   'Calories',
   'Total Fat\n(g)',
-  'Saturated Fat\n(g)',
   'Carbohydrates\n(g)',
   'Fiber\n(g)',
-  'Sugar\n(g)',
   'Protein\n(g)',
-  'Cholesterol\n(mg)',
-  'Sodium\n(mg)',
-  'Potassium\n(mg)',
 ];
 
 const Home = () => {

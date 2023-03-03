@@ -54,16 +54,6 @@ const IngredientForm = () => {
     }
   };
 
-  const convertObjectValuesToNumbers = (objectToConvert) => {
-    let objectWithNumberValues = {};
-
-    for (const key in objectToConvert) {
-      objectWithNumberValues[key] = Number(objectToConvert[key]);
-    }
-
-    return objectWithNumberValues;
-  };
-
   const resetInputValues = () => {
     ingredientInputRef.current.value = '';
     quantityInputRef.current.value = '';
@@ -75,7 +65,7 @@ const IngredientForm = () => {
     setIsIngredientLimitMet(false);
   };
 
-  const fetchFirebaseNutrition = (ingredientName) => {
+  const fetchIngredient = (ingredientName) => {
     const axios = require('axios');
 
     const options = {
@@ -83,11 +73,11 @@ const IngredientForm = () => {
       url: 'https://us-central1-nutrition-calculator-6db9d.cloudfunctions.net/fetchAPINutrition',
       params: { ingredient: ingredientName },
     };
-
+    console.log(options);
     return axios
       .request(options)
       .then((response) => {
-        return response.data.items[0];
+        return response.data;
       })
       .catch((error) => {
         console.error(error);
@@ -99,27 +89,18 @@ const IngredientForm = () => {
     event.preventDefault();
 
     const userIngredientName = event.target[0].value;
-
-    fetchFirebaseNutrition(userIngredientName).then((nutritionData) => {
+   
+    fetchIngredient(userIngredientName).then((nutritionData) => {
       try {
-        if (nutritionData === undefined || null) {
+        if (nutritionData.length === 0 || null) {
           throw 'Invalid ingredient';
         } else {
-          const apiIngredientName = nutritionData.name;
-          delete nutritionData.name;
-
-          const formattedNutritionData =
-            convertObjectValuesToNumbers(nutritionData);
-
-          const apiServingSize_g = formattedNutritionData['serving_size_g'];
-          delete formattedNutritionData['serving_size_g'];
-
           const ingredient = {
             id: `${Number(event.timeStamp)}`,
-            name: apiIngredientName,
+            name: nutritionData.food.label,
             userQuantity_g: parseFloat(event.target[1].value),
-            apiServingSize_g,
-            apiNutrition: formattedNutritionData,
+            apiServingSize_g: 100,
+            apiNutrition: nutritionData.food.nutrients,
           };
 
           const userNutrition = calculateWeightedNutrition(

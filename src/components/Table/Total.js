@@ -56,16 +56,11 @@ const Total = (props) => {
   };
 
   let tableTotals = {
-    sugar_g: 0,
-    fiber_g: 0,
-    sodium_mg: 0,
-    potassium_mg: 0,
-    fat_saturated_g: 0,
-    fat_total_g: 0,
-    calories: 0,
-    cholesterol_mg: 0,
-    protein_g: 0,
-    carbohydrates_total_g: 0,
+    ENERC_KCAL: 0,
+    FAT: 0,
+    CHOCDF: 0,
+    FIBTG: 0,
+    PROCNT: 0,
   };
   tableTotals = calculateTotals(tableTotals, totalData);
 
