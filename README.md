@@ -10,20 +10,20 @@ You can view the production version [here](https://nutrition-calculator-6db9d.we
 If you want to locally host Nutrition Calculator, some setup is required. Nutrition Calculator uses Firebase Functions for API calls, so you will need to change some code to circumvent Firebase. Follow these steps:
 
 1. Open **src/IngredientForm.js**.
-2. In the **fetchFirebaseNutrition** function, replace the **options** variable with the following code:
+2. In the **fetchNutrition** function, replace the **options** variable with the following code:
 ```
     const options = {
       method: "GET",
-      url: "https://calorieninjas.p.rapidapi.com/v1/nutrition",
-      params: {query: ingredientName},
+      url: "https://edamam-food-and-grocery-database.p.rapidapi.com/parser",
+      params: {ingr: ingredientName},
       headers: {
-        "X-RapidAPI-Host": "calorieninjas.p.rapidapi.com",
+        "X-RapidAPI-Host": "edamam-food-and-grocery-database.p.rapidapi.com",
         "X-RapidAPI-Key": '<ENTER YOUR PERSONAL API KEY>',
       },
     };
 ```
-3. Go to [CalorieNinja's Rapid API page](https://rapidapi.com/calorieninjas/api/calorieninjas/) to generate your personal API key. This API is completely free.
-4. Now, go back to the **options** variable in the **fetchFirebaseNutrition** function. Next to **X-RapidAPI-Key** property, enter your personal API key in quotation marks.
+3. Go to [Edamam's Rapid API page](https://rapidapi.com/edamam/api/edamam-food-and-grocery-database) to generate your personal API key. This API is free.
+4. Now, go back to the **options** variable in the **fetchNutrition** function. Next to **X-RapidAPI-Key** property, enter your personal API key in quotation marks.
 5. Everything is now setup for you to locally host Nutrition Calculator. In the terminal, enter **npm run start** to run the web app. 
 
 ## Available Scripts
