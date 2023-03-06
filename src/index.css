@@ -56,7 +56,7 @@ th,
 td {
   overflow: hidden;
   text-overflow: ellipsis;
-  min-width: 4rem;
+  min-width: 5.5rem;
   max-width: 25rem;
   padding: 3px 1rem 3px 0;
 }

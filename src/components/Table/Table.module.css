@@ -1,6 +1,5 @@
 .table {
   display: block;
-  overflow-x: scroll;
   border-collapse: collapse;
   border-radius: var(--border-radius-5);
   border: var(--dark-green-border);
