@@ -9,11 +9,11 @@ exports.fetchAPINutrition = functions.https.onRequest((req, res) => {
   const ingredient = req.query.ingredient;
 
   const options = {
-    method: 'GET',
-    url: 'https://edamam-food-and-grocery-database.p.rapidapi.com/parser',
-    params: { ingr: ingredient },
+    method: "GET",
+    url: "https://edamam-food-and-grocery-database.p.rapidapi.com/parser",
+    params: {ingr: ingredient},
     headers: {
-      'X-RapidAPI-Host': 'edamam-food-and-grocery-database.p.rapidapi.com',
+      "X-RapidAPI-Host": "edamam-food-and-grocery-database.p.rapidapi.com",
       "X-RapidAPI-Key": process.env.EDAMAM_API_KEY,
     },
   };
