@@ -73,11 +73,11 @@ const IngredientForm = () => {
       url: 'https://us-central1-nutrition-calculator-6db9d.cloudfunctions.net/fetchAPINutrition',
       params: { ingredient: ingredientName },
     };
-    console.log(options);
+    
     return axios
       .request(options)
       .then((response) => {
-        return response.data;
+        return response.data.parsed[0];
       })
       .catch((error) => {
         console.error(error);
