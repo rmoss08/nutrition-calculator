@@ -8,43 +8,19 @@ import {
 } from 'victory';
 import styles from './StackedBarChart.module.css';
 
-const CHART_NUTRIENT_ORDER = [
-  'potassium_mg',
-  'sodium_mg',
-  'cholesterol_mg',
-  'fiber_g',
-  'carbohydrates_total_g',
-  'fat_saturated_g',
-  'fat_total_g',
-];
+const CHART_NUTRIENT_ORDER = ['FIBTG', 'CHOCDF','FAT'];
 const NUTRITION_DAILY_VALUES = {
-  fiber_g: 25,
-  sodium_mg: 2500,
-  potassium_mg: 4700,
-  fat_saturated_g: 20,
-  fat_total_g: 65,
-  cholesterol_mg: 300,
-  carbohydrates_total_g: 300,
+  FAT: 65,
+  CHOCDF: 300,
+  FIBTG: 25,
 };
 const NUTRITION_DETAILS = {
-  fiber_g: { formattedName: 'Fiber', unit: 'g' },
-  sodium_mg: { formattedName: 'Sodium', unit: 'mg' },
-  potassium_mg: { formattedName: 'Potassium', unit: 'mg' },
-  fat_saturated_g: { formattedName: 'Saturated Fat', unit: 'g' },
-  fat_total_g: { formattedName: 'Total Fat', unit: 'g' },
-  cholesterol_mg: { formattedName: 'Cholesterol', unit: 'mg' },
-  carbohydrates_total_g: { formattedName: 'Carbohydrates', unit: 'g' },
+  FAT: { formattedName: 'Total Fat', unit: 'g' },
+  CHOCDF: { formattedName: 'Carbohydrates', unit: 'g' },
+  FIBTG: { formattedName: 'Fiber', unit: 'g' },
 };
-const X_AXIS_LABELS = [
-  'Potassium',
-  'Sodium',
-  'Cholesterol',
-  'Fiber',
-  'Carbohydrates',
-  'Saturated Fat',
-  'Total Fat',
-];
-const X_AXIS_VALUES = [1, 2, 3, 4, 5, 6, 7];
+const X_AXIS_LABELS = ['Fiber', 'Carbohydrates','Total Fat'];
+const X_AXIS_VALUES = [1, 2, 3];
 const FONT_FAMILY = 'Arial, Helvetica, sans-serif';
 const GENERAL_FONT_SIZE = 8;
 
@@ -100,7 +76,6 @@ const StackedBarChart = () => {
     let stack = [];
     for (const i in CHART_NUTRIENT_ORDER) {
       const nutrient = CHART_NUTRIENT_ORDER[i];
-      console.log(nutrient);
       const nutrientDailyValuePercentage = calculcateDailyValuePercentage(
         nutrient,
         rawData[nutrient]
@@ -140,9 +115,7 @@ const StackedBarChart = () => {
   };
 
   const necessaryUserTotals = removeUnnecessaryNutrients(userTotals, [
-    'sugar_g',
-    'calories',
-    'protein_g',
+    'PROCNT',
   ]);
   const outstandingDailyValues = calculateOutstandingDailyValues(
     necessaryUserTotals,
